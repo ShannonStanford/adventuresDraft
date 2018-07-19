@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "392311141065",
+    "firebase_url": "https://adventureawaits-198ee.firebaseio.com",
+    "project_id": "adventureawaits-198ee",
+    "storage_bucket": "adventureawaits-198ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392311141065:android:b5e4f9be4c68c171",
+        "android_client_info": {
+          "package_name": "com.example.shannonyan.adventuresdraft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392311141065-f7ho1o8pgia5ohjh6g67lfqamcvf1niq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIsVrW1nBUXuhJI65rECOfEXlRIUO_8H4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
