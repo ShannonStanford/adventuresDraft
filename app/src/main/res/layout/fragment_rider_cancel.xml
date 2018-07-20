@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RiderCancelFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/orderNewDriver"
+        android:layout_width="match_parent"
+        android:layout_height="286dp"
+        android:background="#94dd02"
+        android:text="ORDER NEW DRIVER?"
+        android:textSize="36sp" />
+
+    <Button
+        android:id="@+id/cancelTrip"
+        android:layout_width="match_parent"
+        android:layout_height="281dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/orderNewDriver"
+        android:background="@android:color/holo_red_dark"
+        android:text="CANCEL TRIP"
+        android:textSize="36sp" />
+</RelativeLayout>
