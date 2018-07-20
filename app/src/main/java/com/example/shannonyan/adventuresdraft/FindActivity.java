@@ -64,6 +64,7 @@ public class FindActivity extends AppCompatActivity {
         setStartEnd();
         //start required API calls for UBER process
         findDriver();
+
     }
 
     public void findDriver(){

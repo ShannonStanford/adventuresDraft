@@ -11,4 +11,5 @@
     <string name="title_activity_no_drivers_found">NoDriversFoundActivity</string>
     <string name="title_activity_ride_in_progress">RideInProgressActivity</string>
     <string name="title_activity_rider_cancel">RiderCancelActivity</string>
+    <string name="google_maps_api_key">AIzaSyCT9ivFxi3nczDyR54-SvsvTJXZypBN3II</string>
 </resources>
