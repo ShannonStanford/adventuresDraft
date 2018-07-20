@@ -3,4 +3,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_eta">EtaActivity</string>
+    <string name="title_activity_find">FindActivity</string>
+    <string name="title_activity_event">EventActivity</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_no_drivers_found">NoDriversFoundActivity</string>
+    <string name="title_activity_ride_in_progress">RideInProgressActivity</string>
+    <string name="title_activity_rider_cancel">RiderCancelActivity</string>
 </resources>

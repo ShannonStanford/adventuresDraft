@@ -1,5 +1,6 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
