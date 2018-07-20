@@ -22,7 +22,6 @@ public class StartActivity extends AppCompatActivity {
         onClickToFindActivity();
     }
 
-
     public void onClickToFindActivity(){
         btLaunch.setOnClickListener(new View.OnClickListener() {
             @Override
