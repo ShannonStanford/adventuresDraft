@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EtaFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/ivDriverPic"
+        android:layout_width="184dp"
+        android:layout_height="156dp"
+        android:src="@android:color/background_dark" />
+
+    <Button
+        android:id="@+id/driverMap"
+        android:layout_width="138dp"
+        android:layout_height="93dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="MAP" />
+
+    <TextView
+        android:id="@+id/tvDriverName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ivDriverPic"
+        android:text="Driver Name"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvCarMake"
+        android:layout_width="200dp"
+        android:layout_height="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/ivDriverPic"
+        android:text="Make"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvCarModel"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/tvCarMake"
+        android:layout_toEndOf="@+id/ivDriverPic"
+        android:text="Model"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvCarLicense"
+        android:layout_width="200dp"
+        android:layout_height="29dp"
+        android:layout_below="@+id/tvCarModel"
+        android:layout_toEndOf="@+id/ivDriverPic"
+        android:text="License#"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvEta"
+        android:layout_width="match_parent"
+        android:layout_height="236dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/driverMap"
+        android:text="ETA"
+        android:textAlignment="center"
+        android:textSize="@android:dimen/notification_large_icon_width" />
+
+    <Button
+        android:id="@+id/callDriver"
+        android:layout_width="135dp"
+        android:layout_height="93dp"
+        android:layout_alignBottom="@+id/driverMap"
+        android:layout_toEndOf="@+id/driverMap"
+        android:text="CALL" />
+
+    <Button
+        android:id="@+id/riderCancel"
+        android:layout_width="111dp"
+        android:layout_height="95dp"
+        android:layout_alignTop="@+id/driverMap"
+        android:layout_toEndOf="@+id/callDriver"
+        android:text="CANCEL" />
+</RelativeLayout>
