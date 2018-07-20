@@ -88,15 +88,11 @@ public class FindActivity extends AppCompatActivity {
                 }
             }
 
-<<<<<<< HEAD
-
-=======
             @Override
             public void onFailure(Call<ProductsResponse> call, Throwable t) {
                 //Network Failure
             }
         });
->>>>>>> 682829fcfe7bb3b5382ab5d08c07942f5789f59c
     }
     //added throws IOException to fix .execute() error, good choice? not sure what that may change.
     public void getFareId(String productId) throws IOException {
