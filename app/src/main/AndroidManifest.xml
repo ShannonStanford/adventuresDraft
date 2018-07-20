@@ -18,7 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SampleHome" />
         <activity
             android:name=".StartActivity"
             android:label="@string/title_activity_start"
