@@ -64,6 +64,7 @@ public class FindActivity extends AppCompatActivity {
         setStartEnd();
         //start required API calls for UBER process
         findDriver();
+
     }
 
     public void findDriver(){
@@ -101,8 +102,8 @@ public class FindActivity extends AppCompatActivity {
                 .setDropoffCoordinates(endLat, endLong)
                 .build();
         RideEstimate rideEstimate = service.estimateRide(rideRequestParameters).execute().body();
-        String fareId = rideEstimate.getFareId();
-        requestRide(productId, fareId);
+        //String fareId = rideEstimate.getFareId();
+        //requestRide(productId, fareId);
     }
     //or could solve execute() error by surrounding with try/catch block
     public void requestRide(String productId, String fareId){
