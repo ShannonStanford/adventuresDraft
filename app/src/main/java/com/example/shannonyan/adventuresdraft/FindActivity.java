@@ -1,6 +1,8 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -122,8 +124,19 @@ public class FindActivity extends AppCompatActivity {
         String rideId = ride.getRideId();
         callAsynchronousTask(rideId);
     }
-
+    // only need it if implementing the user login flow
     public void callAsynchronousTask(String rideId){
+        try {
+            // get ride details and start the activity
+            // send the info to the Eta Activity to populate the activity with driver details
+            Ride ride = service.getRideDetails(rideId).execute().body();
+            Intent intent = new Intent(FindActivity.this, EtaActivity.class);
+            intent.putExtra("ride", (Parcelable) ride);
+            startActivity(intent);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
