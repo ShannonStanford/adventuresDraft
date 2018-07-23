@@ -1,5 +1,6 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,8 @@ import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.services.RidesService;
+
+import org.parceler.Parcels;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,7 +31,6 @@ public class EtaActivity extends AppCompatActivity {
     public TextView carModel;
     public TextView carLicense;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +43,9 @@ public class EtaActivity extends AppCompatActivity {
         final TextView carModel = (TextView) findViewById(R.id.tvCarModel);
         final TextView carLicense = (TextView) findViewById(R.id.tvCarLicense);
 
-        //TODO: update the key for unwrapping the Parcel
-        rideID = getIntent().getStringExtra("rideID");
+        Intent intent = getIntent();
+        service = (RidesService) Parcels.unwrap(intent.getParcelableExtra("service"));
+        rideID = intent.getStringExtra("rideId");
 
         do{
             //Adds a buffer of 5 seconds between updating status
@@ -56,20 +59,22 @@ public class EtaActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Ride ride = response.body();
                                 status = ride.getStatus();
-                                ;
-                                if(status.equals("driver_canceled")) {
-                                    //TODO: Start cancelled activity
-                                } else if (status.equals("rider_canceled")){
-                                    //TODO: Start cancelled activity
+                                if(status.equals("driver_canceled") || status.equals("rider_canceled")) {
+                                    Intent i = new Intent(getBaseContext(), RiderCancelActivity.class);
+                                    startActivity(i);
                                 } else if(status.equals("accepted") || status.equals("arriving")){
                                     driverName.setText(ride.getDriver().getName());
                                     carModel.setText(ride.getVehicle().getModel());
                                     carMake.setText(ride.getVehicle().getMake());
                                     carLicense.setText(ride.getVehicle().getLicensePlate());
-                                    tvEta.setText(ride.getEta());
-
+                                    if(status.equals("arriving")){
+                                        tvEta.setText("Arriving");
+                                    } else {
+                                        tvEta.setText(ride.getEta());
+                                    }
                                 } else if(status.equals("completed") ){
-                                    //TODO: move to next activity
+                                    Intent i = new Intent(getBaseContext(), RideInProgressActivity.class);
+                                    startActivity(i);
                                 }
                             } else {
                                 ApiError error = ErrorParser.parseError(response);
