@@ -27,8 +27,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     public Button btLaunch;
 
     private MapView mapView;
-    private GoogleMap gmap;
-
+    private GoogleMap gMap;
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -108,16 +107,16 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        gmap = googleMap;
-        gmap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
-        gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+        gMap = googleMap;
+        gMap.setMinZoomPreference(12);
+        LatLng ny = new LatLng(37.4564126, -122.18630009999998);
+        gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
 
-        gmap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
-        gmap.setOnMyLocationClickListener(onMyLocationClickListener);
+        gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
+        gMap.setOnMyLocationClickListener(onMyLocationClickListener);
         enableMyLocationIfPermitted();
 
-        gmap.getUiSettings().setZoomControlsEnabled(true);
+        gMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
     private void enableMyLocationIfPermitted() {
@@ -128,8 +127,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_PERMISSION_REQUEST_CODE);
-        } else if (gmap != null) {
-            gmap.setMyLocationEnabled(true);
+        } else if (gMap != null) {
+            gMap.setMyLocationEnabled(true);
         }
     }
 
@@ -137,8 +136,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         Toast.makeText(this, "Location permission not granted, " +
                         "showing default location",
                 Toast.LENGTH_SHORT).show();
-        LatLng redmond = new LatLng(47.6739881, -122.121512);
-        gmap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
+        LatLng hotel = new LatLng(37.4564126, -122.18630009999998);
+        gMap.moveCamera(CameraUpdateFactory.newLatLng(hotel));
     }
 
     @Override
@@ -162,7 +161,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
             new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
                 public boolean onMyLocationButtonClick() {
-                    gmap.setMinZoomPreference(15);
+                    gMap.setMinZoomPreference(15);
                     return false;
                 }
             };
@@ -172,7 +171,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 @Override
                 public void onMyLocationClick(@NonNull Location location) {
 
-                    gmap.setMinZoomPreference(12);
+                    gMap.setMinZoomPreference(12);
 
                     CircleOptions circleOptions = new CircleOptions();
                     circleOptions.center(new LatLng(location.getLatitude(),
@@ -182,7 +181,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                     circleOptions.fillColor(Color.RED);
                     circleOptions.strokeWidth(6);
 
-                    gmap.addCircle(circleOptions);
+                    gMap.addCircle(circleOptions);
                 }
             };
 }
