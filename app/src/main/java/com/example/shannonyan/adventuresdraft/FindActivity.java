@@ -1,21 +1,15 @@
 package com.example.shannonyan.adventuresdraft;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.uber.sdk.android.core.UberSdk;
 import com.uber.sdk.android.core.auth.AccessTokenManager;
-import com.uber.sdk.android.core.auth.LoginManager;
 import com.uber.sdk.core.auth.AccessToken;
 import com.uber.sdk.core.auth.AccessTokenStorage;
 import com.uber.sdk.core.auth.Scope;
 import com.uber.sdk.rides.client.AccessTokenSession;
-import com.uber.sdk.rides.client.Session;
 import com.uber.sdk.rides.client.SessionConfiguration;
 import com.uber.sdk.rides.client.UberRidesApi;
 import com.uber.sdk.rides.client.error.ApiError;
@@ -27,11 +21,7 @@ import com.uber.sdk.rides.client.model.RideEstimate;
 import com.uber.sdk.rides.client.model.RideRequestParameters;
 import com.uber.sdk.rides.client.services.RidesService;
 
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import retrofit2.Call;

@@ -27,7 +27,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
 
     private MapView mapView;
     private GoogleMap gMap;
-
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -109,7 +108,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
         gMap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
+        LatLng ny = new LatLng(37.4564126, -122.18630009999998);
         gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
 
         gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
@@ -136,8 +135,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         Toast.makeText(this, "Location permission not granted, " +
                         "showing default location",
                 Toast.LENGTH_SHORT).show();
-        LatLng redmond = new LatLng(47.6739881, -122.121512);
-        gMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
+        LatLng hotel = new LatLng(37.4564126, -122.18630009999998);
+        gMap.moveCamera(CameraUpdateFactory.newLatLng(hotel));
     }
 
     @Override
