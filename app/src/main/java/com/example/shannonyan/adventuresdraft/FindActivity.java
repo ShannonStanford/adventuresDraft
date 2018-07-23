@@ -1,13 +1,20 @@
 package com.example.shannonyan.adventuresdraft;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.uber.sdk.android.core.UberSdk;
+import com.uber.sdk.android.core.auth.AccessTokenManager;
 import com.uber.sdk.android.core.auth.LoginManager;
+import com.uber.sdk.core.auth.AccessToken;
+import com.uber.sdk.core.auth.AccessTokenStorage;
+import com.uber.sdk.core.auth.Scope;
+import com.uber.sdk.rides.client.AccessTokenSession;
 import com.uber.sdk.rides.client.Session;
 import com.uber.sdk.rides.client.SessionConfiguration;
 import com.uber.sdk.rides.client.UberRidesApi;
@@ -21,6 +28,10 @@ import com.uber.sdk.rides.client.model.RideRequestParameters;
 import com.uber.sdk.rides.client.services.RidesService;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,14 +49,13 @@ public class FindActivity extends AppCompatActivity {
     public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
     public String TOKEN = "c2hx0dzYfc5ptMEPWA0w3ODBWdUsaITDQ_UTWF4M"; //serverToken
     public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InZ1YkREQit1U2UrdUxrS3l6UzNmTkE9PSIsImV4cGlyZXNfYXQiOjE1MzQ2NDQ3NTQsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.qXqHB-ZHIJ8XBmXopiwcFMo3_Yw0qzFGdg6fVBWhqxU";
-    public Session session;
     public RidesService service;
-    public LoginManager loginManager;
     public SessionConfiguration config = new SessionConfiguration.Builder()
             // mandatory
             .setClientId(CLIENT_ID)
             // required for enhanced button features
             .setServerToken(TOKEN)
+            .setScopes(Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.ALL_TRIPS, Scope.REQUEST_RECEIPT))
             // required for implicit grant authentication
             //.setRedirectUri("<REDIRECT_URI>")
             // optional: set sandbox as operating environment
@@ -58,15 +68,24 @@ public class FindActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         //UBER initializations
         UberSdk.initialize(config);
-        session = loginManager.getSession();
+        AccessTokenManager accessTokenManager = new AccessTokenManager(this, testAccessToken);
+        Long expirationTime = Long.valueOf(2592000);
+        List<Scope> scopes = Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.ALL_TRIPS, Scope.REQUEST_RECEIPT);
+        String refreshToken = "obtainedRefreshToken";
+        String tokenType = "access_token";
+        AccessToken accessToken = new AccessToken(expirationTime, scopes, testAccessToken, refreshToken, tokenType);
+        AccessTokenStorage accessTokenStorage = new AccessTokenManager(this);
+        accessTokenStorage.setAccessToken(accessToken);
+        AccessTokenSession session = new AccessTokenSession(config, accessTokenStorage);
         service = UberRidesApi.with(session).build().createService();
+
         //populate location variables
         setStartEnd();
         //start required API calls for UBER process
         findDriver();
-
     }
 
     public void findDriver(){
@@ -75,16 +94,10 @@ public class FindActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ProductsResponse> call, Response<ProductsResponse> response) {
                 if (response.isSuccessful()) {
-                    //extract productId for product of choice, in this case just the first type returned
+                    //extract productId for product of choice, original uber should be #2 according to test response
                     List<Product> products = response.body().getProducts();
-                    String productId = products.get(0).getProductId();
-                    //added try/catch for Exception from getFareId(productId)
-                    try {
-                        getFareId(productId);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return;
-                    }
+                    String productId = products.get(2).getProductId();
+                    getFareId(productId);
                 } else {
                     //Api Failure
                     ApiError error = ErrorParser.parseError(response);
@@ -97,46 +110,70 @@ public class FindActivity extends AppCompatActivity {
             }
         });
     }
-    //added throws IOException to fix .execute() error, good choice? not sure what that may change.
-    public void getFareId(String productId) throws IOException {
+
+    //USe product ID to get Fare ID which gurantees a fare for 2 minutes
+    public void getFareId(final String productId) {
         RideRequestParameters rideRequestParameters = new RideRequestParameters.Builder().setPickupCoordinates(startLat, startLong)
                 .setProductId(productId)
                 .setDropoffCoordinates(endLat, endLong)
                 .build();
-        RideEstimate rideEstimate = service.estimateRide(rideRequestParameters).execute().body();
-        //String fareId = rideEstimate.getFareId();
-        //requestRide(productId, fareId);
+
+        service.estimateRide(rideRequestParameters).enqueue(new Callback<RideEstimate>() {
+            @Override
+            public void onResponse(Call<RideEstimate> call, Response<RideEstimate> response) {
+                if (response.isSuccessful()) {
+                    //not sure why response is returning an estimate with a null fareID however sandbox environment allows us to pass a null one and still make a request, however that would not be allowed in production environment
+                    RideEstimate rideEstimate = response.body();
+                    String fareId = rideEstimate.getPrice().getFareId();
+                    requestRide(productId, fareId);
+                } else {
+                    //Api Failure
+                    ApiError error = ErrorParser.parseError(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RideEstimate> call, Throwable t) {
+
+            }
+        });
     }
-    //or could solve execute() error by surrounding with try/catch block
+
+    //Use product and fare ID to send a request and get a Ride ID
     public void requestRide(String productId, String fareId){
         RideRequestParameters rideRequestParameters = new RideRequestParameters.Builder().setPickupCoordinates(startLat, startLong)
                 .setProductId(productId)
                 .setFareId(fareId)
                 .setDropoffCoordinates(endLat, endLong)
                 .build();
-        Ride ride = null;
-        try {
-            ride = service.requestRide(rideRequestParameters).execute().body();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        String rideId = ride.getRideId();
-        callAsynchronousTask(rideId);
-    }
-    // only need it if implementing the user login flow
-    public void callAsynchronousTask(String rideId){
-        try {
-            // get ride details and start the activity
-            // send the info to the Eta Activity to populate the activity with driver details
-            Ride ride = service.getRideDetails(rideId).execute().body();
-            Intent intent = new Intent(FindActivity.this, EtaActivity.class);
-            intent.putExtra("ride", (Parcelable) ride);
-            startActivity(intent);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        service.requestRide(rideRequestParameters).enqueue(new Callback<Ride>() {
+            @Override
+            public void onResponse(Call<Ride> call, Response<Ride> response) {
+                if (response.isSuccessful()) {
+                    Ride ride = response.body();
+                    String rideId = ride.getRideId();
+                    asynchronousTaskDemo(rideId);
+                } else {
+                    //Api Failure
+                    ApiError error = ErrorParser.parseError(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //Use Ride ID to constantly get a ride object and check for changes in driver status
+    public void asynchronousTaskReal(String rideId){
+
+    }
+
+    //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
+    public void asynchronousTaskDemo(String rideId){
 
     }
 
@@ -147,6 +184,5 @@ public class FindActivity extends AppCompatActivity {
         endLat = (float) 37.4799006;
         endLong = (float) -122.15206649999999;
     }
-
 
 }
