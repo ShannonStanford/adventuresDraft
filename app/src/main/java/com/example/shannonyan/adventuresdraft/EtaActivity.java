@@ -6,14 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.uber.sdk.android.core.UberSdk;
+import com.uber.sdk.android.core.auth.AccessTokenManager;
+import com.uber.sdk.core.auth.AccessToken;
+import com.uber.sdk.core.auth.AccessTokenStorage;
+import com.uber.sdk.core.auth.Scope;
+import com.uber.sdk.rides.client.AccessTokenSession;
+import com.uber.sdk.rides.client.SessionConfiguration;
+import com.uber.sdk.rides.client.UberRidesApi;
 import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.services.RidesService;
 
-
-import org.parceler.Parcels;
-
+import java.util.Arrays;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +38,20 @@ public class EtaActivity extends AppCompatActivity {
     public TextView carMake;
     public TextView carModel;
     public TextView carLicense;
+    public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
+    public String TOKEN = "c2hx0dzYfc5ptMEPWA0w3ODBWdUsaITDQ_UTWF4M"; //serverToken
+    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InZ1YkREQit1U2UrdUxrS3l6UzNmTkE9PSIsImV4cGlyZXNfYXQiOjE1MzQ2NDQ3NTQsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.qXqHB-ZHIJ8XBmXopiwcFMo3_Yw0qzFGdg6fVBWhqxU";
+    public SessionConfiguration config = new SessionConfiguration.Builder()
+            // mandatory
+            .setClientId(CLIENT_ID)
+            // required for enhanced button features
+            .setServerToken(TOKEN)
+            .setScopes(Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.ALL_TRIPS, Scope.REQUEST_RECEIPT))
+            // required for implicit grant authentication
+            //.setRedirectUri("<REDIRECT_URI>")
+            // optional: set sandbox as operating environment
+            .setEnvironment(SessionConfiguration.Environment.SANDBOX)
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +65,20 @@ public class EtaActivity extends AppCompatActivity {
         final TextView carModel = (TextView) findViewById(R.id.tvCarModel);
         final TextView carLicense = (TextView) findViewById(R.id.tvCarLicense);
 
+        //UBER initializations
+        UberSdk.initialize(config);
+        AccessTokenManager accessTokenManager = new AccessTokenManager(this, testAccessToken);
+        Long expirationTime = Long.valueOf(2592000);
+        List<Scope> scopes = Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.ALL_TRIPS, Scope.REQUEST_RECEIPT);
+        String refreshToken = "obtainedRefreshToken";
+        String tokenType = "access_token";
+        AccessToken accessToken = new AccessToken(expirationTime, scopes, testAccessToken, refreshToken, tokenType);
+        AccessTokenStorage accessTokenStorage = new AccessTokenManager(this);
+        accessTokenStorage.setAccessToken(accessToken);
+        AccessTokenSession session = new AccessTokenSession(config, accessTokenStorage);
+        service = UberRidesApi.with(session).build().createService();
+
         Intent intent = getIntent();
-        service = (RidesService) Parcels.unwrap(intent.getParcelableExtra("service"));
         rideID = intent.getStringExtra("rideId");
 
         do{
