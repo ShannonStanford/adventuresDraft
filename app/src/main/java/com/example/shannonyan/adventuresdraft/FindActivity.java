@@ -1,6 +1,8 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,10 +21,14 @@ import com.uber.sdk.rides.client.model.ProductsResponse;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.model.RideEstimate;
 import com.uber.sdk.rides.client.model.RideRequestParameters;
+import com.uber.sdk.rides.client.model.SandboxRideRequestParameters;
 import com.uber.sdk.rides.client.services.RidesService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +41,7 @@ public class FindActivity extends AppCompatActivity {
     public float startLong;
     public float endLat;
     public float endLong;
+    public String rideId;
     //UBER API vars
     public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
     public String TOKEN = "c2hx0dzYfc5ptMEPWA0w3ODBWdUsaITDQ_UTWF4M"; //serverToken
@@ -142,7 +149,7 @@ public class FindActivity extends AppCompatActivity {
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 if (response.isSuccessful()) {
                     Ride ride = response.body();
-                    String rideId = ride.getRideId();
+                    rideId = ride.getRideId();
                     asynchronousTaskDemo(rideId);
                 } else {
                     //Api Failure
@@ -159,20 +166,41 @@ public class FindActivity extends AppCompatActivity {
 
     //Use Ride ID to constantly get a ride object and check for changes in driver status
     public void asynchronousTaskReal(String rideId){
-
+        String[] statuses = {"processing", "accepted", "arriving", "driver_cancelled"};
+        Random rand = new Random();
+        int  n = rand.nextInt(50);
     }
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
-    public void asynchronousTaskDemo(String rideId){
+    public void asynchronousTaskDemo(final String rideId){
+        // setting the status to accepted
+        final SandboxRideRequestParameters.Builder sandboxRideRequestParameters = new SandboxRideRequestParameters.Builder().setStatus("accepted");
+        service.updateSandboxRide(rideId, sandboxRideRequestParameters.build());
 
+        // add a buffer of 5 seconds
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // setting the status to driver arriving
+                sandboxRideRequestParameters.setStatus("arriving");
+                service.updateSandboxRide(rideId, sandboxRideRequestParameters.build());
+            }
+        }, 0, 5000);
+        timer.cancel(); // clean up the threads
+
+        // launch the next activity
+        Intent intent = new Intent(FindActivity.this, EtaActivity.class);
+        intent.putExtra("service", (Parcelable) service);
+        intent.putExtra("rideId", rideId);
+        startActivity(intent);
     }
 
-    public void setStartEnd(){
+    public void setStartEnd() {
         //TODO: Set variables based on Database values
         startLat = (float) 37.4564126;
         startLong = (float) -122.18630009999998;
         endLat = (float) 37.4799006;
         endLong = (float) -122.15206649999999;
     }
-
 }
