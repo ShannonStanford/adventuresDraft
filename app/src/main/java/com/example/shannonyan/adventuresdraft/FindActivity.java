@@ -33,6 +33,7 @@ import java.util.TimerTask;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.DELETE;
 
 public class FindActivity extends AppCompatActivity {
 
@@ -177,6 +178,7 @@ public class FindActivity extends AppCompatActivity {
         final SandboxRideRequestParameters.Builder sandboxRideRequestParameters = new SandboxRideRequestParameters.Builder().setStatus("accepted");
         service.updateSandboxRide(rideId, sandboxRideRequestParameters.build());
 
+
         // add a buffer of 5 seconds
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -194,6 +196,8 @@ public class FindActivity extends AppCompatActivity {
         intent.putExtra("service", (Parcelable) service);
         intent.putExtra("rideId", rideId);
         startActivity(intent);
+        service.getCurrentRide().isCanceled();
+        service.cancelCurrentRide();
     }
 
     public void setStartEnd() {
