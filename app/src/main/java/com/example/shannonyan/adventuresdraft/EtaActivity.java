@@ -11,6 +11,7 @@ import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.services.RidesService;
 
+
 import org.parceler.Parcels;
 
 import java.util.Timer;
