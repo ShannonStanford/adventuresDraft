@@ -1,11 +1,12 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uber.sdk.android.core.UberSdk;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 public class EtaActivity extends AppCompatActivity {
 
     public RidesService service;
+    public UberClient uberClient;
     public String rideID;
     public String status;
     public TextView tvEta;
@@ -40,21 +42,9 @@ public class EtaActivity extends AppCompatActivity {
     public TextView carMake;
     public TextView carModel;
     public TextView carLicense;
-    public Button btDriverMap;
-    public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
-    public String TOKEN = "c2hx0dzYfc5ptMEPWA0w3ODBWdUsaITDQ_UTWF4M"; //serverToken
-    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InZ1YkREQit1U2UrdUxrS3l6UzNmTkE9PSIsImV4cGlyZXNfYXQiOjE1MzQ2NDQ3NTQsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.qXqHB-ZHIJ8XBmXopiwcFMo3_Yw0qzFGdg6fVBWhqxU";
-    public SessionConfiguration config = new SessionConfiguration.Builder()
-            // mandatory
-            .setClientId(CLIENT_ID)
-            // required for enhanced button features
-            .setServerToken(TOKEN)
-            .setScopes(Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.ALL_TRIPS, Scope.REQUEST_RECEIPT))
-            // required for implicit grant authentication
-            //.setRedirectUri("<REDIRECT_URI>")
-            // optional: set sandbox as operating environment
-            .setEnvironment(SessionConfiguration.Environment.SANDBOX)
-            .build();
+    public ImageView driverPic;
+    public Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,32 +57,23 @@ public class EtaActivity extends AppCompatActivity {
         final TextView carMake = (TextView) findViewById(R.id.tvCarMake);
         final TextView carModel = (TextView) findViewById(R.id.tvCarModel);
         final TextView carLicense = (TextView) findViewById(R.id.tvCarLicense);
-        final Button btDriverMap = (Button) findViewById(R.id.btDriverMap);
+        final TextView tvEta = (TextView) findViewById(R.id.tvEta);
+        final ImageView driverPic = (ImageView) findViewById(R.id.ivDriverPic);
 
-        //UBER initializations
-        UberSdk.initialize(config);
-        AccessTokenManager accessTokenManager = new AccessTokenManager(this, testAccessToken);
-        Long expirationTime = Long.valueOf(2592000);
-        List<Scope> scopes = Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.ALL_TRIPS, Scope.REQUEST_RECEIPT);
-        String refreshToken = "obtainedRefreshToken";
-        String tokenType = "access_token";
-        AccessToken accessToken = new AccessToken(expirationTime, scopes, testAccessToken, refreshToken, tokenType);
-        AccessTokenStorage accessTokenStorage = new AccessTokenManager(this);
-        accessTokenStorage.setAccessToken(accessToken);
-        AccessTokenSession session = new AccessTokenSession(config, accessTokenStorage);
-        service = UberRidesApi.with(session).build().createService();
+        //UBER instantiations
+        uberClient = UberClient.getUberClientInstance(this);
+        service = uberClient.service;
 
         Intent intent = getIntent();
         rideID = intent.getStringExtra("rideId");
+        context = this;
 
-        onMapButtonCLick();
-
-        do{
+        //do{
             //Adds a buffer of 5 seconds between updating status
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
+//            Timer timer = new Timer();
+//            timer.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
                     service.getRideDetails(rideID).enqueue(new Callback<Ride>() {
                         @Override
                         public void onResponse(Call<Ride> call, Response<Ride> response) {
@@ -107,40 +88,33 @@ public class EtaActivity extends AppCompatActivity {
                                     carModel.setText(ride.getVehicle().getModel());
                                     carMake.setText(ride.getVehicle().getMake());
                                     carLicense.setText(ride.getVehicle().getLicensePlate());
+                                    GlideApp.with(context)
+                                            .load(ride.getDriver().getPictureUrl())
+                                            .into(driverPic);
                                     if(status.equals("arriving")){
                                         tvEta.setText("Arriving");
                                     } else {
-                                        tvEta.setText(ride.getEta());
+                                        tvEta.setText(String.valueOf(ride.getEta()));
                                     }
-                                } else if(status.equals("completed") ){
+                                } else if(status.equals("in_progress") ){
                                     Intent i = new Intent(getBaseContext(), RideInProgressActivity.class);
                                     startActivity(i);
                                 }
+
                             } else {
                                 ApiError error = ErrorParser.parseError(response);
                             }
                         }
-
                         @Override
                         public void onFailure(Call<Ride> call, Throwable t) {
 
                         }
                     });
 
-                }
-            }, 0, 5000);
-        } while (true);
+//                }
+//            }, 0, 5000);
+        //} while (true);
 
-    }
-
-    public void onMapButtonCLick(){
-        btDriverMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getBaseContext(), MapActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
 }
