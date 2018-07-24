@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.uber.sdk.android.core.UberSdk;
@@ -38,6 +40,7 @@ public class EtaActivity extends AppCompatActivity {
     public TextView carMake;
     public TextView carModel;
     public TextView carLicense;
+    public Button btDriverMap;
     public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
     public String TOKEN = "c2hx0dzYfc5ptMEPWA0w3ODBWdUsaITDQ_UTWF4M"; //serverToken
     public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InZ1YkREQit1U2UrdUxrS3l6UzNmTkE9PSIsImV4cGlyZXNfYXQiOjE1MzQ2NDQ3NTQsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.qXqHB-ZHIJ8XBmXopiwcFMo3_Yw0qzFGdg6fVBWhqxU";
@@ -64,6 +67,7 @@ public class EtaActivity extends AppCompatActivity {
         final TextView carMake = (TextView) findViewById(R.id.tvCarMake);
         final TextView carModel = (TextView) findViewById(R.id.tvCarModel);
         final TextView carLicense = (TextView) findViewById(R.id.tvCarLicense);
+        final Button btDriverMap = (Button) findViewById(R.id.btDriverMap);
 
         //UBER initializations
         UberSdk.initialize(config);
@@ -80,6 +84,8 @@ public class EtaActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         rideID = intent.getStringExtra("rideId");
+
+        onMapButtonCLick();
 
         do{
             //Adds a buffer of 5 seconds between updating status
@@ -125,6 +131,16 @@ public class EtaActivity extends AppCompatActivity {
             }, 0, 5000);
         } while (true);
 
+    }
+
+    public void onMapButtonCLick(){
+        btDriverMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), MapActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
 }
