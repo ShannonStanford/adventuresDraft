@@ -21,6 +21,7 @@ import com.uber.sdk.rides.client.model.ProductsResponse;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.model.RideEstimate;
 import com.uber.sdk.rides.client.model.RideRequestParameters;
+import com.uber.sdk.rides.client.model.RideUpdateParameters;
 import com.uber.sdk.rides.client.model.SandboxProductRequestParameters;
 import com.uber.sdk.rides.client.model.SandboxRideRequestParameters;
 import com.uber.sdk.rides.client.services.RidesService;
@@ -45,22 +46,10 @@ public class FindActivity extends AppCompatActivity {
     public float endLat;
     public float endLong;
     public String rideId;
-    //UBER API vars
-    public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
-    public String TOKEN = "c2hx0dzYfc5ptMEPWA0w3ODBWdUsaITDQ_UTWF4M"; //serverToken
-    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InlWaHNQUGs3VDFxNEdienNDZHdRNmc9PSIsImV4cGlyZXNfYXQiOjE1MzQ5ODg5OTAsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.LwqUAcKulDR2oe5tKhAIBYSQpc4VwYxCWnyixNfQARE";
+    public Boolean check = true;
+    //UBER vars
     public RidesService service;
-    public SessionConfiguration config = new SessionConfiguration.Builder()
-            // mandatory
-            .setClientId(CLIENT_ID)
-            // required for enhanced button features
-            .setServerToken(TOKEN)
-            .setScopes(Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.REQUEST_RECEIPT))
-            // required for implicit grant authentication
-            //.setRedirectUri("<REDIRECT_URI>")
-            // optional: set sandbox as operating environment
-            .setEnvironment(SessionConfiguration.Environment.SANDBOX)
-            .build();
+    public UberClient uberClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,19 +57,9 @@ public class FindActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //UBER initializations
-        UberSdk.initialize(config);
-        AccessTokenManager accessTokenManager = new AccessTokenManager(this, testAccessToken);
-        Long expirationTime = Long.valueOf(2592000);
-        List<Scope> scopes = Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.REQUEST_RECEIPT);
-        String refreshToken = "obtainedRefreshToken";
-        String tokenType = "access_token";
-        AccessToken accessToken = new AccessToken(expirationTime, scopes, testAccessToken, refreshToken, tokenType);
-        AccessTokenStorage accessTokenStorage = new AccessTokenManager(this);
-        accessTokenStorage.setAccessToken(accessToken);
-        AccessTokenSession session = new AccessTokenSession(config, accessTokenStorage);
-        service = UberRidesApi.with(session).build().createService();
+        //UBER instanstiation
+        uberClient = UberClient.getUberClientInstance(this);
+        service = uberClient.service;
         //populate location variables
         setStartEnd();
         //start required API calls for UBER process
@@ -144,8 +123,9 @@ public class FindActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 if(response.isSuccessful()){
-                    //if ongoing request should cancel then make a new one with same code in else statement, however below line does not work for cancelling
-                    //service.cancelCurrentRide();
+                    Ride ride = response.body();
+                    rideId = ride.getRideId();
+                    asynchronousTaskDemo(rideId);
                 }
                 else{
                     RideRequestParameters rideRequestParameters = new RideRequestParameters.Builder().setPickupCoordinates(startLat, startLong)
@@ -203,11 +183,36 @@ public class FindActivity extends AppCompatActivity {
         }, 0, 5000);
         timer.cancel(); // clean up the threads
 
-        // launch the next activity
-        Intent intent = new Intent(FindActivity.this, EtaActivity.class);
-        //intent.putExtra("post", Parcels.wrap(service));
-        intent.putExtra("rideId", rideId);
-        startActivity(intent);
+        // launch the next activity when a driver accepts
+        do {
+            //check = false;
+            service.getRideDetails(rideId).enqueue(new Callback<Ride>() {
+                @Override
+                public void onResponse(Call<Ride> call, Response<Ride> response) {
+                    if (response.isSuccessful()) {
+                        Ride ride = response.body();
+                        String status = ride.getStatus();
+                        if(status.equals("accepted") || status.equals("arriving") || status.equals("in_progress")){
+                            Intent intent = new Intent(FindActivity.this, EtaActivity.class);
+                            intent.putExtra("rideId", rideId);
+                            startActivity(intent);
+                        }
+                        else{
+                            //scope issue
+                            check = true;
+                        }
+                    } else {
+                        ApiError error = ErrorParser.parseError(response);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Ride> call, Throwable t) {
+
+                }
+            });
+            //check = true;
+        }while(true);
     }
 
     public void setStartEnd() {
