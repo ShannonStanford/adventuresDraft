@@ -36,6 +36,7 @@ public class EtaActivity extends AppCompatActivity {
     public String rideID;
     public String status;
     public TextView tvEta;
+    public String mapURL;
     public TextView driverName;
     public TextView carMake;
     public TextView carModel;
@@ -85,7 +86,7 @@ public class EtaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         rideID = intent.getStringExtra("rideId");
 
-        onMapButtonCLick();
+
 
         do{
             //Adds a buffer of 5 seconds between updating status
@@ -107,6 +108,7 @@ public class EtaActivity extends AppCompatActivity {
                                     carModel.setText(ride.getVehicle().getModel());
                                     carMake.setText(ride.getVehicle().getMake());
                                     carLicense.setText(ride.getVehicle().getLicensePlate());
+                                    onMapButtonCLick();
                                     if(status.equals("arriving")){
                                         tvEta.setText("Arriving");
                                     } else {
