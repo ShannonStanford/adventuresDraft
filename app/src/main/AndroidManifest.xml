@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shannonyan.adventuresdraft">
 
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+
     <permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
         android:protectionLevel="dangerous" />
