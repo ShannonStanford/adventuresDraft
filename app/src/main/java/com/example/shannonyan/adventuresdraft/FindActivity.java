@@ -21,8 +21,11 @@ import com.uber.sdk.rides.client.model.ProductsResponse;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.model.RideEstimate;
 import com.uber.sdk.rides.client.model.RideRequestParameters;
+import com.uber.sdk.rides.client.model.SandboxProductRequestParameters;
 import com.uber.sdk.rides.client.model.SandboxRideRequestParameters;
 import com.uber.sdk.rides.client.services.RidesService;
+
+import org.parceler.Parcels;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +36,6 @@ import java.util.TimerTask;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.DELETE;
 
 public class FindActivity extends AppCompatActivity {
 
@@ -46,14 +48,14 @@ public class FindActivity extends AppCompatActivity {
     //UBER API vars
     public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
     public String TOKEN = "c2hx0dzYfc5ptMEPWA0w3ODBWdUsaITDQ_UTWF4M"; //serverToken
-    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InZ1YkREQit1U2UrdUxrS3l6UzNmTkE9PSIsImV4cGlyZXNfYXQiOjE1MzQ2NDQ3NTQsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.qXqHB-ZHIJ8XBmXopiwcFMo3_Yw0qzFGdg6fVBWhqxU";
+    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IjNaVXJtNDl6UmdTK3JPNHVGYnpYNEE9PSIsImV4cGlyZXNfYXQiOjE1MzQ5ODY4ODMsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.hCsc6e2Nz_kvHEv4sUEDTb5AUZGwtlKWEu8vJ0gOY2I";
     public RidesService service;
     public SessionConfiguration config = new SessionConfiguration.Builder()
             // mandatory
             .setClientId(CLIENT_ID)
             // required for enhanced button features
             .setServerToken(TOKEN)
-            .setScopes(Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.ALL_TRIPS, Scope.REQUEST_RECEIPT))
+            .setScopes(Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.REQUEST_RECEIPT))
             // required for implicit grant authentication
             //.setRedirectUri("<REDIRECT_URI>")
             // optional: set sandbox as operating environment
@@ -71,7 +73,7 @@ public class FindActivity extends AppCompatActivity {
         UberSdk.initialize(config);
         AccessTokenManager accessTokenManager = new AccessTokenManager(this, testAccessToken);
         Long expirationTime = Long.valueOf(2592000);
-        List<Scope> scopes = Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.ALL_TRIPS, Scope.REQUEST_RECEIPT);
+        List<Scope> scopes = Arrays.asList(Scope.PROFILE, Scope.REQUEST, Scope.HISTORY_LITE, Scope.PLACES, Scope.REQUEST_RECEIPT);
         String refreshToken = "obtainedRefreshToken";
         String tokenType = "access_token";
         AccessToken accessToken = new AccessToken(expirationTime, scopes, testAccessToken, refreshToken, tokenType);
@@ -79,7 +81,24 @@ public class FindActivity extends AppCompatActivity {
         accessTokenStorage.setAccessToken(accessToken);
         AccessTokenSession session = new AccessTokenSession(config, accessTokenStorage);
         service = UberRidesApi.with(session).build().createService();
-
+        //service.getCurrentRide().cancel();
+//        service.getCurrentRide().enqueue(new Callback<Ride>() {
+//            @Override
+//            public void onResponse(Call<Ride> call, Response<Ride> response) {
+//                if(response.isSuccessful()){
+//                    service.cancelCurrentRide();
+//                }
+//                else{
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Ride> call, Throwable t) {
+//
+//            }
+//        });
+//        service.cancelRide("50a776ac-9121-4cf4-a5a8-6805746abd4d");
         //populate location variables
         setStartEnd();
         //start required API calls for UBER process
@@ -138,12 +157,31 @@ public class FindActivity extends AppCompatActivity {
     }
 
     //Use product and fare ID to send a request and get a Ride ID
-    public void requestRide(String productId, String fareId){
+    public void requestRide(final String productId, String fareId){
         RideRequestParameters rideRequestParameters = new RideRequestParameters.Builder().setPickupCoordinates(startLat, startLong)
                 .setProductId(productId)
                 .setFareId(fareId)
                 .setDropoffCoordinates(endLat, endLong)
                 .build();
+        //service.getCurrentRide().cancel();
+//        SandboxProductRequestParameters par = new SandboxProductRequestParameters.Builder().setDriversAvailable(false).build();
+//        service.updateSandboxProduct(productId, par);
+        service.getCurrentRide().enqueue(new Callback<Ride>() {
+            @Override
+            public void onResponse(Call<Ride> call, Response<Ride> response) {
+                if(response.isSuccessful()){
+                    service.cancelCurrentRide();
+                }
+                else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+
+            }
+        });
 
         service.requestRide(rideRequestParameters).enqueue(new Callback<Ride>() {
             @Override
@@ -152,9 +190,14 @@ public class FindActivity extends AppCompatActivity {
                     Ride ride = response.body();
                     rideId = ride.getRideId();
                     asynchronousTaskDemo(rideId);
+
                 } else {
                     //Api Failure
                     ApiError error = ErrorParser.parseError(response);
+//                    service.getCurrentRide().cancel();
+                      //service.cancelCurrentRide();
+//                    SandboxProductRequestParameters par = new SandboxProductRequestParameters.Builder().setDriversAvailable(false).build();
+//                    service.updateSandboxProduct(productId, par);
                 }
             }
 
@@ -174,18 +217,13 @@ public class FindActivity extends AppCompatActivity {
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
     public void asynchronousTaskDemo(final String rideId){
-        // setting the status to accepted
-        final SandboxRideRequestParameters.Builder sandboxRideRequestParameters = new SandboxRideRequestParameters.Builder().setStatus("accepted");
-        service.updateSandboxRide(rideId, sandboxRideRequestParameters.build());
-
-
         // add a buffer of 5 seconds
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                // setting the status to driver arriving
-                sandboxRideRequestParameters.setStatus("arriving");
+                // setting the status to accepted
+                final SandboxRideRequestParameters.Builder sandboxRideRequestParameters = new SandboxRideRequestParameters.Builder().setStatus("accepted");
                 service.updateSandboxRide(rideId, sandboxRideRequestParameters.build());
             }
         }, 0, 5000);
@@ -193,11 +231,9 @@ public class FindActivity extends AppCompatActivity {
 
         // launch the next activity
         Intent intent = new Intent(FindActivity.this, EtaActivity.class);
-        intent.putExtra("service", (Parcelable) service);
+        //intent.putExtra("post", Parcels.wrap(service));
         intent.putExtra("rideId", rideId);
         startActivity(intent);
-        service.getCurrentRide().isCanceled();
-        service.cancelCurrentRide();
     }
 
     public void setStartEnd() {
