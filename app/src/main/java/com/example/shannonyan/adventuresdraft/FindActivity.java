@@ -21,6 +21,8 @@ import com.uber.sdk.rides.client.model.ProductsResponse;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.model.RideEstimate;
 import com.uber.sdk.rides.client.model.RideRequestParameters;
+import com.uber.sdk.rides.client.model.RideUpdateParameters;
+import com.uber.sdk.rides.client.model.SandboxProductRequestParameters;
 import com.uber.sdk.rides.client.model.SandboxRideRequestParameters;
 import com.uber.sdk.rides.client.services.RidesService;
 
@@ -196,8 +198,6 @@ public class FindActivity extends AppCompatActivity {
         intent.putExtra("service", (Parcelable) service);
         intent.putExtra("rideId", rideId);
         startActivity(intent);
-        service.getCurrentRide().isCanceled();
-        service.cancelCurrentRide();
     }
 
     public void setStartEnd() {
