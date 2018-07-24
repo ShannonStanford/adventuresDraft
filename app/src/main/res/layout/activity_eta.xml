@@ -13,7 +13,7 @@
         android:src="@android:color/background_dark" />
 
     <Button
-        android:id="@+id/driverMap"
+        android:id="@+id/btDriverMap"
         android:layout_width="138dp"
         android:layout_height="93dp"
         android:layout_alignParentStart="true"
@@ -24,7 +24,7 @@
         android:id="@+id/tvDriverName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/driverMap"
+        android:layout_above="@+id/btDriverMap"
         android:layout_alignParentStart="true"
         android:text="Driver Name"
         android:textSize="24sp" />
@@ -61,26 +61,26 @@
         android:layout_width="match_parent"
         android:layout_height="176dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/driverMap"
+        android:layout_below="@+id/btDriverMap"
         android:layout_marginTop="60dp"
         android:text="ETA"
         android:textAlignment="center"
         android:textSize="@android:dimen/notification_large_icon_width" />
 
     <Button
-        android:id="@+id/callDriver"
+        android:id="@+id/btCallDriver"
         android:layout_width="135dp"
         android:layout_height="93dp"
-        android:layout_alignBottom="@+id/driverMap"
-        android:layout_toEndOf="@+id/driverMap"
+        android:layout_alignBottom="@+id/btDriverMap"
+        android:layout_toEndOf="@+id/btDriverMap"
         android:text="CALL" />
 
     <Button
-        android:id="@+id/riderCancel"
+        android:id="@+id/btCancel"
         android:layout_width="111dp"
         android:layout_height="95dp"
-        android:layout_alignTop="@+id/driverMap"
-        android:layout_toEndOf="@+id/callDriver"
+        android:layout_alignTop="@+id/btDriverMap"
+        android:layout_toEndOf="@+id/btCallDriver"
         android:text="CANCEL" />
 
     <android.support.design.widget.AppBarLayout
