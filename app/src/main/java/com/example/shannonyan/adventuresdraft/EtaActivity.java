@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Ride;
+import com.uber.sdk.rides.client.model.RideMap;
 import com.uber.sdk.rides.client.services.RidesService;
 
 import retrofit2.Call;
@@ -41,7 +42,7 @@ public class EtaActivity extends AppCompatActivity {
     public Button btCallDriver;
     public Button btCancel;
     public Context context;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,10 @@ public class EtaActivity extends AppCompatActivity {
     }
 
     public void checkRideDetails(){
+
+
+        //TODO: Add timer here
+
         service.getRideDetails(rideID).enqueue(new Callback<Ride>() {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
@@ -122,8 +127,22 @@ public class EtaActivity extends AppCompatActivity {
         btDriverMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: add the map endpoint
+                service.getRideMap(rideID).enqueue(new Callback<RideMap>() {
+                    @Override
+                    public void onResponse(Call<RideMap> call, Response<RideMap> response) {
+                        if (response.isSuccessful()) {
+                            RideMap ride = response.body();
+                            mapURL = ride.getHref();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RideMap> call, Throwable t) {
+
+                    }
+                });
                 Intent intent = new Intent(getBaseContext(), MapActivity.class);
+                intent.putExtra("mapURL", mapURL);
                 startActivity(intent);
             }
         });
