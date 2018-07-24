@@ -171,21 +171,20 @@ public class FindActivity extends AppCompatActivity {
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
     public void asynchronousTaskDemo(final String rideId){
-        // add a buffer of 5 seconds
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                // setting the status to accepted
-                final SandboxRideRequestParameters.Builder sandboxRideRequestParameters = new SandboxRideRequestParameters.Builder().setStatus("accepted");
-                service.updateSandboxRide(rideId, sandboxRideRequestParameters.build());
-            }
-        }, 0, 5000);
-        timer.cancel(); // clean up the threads
+//        // add a buffer of 5 seconds
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                // setting the status to accepted
+//                final SandboxRideRequestParameters.Builder sandboxRideRequestParameters = new SandboxRideRequestParameters.Builder().setStatus("accepted");
+//                service.updateSandboxRide(rideId, sandboxRideRequestParameters.build());
+//            }
+//        }, 0, 5000);
+//        timer.cancel(); // clean up the threads
 
         // launch the next activity when a driver accepts
-        do {
-            //check = false;
+//        do {
             service.getRideDetails(rideId).enqueue(new Callback<Ride>() {
                 @Override
                 public void onResponse(Call<Ride> call, Response<Ride> response) {
@@ -198,8 +197,7 @@ public class FindActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else{
-                            //scope issue
-                            check = true;
+
                         }
                     } else {
                         ApiError error = ErrorParser.parseError(response);
@@ -211,8 +209,7 @@ public class FindActivity extends AppCompatActivity {
 
                 }
             });
-            //check = true;
-        }while(true);
+//        }while(true);
     }
 
     public void setStartEnd() {
