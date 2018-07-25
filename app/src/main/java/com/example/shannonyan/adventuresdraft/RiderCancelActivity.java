@@ -1,11 +1,8 @@
 package com.example.shannonyan.adventuresdraft;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 public class RiderCancelActivity extends AppCompatActivity {
 
@@ -15,7 +12,5 @@ public class RiderCancelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rider_cancel);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
-
 }

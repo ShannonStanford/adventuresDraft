@@ -54,9 +54,11 @@ public class RideInProgressActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
-
+                Intent i = new Intent(getBaseContext(), EventActivity.class);
+                startActivity(i);
             }
         });
+
     }
 
 }
