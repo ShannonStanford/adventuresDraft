@@ -37,27 +37,23 @@ public class RideInProgressActivity extends AppCompatActivity {
     }
 
     public void checkProgress() {
-        service.getRideDetails(rideID).enqueue(new Callback<Ride>() {
+
+        service.getCurrentRide().enqueue(new Callback<Ride>() {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
-                if (response.isSuccessful()) {
-                    Ride ride = response.body();
-                    status = ride.getStatus();
-                    if(status.equals("completed")) {
+                    if(response.isSuccessful()){
+
+                    }
+                    else{
                         Intent i = new Intent(getBaseContext(), EventActivity.class);
                         startActivity(i);
                     }
-                } else {
-                    ApiError error = ErrorParser.parseError(response);
                 }
-            }
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
-                Intent i = new Intent(getBaseContext(), EventActivity.class);
-                startActivity(i);
+
             }
         });
-
     }
 
 }
