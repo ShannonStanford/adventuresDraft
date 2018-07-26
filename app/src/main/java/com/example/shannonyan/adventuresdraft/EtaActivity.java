@@ -27,6 +27,7 @@ import java.util.TimerTask;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 public class EtaActivity extends AppCompatActivity {
 
@@ -123,7 +124,6 @@ public class EtaActivity extends AppCompatActivity {
                         .load(ride1.getDriver().getPictureUrl())
                         .into(driverPic);
 
-                boolean check = stat.equals("arriving");
                 if (stat.equals("arriving")) {
                     tvEta.setText("Arriving");
                 } else {
