@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.Manifest;
 
+import com.example.shannonyan.adventuresdraft.Manifest.permission;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -184,4 +185,5 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                     gMap.addCircle(circleOptions);
                 }
             };
+
 }
