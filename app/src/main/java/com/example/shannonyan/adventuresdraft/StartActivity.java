@@ -30,6 +30,11 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     private GoogleMap gMap;
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private final int ZOOM_PREF = 12;
+    private final int STROKE_WIDTH = 6;
+    private final int CURR_LOCATION_CIRCLE_RADIUS = 200;
+    private final double HARD_CODE_LAT = 37.4564126;
+    private final double HARD_CODE_LNG = -122.18630009999998;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +113,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        gMap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(37.4564126, -122.18630009999998);
+        gMap.setMinZoomPreference(ZOOM_PREF);
+        LatLng ny = new LatLng(HARD_CODE_LAT, HARD_CODE_LNG);
         gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
 
         gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
@@ -136,7 +141,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         Toast.makeText(this, "Location permission not granted, " +
                         "showing default location",
                 Toast.LENGTH_SHORT).show();
-        LatLng hotel = new LatLng(37.4564126, -122.18630009999998);
+        LatLng hotel = new LatLng(HARD_CODE_LAT, HARD_CODE_LNG);
         gMap.moveCamera(CameraUpdateFactory.newLatLng(hotel));
     }
 
@@ -161,7 +166,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
             new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
                 public boolean onMyLocationButtonClick() {
-                    gMap.setMinZoomPreference(15);
+                    gMap.setMinZoomPreference(ZOOM_PREF);
                     return false;
                 }
             };
@@ -171,15 +176,15 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 @Override
                 public void onMyLocationClick(@NonNull Location location) {
 
-                    gMap.setMinZoomPreference(12);
+                    gMap.setMinZoomPreference(ZOOM_PREF);
 
                     CircleOptions circleOptions = new CircleOptions();
                     circleOptions.center(new LatLng(location.getLatitude(),
                             location.getLongitude()));
 
-                    circleOptions.radius(200);
+                    circleOptions.radius(CURR_LOCATION_CIRCLE_RADIUS);
                     circleOptions.fillColor(Color.RED);
-                    circleOptions.strokeWidth(6);
+                    circleOptions.strokeWidth(STROKE_WIDTH);
 
                     gMap.addCircle(circleOptions);
                 }
