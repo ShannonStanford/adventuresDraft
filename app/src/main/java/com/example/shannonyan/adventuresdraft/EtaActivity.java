@@ -72,13 +72,8 @@ public class EtaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         rideID = intent.getStringExtra("rideId");
         context = this;
+        //onMapButtonClick();
 
-        //do{
-            //Adds a buffer of 5 seconds between updating status
-//            Timer timer = new Timer();
-//            timer.schedule(new TimerTask() {
-//                @Override
-//                public void run() {
                     service.getRideDetails(rideID).enqueue(new Callback<Ride>() {
                         @Override
                         public void onResponse(Call<Ride> call, Response<Ride> response) {
@@ -94,7 +89,7 @@ public class EtaActivity extends AppCompatActivity {
                                     carMake.setText(ride.getVehicle().getMake());
                                     carLicense.setText(ride.getVehicle().getLicensePlate());
 
-                                    onMapButtonClick();
+
                                     GlideApp.with(context)
                                             .load(ride.getDriver().getPictureUrl())
                                             .into(driverPic);
@@ -104,7 +99,7 @@ public class EtaActivity extends AppCompatActivity {
                                     } else {
                                         tvEta.setText(String.valueOf(ride.getEta()));
                                     }
-                                } else if(status.equals("in_progress") ){
+                                } else if(status.equals("in_progress") || status.equals("completed") ){
                                     Intent i = new Intent(getBaseContext(), RideInProgressActivity.class);
                                     startActivity(i);
                                 }
@@ -118,11 +113,6 @@ public class EtaActivity extends AppCompatActivity {
 
                         }
                     });
-
-//                }
-//            }, 0, 5000);
-        //} while (true);
-
     }
 
     public void onMapButtonClick(){

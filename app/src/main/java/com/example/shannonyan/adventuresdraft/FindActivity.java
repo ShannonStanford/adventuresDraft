@@ -171,17 +171,6 @@ public class FindActivity extends AppCompatActivity {
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
     public void asynchronousTaskDemo(final String rideId){
-//        // add a buffer of 5 seconds
-//        Timer timer = new Timer();
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                // setting the status to accepted
-//                final SandboxRideRequestParameters.Builder sandboxRideRequestParameters = new SandboxRideRequestParameters.Builder().setStatus("accepted");
-//                service.updateSandboxRide(rideId, sandboxRideRequestParameters.build());
-//            }
-//        }, 0, 5000);
-//        timer.cancel(); // clean up the threads
 
         // launch the next activity when a driver accepts
 //        do {
