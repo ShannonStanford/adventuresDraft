@@ -97,6 +97,7 @@ public class EtaActivity extends AppCompatActivity {
                                         tvEta.setText(String.valueOf(ride.getEta()));
                                     }
                                 } else if(status.equals("in_progress") ){
+                                    // implement the if logic for whether or not they are going back home here TODO implement going home logic
                                     Intent i = new Intent(getBaseContext(), RideInProgressActivity.class);
                                     startActivity(i);
                                 }

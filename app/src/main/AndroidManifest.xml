@@ -11,6 +11,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -61,7 +62,8 @@
             android:name=".RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".CreateActivity"></activity>
     </application>
 
 </manifest>
