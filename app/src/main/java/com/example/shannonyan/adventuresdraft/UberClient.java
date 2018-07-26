@@ -19,9 +19,9 @@ public final class UberClient {
 
     private static UberClient uberClientInstance;
     //UBER API vars
-    public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
-    public String TOKEN = "c2hx0dzYfc5ptMEPWA0w3ODBWdUsaITDQ_UTWF4M"; //serverToken
-    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InlWaHNQUGs3VDFxNEdienNDZHdRNmc9PSIsImV4cGlyZXNfYXQiOjE1MzQ5ODg5OTAsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.LwqUAcKulDR2oe5tKhAIBYSQpc4VwYxCWnyixNfQARE";
+    public String CLIENT_ID = "D4bTw-t73cglNaTsFlUfjQuFYeWsjP3F";
+    public String TOKEN = "ayK8v-qqcB_TVX7IMGb-4KU8sqxAgDk1l40lkWQo"; //serverToken
+    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InpESnU5a1hyUm5TWUplU1A3MGpEd3c9PSIsImV4cGlyZXNfYXQiOjE1MzUxNTA5MzEsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0._5WMyZ4xbcEOcSi3BNQ3lCy_I4GMrymkKlvc6vinZio";
     public RidesService service;
     public SessionConfiguration config = new SessionConfiguration.Builder()
             // mandatory
@@ -62,5 +62,4 @@ public final class UberClient {
     public void printSingleton(){
         System.out.println("Inside print uberClient");
     }
-
 }

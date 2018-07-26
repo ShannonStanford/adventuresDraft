@@ -27,7 +27,6 @@ public class RideInProgressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ride_in_progress);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
 
@@ -50,32 +49,11 @@ public class RideInProgressActivity extends AppCompatActivity {
                         startActivity(i);
                     }
                 }
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
 
-                @Override
-                public void onFailure(Call<Ride> call, Throwable t) {
-
-                }
-                });
-//                service.getRideDetails(rideID).enqueue(new Callback<Ride>() {
-//                    @Override
-//                    public void onResponse(Call<Ride> call, Response<Ride> response) {
-//                        if (response.isSuccessful()) {
-//                            Ride ride = response.body();
-//                            status = ride.getStatus();
-//                            if (status.equals("completed")) {
-//                                Intent i = new Intent(getBaseContext(), EventActivity.class);
-//                                startActivity(i);
-//                            }
-//                        } else {
-//                            ApiError error = ErrorParser.parseError(response);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Ride> call, Throwable t) {
-//
-//                    }
-//                });
+            }
+        });
     }
 
 }

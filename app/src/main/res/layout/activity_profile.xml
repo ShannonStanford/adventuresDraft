@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileActivity"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/button"
-        android:text="Past Trips" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="338dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/ivProfilePic"
@@ -20,6 +20,7 @@
         android:layout_height="125dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         app:srcCompat="@drawable/ic_person_black_24dp" />
 
     <TextView
@@ -30,12 +31,14 @@
         android:layout_centerHorizontal="true"
         android:text="TextView" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
+    <include
+        layout="@layout/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="154dp"
-        android:text="My Preferences" />
+        android:layout_marginTop="175dp" />
+
+
+
 </RelativeLayout>

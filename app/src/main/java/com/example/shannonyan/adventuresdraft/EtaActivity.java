@@ -2,32 +2,23 @@ package com.example.shannonyan.adventuresdraft;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.uber.sdk.android.core.UberSdk;
-import com.uber.sdk.android.core.auth.AccessTokenManager;
-import com.uber.sdk.core.auth.AccessToken;
-import com.uber.sdk.core.auth.AccessTokenStorage;
-import com.uber.sdk.core.auth.Scope;
-import com.uber.sdk.rides.client.AccessTokenSession;
-import com.uber.sdk.rides.client.SessionConfiguration;
-import com.uber.sdk.rides.client.UberRidesApi;
 import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Ride;
+import com.uber.sdk.rides.client.model.RideMap;
 import com.uber.sdk.rides.client.services.RidesService;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,14 +32,16 @@ public class EtaActivity extends AppCompatActivity {
     public String status;
     public TextView tvEta;
     public String mapURL;
+    public String driverPhoneNumber;
     public TextView driverName;
     public TextView carMake;
     public TextView carModel;
     public TextView carLicense;
     public ImageView driverPic;
     public Button btDriverMap;
+    public Button btCallDriver;
+    public Button btCancel;
     public Context context;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +57,8 @@ public class EtaActivity extends AppCompatActivity {
         final TextView tvEta = (TextView) findViewById(R.id.tvEta);
         final ImageView driverPic = (ImageView) findViewById(R.id.ivDriverPic);
         final Button btDriverMap = (Button) findViewById(R.id.btDriverMap);
+        final Button btCallDriver = (Button) findViewById(R.id.btCallDriver);
+        final Button btRiderCandel = (Button) findViewById(R.id.btCancel);
 
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
@@ -72,7 +67,6 @@ public class EtaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         rideID = intent.getStringExtra("rideId");
         context = this;
-        //onMapButtonClick();
 
                     service.getRideDetails(rideID).enqueue(new Callback<Ride>() {
                         @Override
@@ -89,6 +83,9 @@ public class EtaActivity extends AppCompatActivity {
                                     carMake.setText(ride.getVehicle().getMake());
                                     carLicense.setText(ride.getVehicle().getLicensePlate());
 
+                                    onMapButtonClick();
+                                    onCallButtonClick();
+                                    onCancelButtonClick();
 
                                     GlideApp.with(context)
                                             .load(ride.getDriver().getPictureUrl())
@@ -104,25 +101,66 @@ public class EtaActivity extends AppCompatActivity {
                                     startActivity(i);
                                 }
 
-                            } else {
-                                ApiError error = ErrorParser.parseError(response);
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<Ride> call, Throwable t) {
+                } else {
+                    ApiError error = ErrorParser.parseError(response);
+                }
+            }
 
-                        }
-                    });
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+
+            }
+        });
+
     }
 
-    public void onMapButtonClick(){
-         btDriverMap.setOnClickListener(new View.OnClickListener() {
+    public void onMapButtonClick() {
+        btDriverMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getBaseContext(), MapActivity.class);
-                startActivity(i);
+                service.getRideMap(rideID).enqueue(new Callback<RideMap>() {
+                    @Override
+                    public void onResponse(Call<RideMap> call, Response<RideMap> response) {
+                        if (response.isSuccessful()) {
+                            RideMap ride = response.body();
+                            mapURL = ride.getHref();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RideMap> call, Throwable t) {
+
+                    }
+                });
+                Intent intent = new Intent(getBaseContext(), MapActivity.class);
+                intent.putExtra("mapURL", mapURL);
+                startActivity(intent);
             }
         });
     }
 
+    public void onCallButtonClick() {
+        btCallDriver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+driverPhoneNumber));
+                if (ActivityCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getBaseContext(), "Make sure you granted calling permissions", Toast.LENGTH_SHORT);
+                    return;
+                }
+                startActivity(callIntent);
+            }
+        });
+    }
+
+    public void onCancelButtonClick(){
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), RiderCancelActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 }

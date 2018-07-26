@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shannonyan.adventuresdraft">
 
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+
     <permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
         android:protectionLevel="dangerous" />
@@ -14,6 +16,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -29,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".testMapSearch">
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,6 +67,8 @@
             android:name=".RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel"
             android:theme="@style/AppTheme" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".CreateActivity"></activity>
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".StartActivity"
