@@ -27,7 +27,6 @@ public class RideInProgressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ride_in_progress);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
 

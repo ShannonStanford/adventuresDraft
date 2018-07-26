@@ -68,7 +68,50 @@ public class EtaActivity extends AppCompatActivity {
         rideID = intent.getStringExtra("rideId");
         context = this;
 
-        checkRideDetails();
+        //do{
+        //Adds a buffer of 5 seconds between updating status
+//            Timer timer = new Timer();
+//            timer.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+        service.getRideDetails(rideID).enqueue(new Callback<Ride>() {
+            @Override
+            public void onResponse(Call<Ride> call, Response<Ride> response) {
+                if (response.isSuccessful()) {
+                    Ride ride = response.body();
+                    status = ride.getStatus();
+                    if (status.equals("driver_canceled") || status.equals("rider_canceled")) {
+                        Intent i = new Intent(getBaseContext(), RiderCancelActivity.class);
+                        startActivity(i);
+                    } else if (status.equals("accepted") || status.equals("arriving")) {
+                        driverName.setText(ride.getDriver().getName());
+                        carModel.setText(ride.getVehicle().getModel());
+                        carMake.setText(ride.getVehicle().getMake());
+                        carLicense.setText(ride.getVehicle().getLicensePlate());
+                        GlideApp.with(context)
+                                .load(ride.getDriver().getPictureUrl())
+                                .into(driverPic);
+                        if (status.equals("arriving")) {
+                            tvEta.setText("Arriving");
+                        } else {
+                            tvEta.setText(String.valueOf(ride.getEta()));
+                        }
+                    } else if (status.equals("in_progress")) {
+                        // implement the if logic for whether or not they are going back home here TODO implement going home logic
+                        Intent i = new Intent(getBaseContext(), RideInProgressActivity.class);
+                        startActivity(i);
+                    }
+
+                } else {
+                    ApiError error = ErrorParser.parseError(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+                checkRideDetails();
+            }
+        });
     }
 
     public void checkRideDetails(){
