@@ -48,8 +48,8 @@
             android:label="@string/title_activity_find"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".StartActivity"
-            android:label="@string/title_activity_start"
+            android:name=".CreateFlowActivity"
+            android:label="@string/title_activity_create_flow"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MapActivity"
@@ -68,9 +68,10 @@
             android:label="@string/title_activity_rider_cancel"
             android:theme="@style/AppTheme" />
         <activity android:name=".ProfileActivity" />
-        <activity
-            android:name=".CreateFlowActivity"
-            android:label="@string/title_activity_create_flow"></activity>
+        <activity android:name=".TestYelp"></activity>
+
+        <activity android:name=".StartActivity"
+            android:label="@string/title_activity_start"></activity>
     </application>
 
 </manifest>
