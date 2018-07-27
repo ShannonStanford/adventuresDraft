@@ -1,5 +1,6 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,10 +13,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-//        position = position+1;
-//        Bundle bundle = new Bundle();
-//        bundle.putString("message", "Fragment:" + position);
-//        prefFragment.setArguments(bundle);
         switch(position) {
             case 0: return CreatePickUpFragment.newInstance("FirstFragment, Instance 1");
             case 1: return CreateSecondFragment.newInstance("SecondFragment, Instance 1");
@@ -26,5 +23,15 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch(position) {
+            case 0: return "Preferences";
+            case 1: return "Past Trips";
+            default: return "Preferences";
+        }
     }
 }

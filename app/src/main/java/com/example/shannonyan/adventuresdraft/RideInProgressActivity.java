@@ -1,7 +1,10 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -9,6 +12,10 @@ import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.services.RidesService;
+
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +27,7 @@ public class RideInProgressActivity extends AppCompatActivity {
     public UberClient uberClient;
     public String rideID;
     public String status;
+    public Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +40,19 @@ public class RideInProgressActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         rideID = intent.getStringExtra("rideId");
-        checkProgress();
+
+        // setup and call the timer
+        timer = new Timer();
+        // creating timer task, timer
+        TimerTask tasknew = new TimerTask() {
+            @Override
+            public void run() {
+                // execute the background task
+                checkProgress();
+            }
+        };
+        // add a buffer of 5 seconds
+        timer.schedule(tasknew, 0, 5000);
 
     }
 
@@ -42,10 +62,13 @@ public class RideInProgressActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                     if(response.isSuccessful()){
-
                     }
                     else{
-                        Intent i = new Intent(getBaseContext(), EventActivity.class);
+                        // stop the timer and get rid of all the cancelled tasks in the queue before
+                        // launching the activity
+                        timer.cancel();
+                        timer.purge();
+                        Intent i = new Intent(RideInProgressActivity.this, EventActivity.class);
                         startActivity(i);
                     }
                 }

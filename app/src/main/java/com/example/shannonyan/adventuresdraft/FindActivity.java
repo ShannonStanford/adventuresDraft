@@ -18,6 +18,7 @@ import com.uber.sdk.rides.client.model.RideEstimate;
 import com.uber.sdk.rides.client.model.RideRequestParameters;
 import com.uber.sdk.rides.client.services.RidesService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -129,7 +130,7 @@ public class FindActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Ride ride = response.body();
                     rideId = ride.getRideId();
-                    Log.d("RIDE", "rideid: " + rideId);
+                    Log.v("tag3", "rideid: " + rideId);
                     asynchronousTaskDemo(rideId);
 
                 }
@@ -189,30 +190,37 @@ public class FindActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            service.getRideDetails(rideId).enqueue(new Callback<Ride>() {
-                @Override
-                public void onResponse(Call<Ride> call, Response<Ride> response) {
-                    Log.d("tag1", "Going inside the callback");
-                    if (response.isSuccessful()) {
-                        Log.d("tag1", "Getting a successful response");
-                        Ride ride = response.body();
-                        status = ride.getStatus();
-                        Log.d("tag2", "updating the status: " + status);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Ride> call, Throwable t) {
-                    Log.d("tag", t.getMessage());
-                }
-            });
-            return status;
+            String stat = "norun";
+            try {
+                stat = service.getRideDetails(rideId).execute().body().getStatus();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            service.getRideDetails(rideId).enqueue(new Callback<Ride>() {
+//                @Override
+//                public void onResponse(Call<Ride> call, Response<Ride> response) {
+//                    Log.d("tag1", "Going inside the callback");
+//                    if (response.isSuccessful()) {
+//                        Log.d("tag1", "Getting a successful response");
+//                        Ride ride = response.body();
+//                        status = ride.getStatus();
+//                        Log.d("tag2", "updating the status: " + status);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Ride> call, Throwable t) {
+//                    Log.d("tag", t.getMessage());
+//                }
+//            });
+            return stat;
         }
         // run on the main UI thread after the background task is executed
         @Override
-        protected void onPostExecute(String s) {
-            if (status.equals("accepted") || status.equals("arriving") || status.equals("in_progress")) {
+        protected void onPostExecute(String stat) {
+            if (stat.equals("accepted") || stat.equals("arriving") || stat.equals("in_progress")) {
                 // cancel all scheduled timer tasks and get rid of the cancelled tasks queued to the end
+                Log.d("TAG4", "status in progress or accepted");
                 timer.cancel();
                 timer.purge();
 
