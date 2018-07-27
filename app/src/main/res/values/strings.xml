@@ -11,4 +11,5 @@
     <string name="title_activity_rider_cancel">RiderCancelActivity</string>
     <string name="google_maps_api_key">AIzaSyBIsVrW1nBUXuhJI65rECOfEXlRIUO_8H4</string>
     <string name="title_activity_test_map_search">testMapSearch</string>
+    <string name="title_activity_create_flow">CreateFlowActivity</string>
 </resources>

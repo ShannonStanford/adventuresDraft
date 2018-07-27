@@ -3,9 +3,9 @@ package com.example.shannonyan.adventuresdraft;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -15,20 +15,19 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity implements PrefFragment.onButtonClickedListener{
 
-    private Toolbar toolbar;
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     private DatabaseReference mDatabase;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         viewPager = findViewById(R.id.pager);
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 

@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".StartActivity">
+        <activity android:name=".EventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,12 +44,12 @@
             android:label="@string/title_activity_eta"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".FindActivity"
             android:label="@string/title_activity_find"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".EventActivity"
-            android:label="@string/title_activity_event"
+            android:name=".CreateFlowActivity"
+            android:label="@string/title_activity_create_flow"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MapActivity"
@@ -67,11 +67,11 @@
             android:name=".RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".FindActivity"
-            android:label="@string/title_activity_find"
-            android:theme="@style/AppTheme" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".TestYelp"></activity>
+
+        <activity android:name=".StartActivity"
+            android:label="@string/title_activity_start"></activity>
     </application>
 
 </manifest>
