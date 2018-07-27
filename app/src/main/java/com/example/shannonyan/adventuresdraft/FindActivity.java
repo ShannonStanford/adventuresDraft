@@ -39,8 +39,7 @@ public class FindActivity extends AppCompatActivity {
     //UBER vars
     public RidesService service;
     public UberClient uberClient;
-    public String status = "1";
-    public String transportTo;
+    public String returnTrip;
     public Timer timer;
 
     @Override
@@ -53,23 +52,23 @@ public class FindActivity extends AppCompatActivity {
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
         // check if they are starting their journey, or going back?
-//        Intent intent = getIntent();
-//        if (intent != null && intent.getStringExtra("transportTo").equals("false")) {
-//            setGoingBack();
-//            transportTo = "false";
-//        }
-//        else {
-//            //populate location variables
-//            setStartEnd();
-//            transportTo = "true";
-//        }
-        setStartEnd();
+
+        if (getIntent().getExtras() != null) {
+            Intent intent = getIntent();
+            if (intent.getStringExtra("returnTrip").equals("true")) {
+                setGoingBack();
+                returnTrip = "true";
+            }
+        }
+        else {
+            //populate location variables
+            setStartEnd();
+            returnTrip = "false";
+        }
+
         //start required API calls for UBER process
         findDriver();
     }
-
-
-
 
     public void findDriver(){
         //get list of products offered in corresponding city
@@ -86,7 +85,6 @@ public class FindActivity extends AppCompatActivity {
                     ApiError error = ErrorParser.parseError(response);
                 }
             }
-
             @Override
             public void onFailure(Call<ProductsResponse> call, Throwable t) {
                 //Network Failure
@@ -114,7 +112,6 @@ public class FindActivity extends AppCompatActivity {
                     ApiError error = ErrorParser.parseError(response);
                 }
             }
-
             @Override
             public void onFailure(Call<RideEstimate> call, Throwable t) {
 
@@ -130,6 +127,7 @@ public class FindActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Ride ride = response.body();
                     rideId = ride.getRideId();
+//                    service.cancelRide(rideId);
                     Log.v("tag3", "rideid: " + rideId);
                     asynchronousTaskDemo(rideId);
 
@@ -160,17 +158,16 @@ public class FindActivity extends AppCompatActivity {
                     });
                 }
             }
-
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
 
             }
         });
+        Log.d("SMART", "ride details callback ended: " + rideId);
     }
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
     public void asynchronousTaskDemo(final String rideId){
-
         // timer thing implement:
         timer = new Timer();
         // creating timer task, timer
@@ -182,7 +179,7 @@ public class FindActivity extends AppCompatActivity {
             }
         };
         // add a buffer of 5 seconds
-        timer.schedule(tasknew, 0, 10000);
+        timer.schedule(tasknew, 0, 5000);
     }
 
     // private class for timer
@@ -193,31 +190,17 @@ public class FindActivity extends AppCompatActivity {
             String stat = "norun";
             try {
                 stat = service.getRideDetails(rideId).execute().body().getStatus();
+                Log.d("STAT", "ride status: "+ stat);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            service.getRideDetails(rideId).enqueue(new Callback<Ride>() {
-//                @Override
-//                public void onResponse(Call<Ride> call, Response<Ride> response) {
-//                    Log.d("tag1", "Going inside the callback");
-//                    if (response.isSuccessful()) {
-//                        Log.d("tag1", "Getting a successful response");
-//                        Ride ride = response.body();
-//                        status = ride.getStatus();
-//                        Log.d("tag2", "updating the status: " + status);
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Ride> call, Throwable t) {
-//                    Log.d("tag", t.getMessage());
-//                }
-//            });
             return stat;
         }
+
         // run on the main UI thread after the background task is executed
         @Override
         protected void onPostExecute(String stat) {
+            Log.d("SMART", "ride id is: " + rideId);
             if (stat.equals("accepted") || stat.equals("arriving") || stat.equals("in_progress")) {
                 // cancel all scheduled timer tasks and get rid of the cancelled tasks queued to the end
                 Log.d("TAG4", "status in progress or accepted");
@@ -225,16 +208,12 @@ public class FindActivity extends AppCompatActivity {
                 timer.purge();
 
                 Log.d("TIMER", "timer cancel successful");
-//                timer.purge();
                 Intent intent = new Intent(FindActivity.this, EtaActivity.class);
                 intent.putExtra("rideId", rideId);
-//                if (transportTo.equals("false")) {
-//                    intent.putExtra("transportTo", transportTo);
-//                }
+                intent.putExtra("returnTrip", returnTrip);
                 startActivity(intent);
             } else {}
         }
-
     }
 
     public void setStartEnd() {

@@ -16,7 +16,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         switch(position) {
             case 0: return CreatePickUpFragment.newInstance("FirstFragment, Instance 1");
             case 1: return CreateSecondFragment.newInstance("SecondFragment, Instance 1");
-            default: return PrefFragment.newInstance("FirstFragment, Instance 1");
+            default: return CreatePickUpFragment.newInstance("FirstFragment, Instance 1");
         }
     }
 

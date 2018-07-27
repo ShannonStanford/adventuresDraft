@@ -33,7 +33,7 @@ public class EtaActivity extends AppCompatActivity {
 
     public RidesService service;
     public UberClient uberClient;
-    public String rideID;
+    public String rideId;
     public TextView tvEta;
     public String mapURL;
     public String driverPhoneNumber;
@@ -47,6 +47,8 @@ public class EtaActivity extends AppCompatActivity {
     public Button btCancel;
     public Context context;
     public Timer timer;
+    public String rideId2;
+    public String returnTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,8 @@ public class EtaActivity extends AppCompatActivity {
         service = uberClient.service;
 
         Intent intent = getIntent();
-        rideID = intent.getStringExtra("rideId");
+        rideId = intent.getStringExtra("rideId");
+        returnTrip = intent.getStringExtra("returnTrip");
         context = this;
 
         // setup and call the timer
@@ -97,18 +100,20 @@ public class EtaActivity extends AppCompatActivity {
         @Override
         protected Ride doInBackground(String... strings) {
             try {
-                ride = service.getRideDetails(rideID).execute().body();
+                ride = service.getRideDetails(rideId).execute().body();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return ride;
         }
+
         // run on the main UI thread after the background task is executed
         @Override
         protected void onPostExecute(Ride ride1) {
             // populate the views based on the current status and situation
             // deals with accepted and arriving
             String stat = ride1.getStatus();
+            rideId2 = ride1.getRideId();
             if (stat.equals("accepted") || stat.equals("arriving")) {
                 Log.d("TAG4", "status accepted");
                 driverName.setText(ride1.getDriver().getName());
@@ -131,21 +136,29 @@ public class EtaActivity extends AppCompatActivity {
                 } else {
                     tvEta.setText(String.valueOf(ride1.getEta()));
                 }
-
             }
             // deals with driver canceled and rider canceled situations
             else if (stat.equals("driver_canceled") || stat.equals("rider_canceled")) {
+                // TODO resolve the logic behind this
+                // TODO
                 timer.cancel();
                 timer.purge();
-                Intent i = new Intent(getBaseContext(), RiderCancelActivity.class);
-                startActivity(i);
+                Toast.makeText(EtaActivity.this, "Driver Cancelled, calling another Uber.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getBaseContext(), FindActivity.class);
+                startActivity(intent);
             } else if (stat.equals("in_progress")) {
                 Log.d("TAG4", "status in progress");
                 timer.cancel();
                 timer.purge();
-                Intent i = new Intent(EtaActivity.this, RideInProgressActivity.class);
-                i.putExtra("rideId", rideID);
-                startActivity(i);
+                if (returnTrip.equals("true")) {
+                    Intent i = new Intent(EtaActivity.this, ReturnHomeActivity.class);
+                    i.putExtra("rideId", rideId);
+                    startActivity(i);
+                }
+                else {
+                    Intent i = new Intent(EtaActivity.this, RideInProgressActivity.class);
+                    startActivity(i);
+                }
             }
         }
     }
@@ -154,7 +167,7 @@ public class EtaActivity extends AppCompatActivity {
         btDriverMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                service.getRideMap(rideID).enqueue(new Callback<RideMap>() {
+                service.getRideMap(rideId).enqueue(new Callback<RideMap>() {
                     @Override
                     public void onResponse(Call<RideMap> call, Response<RideMap> response) {
                         if (response.isSuccessful()) {
@@ -165,9 +178,9 @@ public class EtaActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<RideMap> call, Throwable t) {
-
                     }
                 });
+                // launch the map activity to show their progress
                 Intent intent = new Intent(getBaseContext(), MapActivity.class);
                 intent.putExtra("mapURL", mapURL);
                 startActivity(intent);
@@ -194,7 +207,11 @@ public class EtaActivity extends AppCompatActivity {
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                timer.cancel();
+                timer.purge();
                 Intent intent = new Intent(getBaseContext(), RiderCancelActivity.class);
+                intent.putExtra("rideId", rideId2);
+                intent.putExtra("returnTrip", returnTrip);
                 startActivity(intent);
             }
         });
