@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -72,23 +73,18 @@ public class EventActivity extends AppCompatActivity {
     }
 
     public void populateComponents(){
-        mDatabase.child("trip").child(tripId).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("trips").child("testTrip").child("event").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                JSONObject object = (JSONObject) dataSnapshot.getValue();
-                Event event = null;
-                try {
-                    event = Event.fromJSON(object);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                tvEventName.setText(event.title);
-                eventRating.setNumStars(event.numStars);
+                Event event = dataSnapshot.getValue(Event.class);
+                tvEventName.setText(event.name);
+                //storageRef.child(event.storageUrl);
+                String storagePath = "https://firebasestorage.googleapis.com/v0/b/adventureawaits-198ee.appspot.com/o/Screen%20Shot%202018-07-23%20at%2010.32.36%20AM.png?alt=media&token=e27f5e19-6cb7-4bed-b790-fefd240fd32b";
+                eventRating.setNumStars(event.rating);
                 GlideApp.with(context)
-                        .load(storageRef.child(event.storageUrl))
+                        .load(storagePath)
                         .into(ivEvent);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

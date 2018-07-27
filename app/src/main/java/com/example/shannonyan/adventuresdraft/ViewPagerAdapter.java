@@ -14,9 +14,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0: return PrefFragment.newInstance();
-            case 1: return PastTripFragment.newInstance();
-            default: return PrefFragment.newInstance();
+            case 0: return CreatePickUpFragment.newInstance("FirstFragment, Instance 1");
+            case 1: return CreateSecondFragment.newInstance("SecondFragment, Instance 1");
+            default: return PrefFragment.newInstance("FirstFragment, Instance 1");
         }
     }
 
