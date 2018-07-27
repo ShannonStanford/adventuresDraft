@@ -78,11 +78,9 @@ public class EventActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Event event = dataSnapshot.getValue(Event.class);
                 tvEventName.setText(event.name);
-                //storageRef.child(event.storageUrl);
-                String storagePath = "https://firebasestorage.googleapis.com/v0/b/adventureawaits-198ee.appspot.com/o/Screen%20Shot%202018-07-23%20at%2010.32.36%20AM.png?alt=media&token=e27f5e19-6cb7-4bed-b790-fefd240fd32b";
                 eventRating.setNumStars(event.rating);
                 GlideApp.with(context)
-                        .load(storagePath)
+                        .load(event.downloadUrl)
                         .into(ivEvent);
             }
             @Override

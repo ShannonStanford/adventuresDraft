@@ -3,12 +3,12 @@ package com.example.shannonyan.adventuresdraft;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.google.protobuf.Api;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Product;
@@ -41,6 +41,7 @@ public class FindActivity extends AppCompatActivity {
     public UberClient uberClient;
     public String returnTrip;
     public Timer timer;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class FindActivity extends AppCompatActivity {
         //UBER instanstiation
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         // check if they are starting their journey, or going back?
 
         if (getIntent().getExtras() != null) {
@@ -127,7 +129,7 @@ public class FindActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Ride ride = response.body();
                     rideId = ride.getRideId();
-//                    service.cancelRide(rideId);
+                    mDatabase.child("trips").child("testTrip").child("uber").child("rideId").setValue(rideId);
                     Log.v("tag3", "rideid: " + rideId);
                     asynchronousTaskDemo(rideId);
 
@@ -144,6 +146,7 @@ public class FindActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Ride ride = response.body();
                                 rideId = ride.getRideId();
+                                mDatabase.child("trips").child("testTrip").child("uber").child("rideId").setValue(rideId);
                                 asynchronousTaskDemo(rideId);
                             } else {
                                 //Api Failure

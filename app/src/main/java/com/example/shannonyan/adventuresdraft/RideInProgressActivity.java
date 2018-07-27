@@ -1,19 +1,13 @@
 package com.example.shannonyan.adventuresdraft;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.uber.sdk.rides.client.error.ApiError;
-import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.services.RidesService;
 
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 

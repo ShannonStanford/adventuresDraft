@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class ProfileActivity extends AppCompatActivity implements PrefFragment.onButtonClickedListener{
 
     private ViewPager viewPager;
-    private ViewPagerAdapter adapter;
+    private profileViewAdapter adapter;
     private DatabaseReference mDatabase;
     private TabLayout tabLayout;
 
@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new profileViewAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
