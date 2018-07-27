@@ -48,8 +48,8 @@
             android:label="@string/title_activity_find"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".CreateFlowActivity"
-            android:label="@string/title_activity_create_flow"
+            android:name=".StartActivity"
+            android:label="@string/title_activity_start"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MapActivity"
@@ -69,8 +69,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".ProfileActivity" />
         <activity
-            android:name=".StartActivity"
-            android:label="@string/title_activity_start"></activity>
+            android:name=".CreateFlowActivity"
+            android:label="@string/title_activity_create_flow"></activity>
     </application>
 
 </manifest>
