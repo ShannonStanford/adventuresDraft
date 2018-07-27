@@ -7,7 +7,7 @@ public class Event {
     //attributes
     public String name;
     public int rating;
-    public String storageUrl;
+    public String downloadUrl;
 
     //deserialize the JSON
     public static Event fromJSON(JSONObject json) throws JSONException {
@@ -16,7 +16,7 @@ public class Event {
         //extract and fill the values
         event.name = json.getString("name");
         event.rating = json.getInt("rating");
-        event.storageUrl = json.getString("storageUrl");
+        event.downloadUrl = json.getString("downloadUrl");
 
         return event;
     }
