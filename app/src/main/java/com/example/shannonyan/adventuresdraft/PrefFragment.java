@@ -32,7 +32,7 @@ public class PrefFragment extends Fragment {
         }
     }
 
-    public static PrefFragment newInstance(String text) {
+    public static PrefFragment newInstance() {
         PrefFragment frag = new PrefFragment();
         return frag;
     }
