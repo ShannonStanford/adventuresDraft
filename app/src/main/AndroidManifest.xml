@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shannonyan.adventuresdraft">
 
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".StartActivity">
+        <activity android:name=".EventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,8 +48,8 @@
             android:label="@string/title_activity_find"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".EventActivity"
-            android:label="@string/title_activity_event"
+            android:name=".CreateFlowActivity"
+            android:label="@string/title_activity_create_flow"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MapActivity"
@@ -68,12 +68,9 @@
             android:label="@string/title_activity_rider_cancel"
             android:theme="@style/AppTheme" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".CreateActivity"></activity>
-        <activity android:name=".ProfileActivity" />
         <activity
             android:name=".StartActivity"
-            android:label="@string/title_activity_start"
-            android:theme="@style/AppTheme" />
+            android:label="@string/title_activity_start"></activity>
     </application>
 
 </manifest>

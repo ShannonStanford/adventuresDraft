@@ -12,6 +12,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    public PlaceAutocompleteFragment placeAutoComplete;
+    public SupportPlaceAutocompleteFragment placeAutoComplete;
     private DatabaseReference mDatabase;
     private double startLat;
     private double startLong;
@@ -45,9 +46,9 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        placeAutoComplete = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete);
+        placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -65,10 +66,16 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
                 Log.d("Maps", "An error occurred: " + status);
             }
         });
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_one);
         mapFragment.getMapAsync(this);
-        return inflater.inflate(R.layout.fragment_create_pick_up, container, false);
+
+        return view;
+    }
+
+    public static CreatePickUpFragment newInstance(String text) {
+
+        CreatePickUpFragment frag = new CreatePickUpFragment();
+        return frag;
     }
 
     public void addMarker(Place p){

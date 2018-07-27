@@ -5,8 +5,8 @@ import org.json.JSONObject;
 
 public class Event {
     //attributes
-    public String title;
-    public int numStars;
+    public String name;
+    public int rating;
     public String storageUrl;
 
     //deserialize the JSON
@@ -14,9 +14,9 @@ public class Event {
         Event event = new Event();
 
         //extract and fill the values
-        event.title = json.getString("EventName");
-        event.numStars = json.getInt("EventRating");
-        event.storageUrl = json.getString("EventImageStorageUrl");
+        event.name = json.getString("name");
+        event.rating = json.getInt("rating");
+        event.storageUrl = json.getString("storageUrl");
 
         return event;
     }

@@ -13,6 +13,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class CreateSecondFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    public PlaceAutocompleteFragment placeAutoComplete;
+    public SupportPlaceAutocompleteFragment placeAutoComplete;
     private DatabaseReference mDatabase;
     private String cityInterest;
     private EditText etPeeps;
@@ -45,12 +46,12 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_second, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         etPeeps = view.findViewById(R.id.etNumPeeps);
         etPrice = view.findViewById(R.id.etPrice);
-        placeAutoComplete = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentById(R.id.place_autocomplete);
-        SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
+        placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         //stores city of interest
@@ -91,6 +92,12 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
         });
 
         return view;
+    }
+
+    public static CreateSecondFragment newInstance(String text) {
+
+        CreateSecondFragment frag = new CreateSecondFragment();
+        return frag;
     }
 
     public void addMarker(Place p){
