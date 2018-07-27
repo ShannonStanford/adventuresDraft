@@ -12,14 +12,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        PrefFragment prefFragment = new PrefFragment();
-//        position = position+1;
-//        Bundle bundle = new Bundle();
-//        bundle.putString("message", "Fragment:" + position);
-//        prefFragment.setArguments(bundle);
         switch(position) {
-            case 0: return PrefFragment.newInstance("FirstFragment, Instance 1");
-            default: return PrefFragment.newInstance("FirstFragment, Instance 1");
+            case 0: return PrefFragment.newInstance();
+            case 1: return PastTripFragment.newInstance();
+            default: return PrefFragment.newInstance();
         }
     }
 
