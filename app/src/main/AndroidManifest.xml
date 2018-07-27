@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".EventActivity">
+        <activity android:name=".CreateFlowActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,7 +48,7 @@
             android:label="@string/title_activity_find"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".CreateFlowActivity"
+            android:name=".EventActivity"
             android:label="@string/title_activity_create_flow"
             android:theme="@style/AppTheme" />
         <activity
