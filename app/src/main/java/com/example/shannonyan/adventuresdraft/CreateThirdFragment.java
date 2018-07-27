@@ -72,7 +72,25 @@ public class CreateThirdFragment extends Fragment {
         return view;
     }
 
-    public static CreateThirdFragment newInstance(String text) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        mDatabase.child("trips").child("testTrip").child("uber").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                cityAns.setText(dataSnapshot.child("cityOfInterest").getValue(String.class));
+                priceAns.setText(dataSnapshot.child("priceCap").getValue(String.class));
+                pickupAns.setText(dataSnapshot.child("pickUpName").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static CreateThirdFragment newInstance() {
 
         CreateThirdFragment frag = new CreateThirdFragment();
         return frag;
