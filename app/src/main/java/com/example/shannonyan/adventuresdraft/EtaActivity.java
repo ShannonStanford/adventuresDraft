@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -110,6 +111,7 @@ public class EtaActivity extends AppCompatActivity {
             // deals with accepted and arriving
             String stat = ride1.getStatus();
             if (stat.equals("accepted") || stat.equals("arriving")) {
+                Log.d("TAG4", "status accepted");
                 driverName.setText(ride1.getDriver().getName());
                 carModel.setText(ride1.getVehicle().getModel());
                 carMake.setText(ride1.getVehicle().getMake());
@@ -126,6 +128,7 @@ public class EtaActivity extends AppCompatActivity {
 
                 if (stat.equals("arriving")) {
                     tvEta.setText("Arriving");
+                    Log.d("TAG4", "status arriving");
                 } else {
                     tvEta.setText(String.valueOf(ride1.getEta()));
                 }
@@ -138,9 +141,11 @@ public class EtaActivity extends AppCompatActivity {
                 Intent i = new Intent(getBaseContext(), RiderCancelActivity.class);
                 startActivity(i);
             } else if (stat.equals("in_progress")) {
+                Log.d("TAG4", "status in progress");
                 timer.cancel();
                 timer.purge();
-                Intent i = new Intent(getBaseContext(), RideInProgressActivity.class);
+                Intent i = new Intent(EtaActivity.this, RideInProgressActivity.class);
+                i.putExtra("rideId", rideID);
                 startActivity(i);
             }
         }

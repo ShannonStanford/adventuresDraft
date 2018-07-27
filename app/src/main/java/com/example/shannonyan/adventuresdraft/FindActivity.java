@@ -220,6 +220,7 @@ public class FindActivity extends AppCompatActivity {
         protected void onPostExecute(String stat) {
             if (stat.equals("accepted") || stat.equals("arriving") || stat.equals("in_progress")) {
                 // cancel all scheduled timer tasks and get rid of the cancelled tasks queued to the end
+                Log.d("TAG4", "status in progress or accepted");
                 timer.cancel();
                 timer.purge();
 

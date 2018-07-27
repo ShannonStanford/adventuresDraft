@@ -29,31 +29,6 @@ public class RideInProgressActivity extends AppCompatActivity {
     public String status;
     public Timer timer;
 
-    // to implement the timer
-    // private class for timer
-    private class ApiOperation extends AsyncTask<String, Void, Ride> {
-        Ride ride;
-        public Handler hand;
-
-        @Override
-        protected Ride doInBackground(String... strings) {
-            try {
-                ride = service.getRideDetails(rideID).execute().body();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return ride;
-        }
-        // run on the main UI thread after the background task is executed
-        @Override
-        protected void onPostExecute(Ride ride1) {
-            // populate the views based on the current status and situation
-            // deals with accepted and arriving
-            String stat = ride1.getStatus();
-
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +40,6 @@ public class RideInProgressActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         rideID = intent.getStringExtra("rideId");
-        checkProgress();
 
         // setup and call the timer
         timer = new Timer();
@@ -74,8 +48,7 @@ public class RideInProgressActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // execute the background task
-                new RideInProgressActivity.ApiOperation().execute("");
-
+                checkProgress();
             }
         };
         // add a buffer of 5 seconds
@@ -89,10 +62,13 @@ public class RideInProgressActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                     if(response.isSuccessful()){
-
                     }
                     else{
-                        Intent i = new Intent(getBaseContext(), EventActivity.class);
+                        // stop the timer and get rid of all the cancelled tasks in the queue before
+                        // launching the activity
+                        timer.cancel();
+                        timer.purge();
+                        Intent i = new Intent(RideInProgressActivity.this, EventActivity.class);
                         startActivity(i);
                     }
                 }
