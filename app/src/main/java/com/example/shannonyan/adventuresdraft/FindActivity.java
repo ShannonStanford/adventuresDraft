@@ -3,12 +3,10 @@ package com.example.shannonyan.adventuresdraft;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.google.protobuf.Api;
 import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Product;
@@ -67,9 +65,6 @@ public class FindActivity extends AppCompatActivity {
         //start required API calls for UBER process
         findDriver();
     }
-
-
-
 
     public void findDriver(){
         //get list of products offered in corresponding city

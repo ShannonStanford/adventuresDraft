@@ -5,25 +5,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class profileViewAdapter extends FragmentPagerAdapter {
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public profileViewAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0: return CreatePickUpFragment.newInstance();
-            case 1: return CreateSecondFragment.newInstance();
-            case 2: return CreateThirdFragment.newInstance();
-            default: return CreatePickUpFragment.newInstance();
+            case 0: return PrefFragment.newInstance();
+            case 1: return PastTripFragment.newInstance();
+            default: return PrefFragment.newInstance();
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Nullable
