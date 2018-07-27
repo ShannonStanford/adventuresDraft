@@ -9,7 +9,7 @@
         android:id="@+id/map_one"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="465dp"
+        android:layout_height="412dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 

@@ -49,7 +49,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".EventActivity"
-            android:label="@string/title_activity_create_flow"
+            android:label="@string/title_activity_event"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MapActivity"

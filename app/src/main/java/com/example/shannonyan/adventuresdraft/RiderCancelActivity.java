@@ -12,5 +12,6 @@ public class RiderCancelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rider_cancel);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
     }
 }

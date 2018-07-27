@@ -16,13 +16,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         switch(position) {
             case 0: return CreatePickUpFragment.newInstance();
             case 1: return CreateSecondFragment.newInstance();
-            default: return PrefFragment.newInstance();
+            case 2: return CreateThirdFragment.newInstance();
+            default: return CreatePickUpFragment.newInstance();
         }
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable

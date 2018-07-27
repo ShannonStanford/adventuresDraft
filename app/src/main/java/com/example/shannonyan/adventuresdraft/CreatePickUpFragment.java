@@ -56,6 +56,7 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
                 //store in database
                 startLat = place.getLatLng().latitude;
                 startLong = place.getLatLng().longitude;
+                mDatabase.child("trips").child("testTrip").child("uber").child("pickUpName").setValue(place.getName());
                 mDatabase.child("trips").child("testTrip").child("uber").child("startLoc").child("lat").setValue(startLat);
                 mDatabase.child("trips").child("testTrip").child("uber").child("startLoc").child("long").setValue(startLong);
             }
