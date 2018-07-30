@@ -30,6 +30,7 @@ import java.util.TimerTask;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 public class FindActivity extends AppCompatActivity {
 
@@ -45,6 +46,7 @@ public class FindActivity extends AppCompatActivity {
     public UberClient uberClient;
     public String returnTrip;
     public Timer timer;
+
     private DatabaseReference mDatabase;
     private static final String TRIPS = "trips";
     private static final String TEST_TRIPS = "testTrip";
@@ -84,6 +86,7 @@ public class FindActivity extends AppCompatActivity {
             returnTrip = "false";
         }
 
+        setStartEnd();
         //start required API calls for UBER process
         findDriver();
     }
@@ -130,6 +133,7 @@ public class FindActivity extends AppCompatActivity {
                     ApiError error = ErrorParser.parseError(response);
                 }
             }
+
             @Override
             public void onFailure(Call<RideEstimate> call, Throwable t) {
 
@@ -143,43 +147,51 @@ public class FindActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 if(response.isSuccessful()){
-                    Ride ride = response.body();
-                    rideId = ride.getRideId();
-                    mDatabase.child(RIDE_ID).setValue(rideId);
-                    Log.v("FindActivity",  RIDE_ID + ": " + rideId);
-                    asynchronousTaskDemo(rideId);
-
+                    useCurrentRide(response);
                 }
                 else{
-                    RideRequestParameters rideRequestParameters = new RideRequestParameters.Builder().setPickupCoordinates(startLat, startLong)
-                            .setProductId(productId)
-                            .setFareId(fareId)
-                            .setDropoffCoordinates(endLat, endLong)
-                            .build();
-                    service.requestRide(rideRequestParameters).enqueue(new Callback<Ride>() {
-                        @Override
-                        public void onResponse(Call<Ride> call, Response<Ride> response) {
-                            if (response.isSuccessful()) {
-                                Ride ride = response.body();
-                                rideId = ride.getRideId();
-                                mDatabase.child(RIDE_ID).setValue(rideId);
-                                asynchronousTaskDemo(rideId);
-                            } else {
-                                //Api Failure
-                                ApiError error = ErrorParser.parseError(response);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Ride> call, Throwable t) {
-                            Log.d("tag3", "Callback fails");
-                        }
-                    });
+                    requestNewRide(response, productId, fareId);
                 }
             }
+
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
 
+            }
+        });
+    }
+
+    public void useCurrentRide(Response<Ride> response){
+        Ride ride = response.body();
+        rideId = ride.getRideId();
+        mDatabase.child(RIDE_ID).setValue(rideId);
+        Log.v("tag3", "rideid: " + rideId);
+        asynchronousTaskDemo(rideId);
+    }
+
+    public void requestNewRide(Response<Ride> response, String productId, String fareId){
+        RideRequestParameters rideRequestParameters = new RideRequestParameters.Builder().setPickupCoordinates(startLat, startLong)
+                .setProductId(productId)
+                .setFareId(fareId)
+                .setDropoffCoordinates(endLat, endLong)
+                .build();
+        service.requestRide(rideRequestParameters).enqueue(new Callback<Ride>() {
+            @Override
+            public void onResponse(Call<Ride> call, Response<Ride> response) {
+                if (response.isSuccessful()) {
+                    Ride ride = response.body();
+                    rideId = ride.getRideId();
+                    mDatabase.child(RIDE_ID).setValue(rideId);
+                    asynchronousTaskDemo(rideId);
+                } else {
+                    //Api Failure
+                    ApiError error = ErrorParser.parseError(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+                Log.d("tag3", "Callback fails");
             }
         });
         Log.d("SMART", "ride details callback ended: " + rideId);
@@ -187,6 +199,7 @@ public class FindActivity extends AppCompatActivity {
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
     public void asynchronousTaskDemo(final String rideId){
+
         // timer thing implement:
         timer = new Timer();
         // creating timer task, timer

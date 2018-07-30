@@ -1,6 +1,5 @@
 package com.example.shannonyan.adventuresdraft;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,8 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateSecondFragment extends Fragment implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
     public SupportPlaceAutocompleteFragment placeAutoComplete;
+
+    private GoogleMap mMap;
     private DatabaseReference mDatabase;
     private String cityInterest;
     private EditText etPeeps;

@@ -116,11 +116,9 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         gMap.setMinZoomPreference(ZOOM_PREF);
         LatLng ny = new LatLng(HARD_CODE_LAT, HARD_CODE_LNG);
         gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
-
         gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         gMap.setOnMyLocationClickListener(onMyLocationClickListener);
         enableMyLocationIfPermitted();
-
         gMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
@@ -158,7 +156,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 }
                 return;
             }
-
         }
     }
 
