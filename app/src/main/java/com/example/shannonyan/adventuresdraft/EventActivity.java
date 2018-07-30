@@ -25,14 +25,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class EventActivity extends AppCompatActivity {
-    //component vars
+
+    private DatabaseReference mDatabase;
+
     public ImageView ivEvent;
     public TextView tvEventName;
     public RatingBar eventRating;
     public Button continueButton;
-    //required instance of Database for firebase read/write and image Download
-    private DatabaseReference mDatabase;
-    public String tripId;
     public StorageReference storageRef;
     public FirebaseStorage storage;
     public Context context;
@@ -54,7 +53,6 @@ public class EventActivity extends AppCompatActivity {
         storageRef = storage.getReference();
         context = this;
 
-        setTripId();
         populateComponents();
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,11 +63,6 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    public void setTripId(){
-        //TODO: set tripId based on corresponsing user that's logged in
-        tripId = "mXdgfyxOyh1zaolkJQPU";
     }
 
     public void populateComponents(){
