@@ -3,12 +3,16 @@ package com.example.shannonyan.adventuresdraft;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Product;
@@ -239,18 +243,31 @@ public class FindActivity extends AppCompatActivity {
     }
 
     public void setStartEnd() {
-        //TODO: Set variables based on Database values
-        startLat = (float) 37.4564126;
-        startLong = (float) -122.18630009999998;
-        endLat = (float) 37.4799006;
-        endLong = (float) -122.15206649999999;
+        mDatabase.child("trips").child("testTrip").child("uber").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                startLat = (float) dataSnapshot.child("startLoc").child("lat").getValue(float.class);
+                startLong = (float) dataSnapshot.child("startLoc").child("long").getValue(float.class);
+                endLat = (float) dataSnapshot.child("endLoc").child("lat").getValue(float.class);
+                endLong = (float) dataSnapshot.child("endLoc").child("long").getValue(float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("FindActivity", "Firebase cancelled");
+            }
+        });
     }
 
     public void setGoingBack() {
-        //TODO: Set variables based on Database values
-        endLat = (float) 37.4564126;
-        endLong = (float) -122.18630009999998;
-        startLat = (float) 37.4799006;
-        startLong = (float) -122.15206649999999;
+        float tempLat;
+        float tempLong;
+        tempLat = startLat;
+        startLat = endLat;
+        endLat = tempLat;
+
+        tempLong = startLong;
+        startLong = endLong;
+        endLong = tempLong;
     }
 }
