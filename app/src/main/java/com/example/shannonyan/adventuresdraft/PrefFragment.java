@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class PrefFragment extends Fragment {
+
     public Button btFood;
     public Button btCar;
     public onButtonClickedListener callback;

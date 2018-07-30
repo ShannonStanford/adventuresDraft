@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class UberClient {
-
+//IOC/injection
     private static UberClient uberClientInstance;
     //UBER API vars
     public String CLIENT_ID = "D4bTw-t73cglNaTsFlUfjQuFYeWsjP3F";

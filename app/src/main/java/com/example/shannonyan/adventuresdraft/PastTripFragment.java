@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class PastTripFragment extends Fragment {
+
     public PastTripFragment() {
 
     }

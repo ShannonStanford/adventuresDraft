@@ -31,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
         adapter = new profileViewAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("user").child("testUser");
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mDatabase.child("user").child("testUser").child("foodPref").setValue(selectedFoods);
+                        mDatabase.child("foodPref").setValue(selectedFoods);
                         Toast.makeText(getBaseContext(),"Preferences updated", Toast.LENGTH_LONG).show();
                     }
                 })
@@ -107,7 +107,7 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mDatabase.child("user").child("testUser").child("carPref").setValue(selectedFoods);
+                        mDatabase.child("carPref").setValue(selectedFoods);
                         Toast.makeText(getBaseContext(),"Preferences updated", Toast.LENGTH_LONG).show();
                     }
                 })

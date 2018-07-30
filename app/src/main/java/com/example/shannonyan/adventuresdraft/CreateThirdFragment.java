@@ -18,17 +18,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 public class CreateThirdFragment extends Fragment {
 
     private TextView pickupAns;
     private TextView priceAns;
     private TextView cityAns;
-    public Button create;
     private DatabaseReference mDatabase;
 
     public CreateThirdFragment() { }
-
+    public Button create;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,25 +54,23 @@ public class CreateThirdFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        mDatabase.child("trips").child("testTrip").child("uber").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cityAns.setText(dataSnapshot.child("cityOfInterest").getValue(String.class));
-                priceAns.setText(dataSnapshot.child("priceCap").getValue(String.class));
-                pickupAns.setText(dataSnapshot.child("pickUpName").getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        setValues();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        setValues();
+    }
+
+    public static CreateThirdFragment newInstance() {
+
+        CreateThirdFragment frag = new CreateThirdFragment();
+        return frag;
+    }
+
+    public void setValues(){
         mDatabase.child("trips").child("testTrip").child("uber").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -88,11 +84,5 @@ public class CreateThirdFragment extends Fragment {
 
             }
         });
-    }
-
-    public static CreateThirdFragment newInstance() {
-
-        CreateThirdFragment frag = new CreateThirdFragment();
-        return frag;
     }
 }

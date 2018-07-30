@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 public class MapActivity extends AppCompatActivity {
+
     public String mapURL;
     public WebView webview;
 
@@ -22,7 +23,6 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         Intent intent = getIntent();
         mapURL = intent.getExtras().getString("mapURL");
         loadMapView();

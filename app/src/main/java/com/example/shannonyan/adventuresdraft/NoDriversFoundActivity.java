@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.uber.sdk.rides.client.services.RidesService;
 
 public class NoDriversFoundActivity extends AppCompatActivity {
+
     public Button tryagain;
     public Button exit;
     public TextView tvNoDrivers;
