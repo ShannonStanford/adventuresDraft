@@ -60,7 +60,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EventActivity.this, FindActivity.class);
-                intent.putExtra("transportTo", "false");
+                intent.putExtra("returnTrip", "true");
                 startActivity(intent);
             }
         });
