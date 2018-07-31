@@ -38,7 +38,6 @@ import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 
-
 public class CreateThirdFragment extends Fragment {
 
     private TextView pickupAns;
@@ -195,12 +194,18 @@ public class CreateThirdFragment extends Fragment {
 
             }
         });
+        setValues();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        setValues();
+    }
+
+
+    public void setValues(){
         mDatabase.child("trips").child("testTrip").child("uber").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

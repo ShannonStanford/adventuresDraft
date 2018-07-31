@@ -3,12 +3,16 @@ package com.example.shannonyan.adventuresdraft;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.uber.sdk.rides.client.error.ApiError;
 import com.uber.sdk.rides.client.error.ErrorParser;
 import com.uber.sdk.rides.client.model.Product;
@@ -26,6 +30,7 @@ import java.util.TimerTask;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 public class FindActivity extends AppCompatActivity {
 
@@ -41,7 +46,20 @@ public class FindActivity extends AppCompatActivity {
     public UberClient uberClient;
     public String returnTrip;
     public Timer timer;
+
     private DatabaseReference mDatabase;
+    private static final String TRIPS = "trips";
+    private static final String TEST_TRIPS = "testTrip";
+    private static final String UBER = "uber";
+    private static final String RIDE_ID = "rideId";
+    private static final String ACCEPT = "accepted";
+    private static final String ARRIVE = "arriving";
+    private static final String PROGRESS = "in_progress";
+    private static final String START_LOC = "startLoc";
+    private static final String END_LOC = "endLoc";
+    private static final String LAT = "lat";
+    private static final String LONG = "long";
+    private static final int UBER_X = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +70,7 @@ public class FindActivity extends AppCompatActivity {
         //UBER instanstiation
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(TRIPS).child(TEST_TRIPS).child(UBER);
         // check if they are starting their journey, or going back?
 
         if (getIntent().getExtras() != null) {
@@ -68,6 +86,7 @@ public class FindActivity extends AppCompatActivity {
             returnTrip = "false";
         }
 
+        setStartEnd();
         //start required API calls for UBER process
         findDriver();
     }
@@ -80,7 +99,7 @@ public class FindActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     //extract productId for product of choice, original uber should be #2 according to test response
                     List<Product> products = response.body().getProducts();
-                    String productId = products.get(2).getProductId();
+                    String productId = products.get(UBER_X).getProductId();
                     getFareId(productId);
                 } else {
                     //Api Failure
@@ -114,6 +133,7 @@ public class FindActivity extends AppCompatActivity {
                     ApiError error = ErrorParser.parseError(response);
                 }
             }
+
             @Override
             public void onFailure(Call<RideEstimate> call, Throwable t) {
 
@@ -127,43 +147,51 @@ public class FindActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 if(response.isSuccessful()){
-                    Ride ride = response.body();
-                    rideId = ride.getRideId();
-                    mDatabase.child("trips").child("testTrip").child("uber").child("rideId").setValue(rideId);
-                    Log.v("tag3", "rideid: " + rideId);
-                    asynchronousTaskDemo(rideId);
-
+                    useCurrentRide(response);
                 }
                 else{
-                    RideRequestParameters rideRequestParameters = new RideRequestParameters.Builder().setPickupCoordinates(startLat, startLong)
-                            .setProductId(productId)
-                            .setFareId(fareId)
-                            .setDropoffCoordinates(endLat, endLong)
-                            .build();
-                    service.requestRide(rideRequestParameters).enqueue(new Callback<Ride>() {
-                        @Override
-                        public void onResponse(Call<Ride> call, Response<Ride> response) {
-                            if (response.isSuccessful()) {
-                                Ride ride = response.body();
-                                rideId = ride.getRideId();
-                                mDatabase.child("trips").child("testTrip").child("uber").child("rideId").setValue(rideId);
-                                asynchronousTaskDemo(rideId);
-                            } else {
-                                //Api Failure
-                                ApiError error = ErrorParser.parseError(response);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Ride> call, Throwable t) {
-                            Log.d("tag3", "Callback fails");
-                        }
-                    });
+                    requestNewRide(response, productId, fareId);
                 }
             }
+
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
 
+            }
+        });
+    }
+
+    public void useCurrentRide(Response<Ride> response){
+        Ride ride = response.body();
+        rideId = ride.getRideId();
+        mDatabase.child(RIDE_ID).setValue(rideId);
+        Log.v("tag3", "rideid: " + rideId);
+        asynchronousTaskDemo(rideId);
+    }
+
+    public void requestNewRide(Response<Ride> response, String productId, String fareId){
+        RideRequestParameters rideRequestParameters = new RideRequestParameters.Builder().setPickupCoordinates(startLat, startLong)
+                .setProductId(productId)
+                .setFareId(fareId)
+                .setDropoffCoordinates(endLat, endLong)
+                .build();
+        service.requestRide(rideRequestParameters).enqueue(new Callback<Ride>() {
+            @Override
+            public void onResponse(Call<Ride> call, Response<Ride> response) {
+                if (response.isSuccessful()) {
+                    Ride ride = response.body();
+                    rideId = ride.getRideId();
+                    mDatabase.child(RIDE_ID).setValue(rideId);
+                    asynchronousTaskDemo(rideId);
+                } else {
+                    //Api Failure
+                    ApiError error = ErrorParser.parseError(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+                Log.d("tag3", "Callback fails");
             }
         });
         Log.d("SMART", "ride details callback ended: " + rideId);
@@ -171,6 +199,7 @@ public class FindActivity extends AppCompatActivity {
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
     public void asynchronousTaskDemo(final String rideId){
+
         // timer thing implement:
         timer = new Timer();
         // creating timer task, timer
@@ -204,7 +233,7 @@ public class FindActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String stat) {
             Log.d("SMART", "ride id is: " + rideId);
-            if (stat.equals("accepted") || stat.equals("arriving") || stat.equals("in_progress")) {
+            if (stat.equals(ACCEPT) || stat.equals(ARRIVE) || stat.equals(PROGRESS)) {
                 // cancel all scheduled timer tasks and get rid of the cancelled tasks queued to the end
                 Log.d("TAG4", "status in progress or accepted");
                 timer.cancel();
@@ -212,7 +241,7 @@ public class FindActivity extends AppCompatActivity {
 
                 Log.d("TIMER", "timer cancel successful");
                 Intent intent = new Intent(FindActivity.this, EtaActivity.class);
-                intent.putExtra("rideId", rideId);
+                intent.putExtra(RIDE_ID, rideId);
                 intent.putExtra("returnTrip", returnTrip);
                 startActivity(intent);
             } else {}
@@ -220,18 +249,32 @@ public class FindActivity extends AppCompatActivity {
     }
 
     public void setStartEnd() {
-        //TODO: Set variables based on Database values
-        startLat = (float) 37.4564126;
-        startLong = (float) -122.18630009999998;
-        endLat = (float) 37.4799006;
-        endLong = (float) -122.15206649999999;
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                startLat = (float) dataSnapshot.child(START_LOC).child(LAT).getValue(float.class);
+                startLong = (float) dataSnapshot.child(START_LOC).child(LONG).getValue(float.class);
+                endLat = (float) dataSnapshot.child(END_LOC).child(LAT).getValue(float.class);
+                endLong = (float) dataSnapshot.child(END_LOC).child(LONG).getValue(float.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("FindActivity", "Firebase cancelled");
+            }
+        });
     }
 
     public void setGoingBack() {
-        //TODO: Set variables based on Database values
-        endLat = (float) 37.4564126;
-        endLong = (float) -122.18630009999998;
-        startLat = (float) 37.4799006;
-        startLong = (float) -122.15206649999999;
+        float tempLat;
+        float tempLong;
+        tempLat = startLat;
+        startLat = endLat;
+        endLat = tempLat;
+
+        tempLong = startLong;
+        startLong = endLong;
+        endLong = tempLong;
     }
 }

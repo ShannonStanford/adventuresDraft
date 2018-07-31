@@ -1,6 +1,5 @@
 package com.example.shannonyan.adventuresdraft;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,15 +20,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
-
 public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    public SupportPlaceAutocompleteFragment placeAutoComplete;
     private DatabaseReference mDatabase;
     private double startLat;
     private double startLong;
+
+    public SupportPlaceAutocompleteFragment placeAutoComplete;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -46,7 +44,7 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("trips").child("testTrip").child("uber");
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
@@ -56,9 +54,10 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
                 //store in database
                 startLat = place.getLatLng().latitude;
                 startLong = place.getLatLng().longitude;
-                mDatabase.child("trips").child("testTrip").child("uber").child("pickUpName").setValue(place.getName());
-                mDatabase.child("trips").child("testTrip").child("uber").child("startLoc").child("lat").setValue(startLat);
-                mDatabase.child("trips").child("testTrip").child("uber").child("startLoc").child("long").setValue(startLong);
+                //reduce repetition, make strings static vars
+                mDatabase.child("pickUpName").setValue(place.getName());
+                mDatabase.child("startLoc").child("lat").setValue(startLat);
+                mDatabase.child("startLoc").child("long").setValue(startLong);
             }
 
             @Override
