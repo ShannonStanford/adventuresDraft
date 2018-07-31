@@ -9,27 +9,18 @@
         android:id="@+id/map_one"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="412dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
     <fragment
         android:id="@+id/place_autocomplete_one"
         android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/map_one"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/place_autocomplete_one"
         android:layout_alignParentStart="true"
-        android:text="SET YOUR PICK UP LOCATION"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="105dp" />
+
 
 </RelativeLayout>
