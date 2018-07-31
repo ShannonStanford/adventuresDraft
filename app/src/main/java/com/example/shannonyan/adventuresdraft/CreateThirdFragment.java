@@ -1,29 +1,21 @@
 package com.example.shannonyan.adventuresdraft;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.api.client.json.Json;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.uber.sdk.rides.client.model.PriceEstimate;
-import com.uber.sdk.rides.client.model.PriceEstimatesResponse;
 import com.uber.sdk.rides.client.services.RidesService;
 
 import org.json.JSONArray;
@@ -31,14 +23,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URISyntaxException;
-import java.sql.Time;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.utils.URIBuilder;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -53,9 +41,8 @@ public class CreateThirdFragment extends Fragment {
     private TextView cityAns;
     private DatabaseReference mDatabase;
     public Button create;
-    public AsyncHttpClient client;
-    public final static String YELP_KEY= "@string/yelp_key";
-    public final static String SEARCH_API_URL = "@string/search_api_url";
+    public final static String YELP_KEY= "q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
+    public final static String SEARCH_API_URL = "https://api.yelp.com/v3/businesses/search";
     public List<String> food;
     public float numPeeps;
     public String priceRange;
