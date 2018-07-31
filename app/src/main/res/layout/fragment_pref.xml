@@ -7,19 +7,21 @@
 
     <Button
         android:id="@+id/btFood"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="145dp"
-        style="?android:attr/borderlessButtonStyle"
-        android:text="Food" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/picture" />
 
     <Button
         android:id="@+id/btCar"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="143dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/btFood"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_marginStart="0dp"
-        android:text="Car" />
+        android:background="@drawable/car" />
 
 </RelativeLayout>
