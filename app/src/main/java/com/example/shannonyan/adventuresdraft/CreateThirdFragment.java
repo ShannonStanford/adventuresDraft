@@ -1,29 +1,21 @@
 package com.example.shannonyan.adventuresdraft;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.api.client.json.Json;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.uber.sdk.rides.client.model.PriceEstimate;
-import com.uber.sdk.rides.client.model.PriceEstimatesResponse;
 import com.uber.sdk.rides.client.services.RidesService;
 
 import org.json.JSONArray;
@@ -31,14 +23,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URISyntaxException;
-import java.sql.Time;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.utils.URIBuilder;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -53,10 +42,9 @@ public class CreateThirdFragment extends Fragment {
     private TextView cityAns;
     private DatabaseReference mDatabase;
     public Button create;
-    public AsyncHttpClient client;
-    public final static String YELP_KEY= "@string/yelp_key";
-    public final static String SEARCH_API_URL = "@string/search_api_url";
-    public List<String> food;
+    public final static String YELP_KEY= "q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
+    public final static String SEARCH_API_URL = "https://api.yelp.com/v3/businesses/search";
+    public ArrayList<String> food;
     public float numPeeps;
     public String priceRange;
     public static final int priceRange1H = 10;
@@ -66,8 +54,8 @@ public class CreateThirdFragment extends Fragment {
     public static final int priceRange3H = 60;
     public UberClient uberClient;
     public RidesService service;
-    public float startLat;
-    public float startLong;
+    public double startLat;
+    public double startLong;
     public int highEstimate;
 
     public CreateThirdFragment() { }
@@ -87,7 +75,6 @@ public class CreateThirdFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         create = (Button) view.findViewById(R.id.create);
         uberClient = UberClient.getUberClientInstance(getContext());
-//        uberClient = UberClient.getUberClientInstance(getActivity());
         service = uberClient.service;
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +84,18 @@ public class CreateThirdFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         // test size
-//                        food = dataSnapshot.child("user").child("testUser").getValue(List<String>.class);
+                        food = (ArrayList<String>) dataSnapshot.child("user").child("testUser").child("foodPref").getValue();
                         numPeeps = dataSnapshot.child("trips").child("testTrip").child("uber").child("numPeeps").getValue(float.class);
                         startLat = dataSnapshot.child("trips").child("testTrip").child("uber").child("startLoc").child("lat").getValue(long.class);
                         startLong = dataSnapshot.child("trips").child("testTrip").child("uber").child("startLoc").child("long").getValue(long.class);
-                        CreateEvent();
+                        StringBuilder foodParam = new StringBuilder();
+                        for (int i = 0; i < food.size(); i++) {
+                            foodParam.append(food.get(i));
+                            if (i != food.size() - 1) {
+                                foodParam.append(",");
+                            }
+                        }
+                        CreateEvent(foodParam);
                     }
 
                     @Override
@@ -149,16 +143,8 @@ public class CreateThirdFragment extends Fragment {
         });
     }
 
-    public void CreateEvent() {
+    public void CreateEvent(StringBuilder foodPar) {
         // assembling the foodParam to put in for categories in the search query
-        String[] food2 = {"chinese", "american"};
-        StringBuilder foodParam = new StringBuilder();
-        for (int i = 0; i < food2.length; i++) {
-            foodParam.append(food2[i]);
-            if (i != food2.length - 1) {
-                foodParam.append(",");
-            }
-        }
         int priceCap = Integer.parseInt(String.valueOf(priceAns.getText()));
         final int uberCap = priceCap/4; // one way uber cap
         float foodCap = priceCap/(2 * numPeeps);
@@ -174,10 +160,10 @@ public class CreateThirdFragment extends Fragment {
 
         OkHttpClient client = new OkHttpClient();
         try {
-            URIBuilder builder = new URIBuilder(SEARCH_API_URL);
+            URIBuilder builder = new URIBuilder("https://api.yelp.com/v3/businesses/search");
             builder.addParameter("term", "restaurant");
             builder.addParameter("location", String.valueOf(cityAns.getText()));
-            builder.addParameter("categories", foodParam.toString());
+            builder.addParameter("categories", foodPar.toString());
             builder.addParameter("limit", "50");
             builder.addParameter("offset", "0");
             builder.addParameter("price", priceRange);
@@ -185,7 +171,7 @@ public class CreateThirdFragment extends Fragment {
             Request request = new Request.Builder()
                     .url(url)
                     .get()
-                    .addHeader("Authorization", "Bearer " + YELP_KEY)
+                    .addHeader("Authorization", "Bearer q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx")
                     .addHeader("Cache-Control", "no-cache")
                     .addHeader("Postman-Token", "25f7d9ed-02e6-46dc-8915-a68121e1a168")
                     .build();
@@ -217,12 +203,12 @@ public class CreateThirdFragment extends Fragment {
                         int n = rand.nextInt(results.length());
                         if (map[n]) n = rand.nextInt(results.length());
                         map[n] = true;
-                        JSONObject item = null;
+//                        JSONObject item = null;
                         try {
-                            item = results.getJSONObject(n);
-                            float endLat = item.getJSONObject("coordinates").getLong("latitude");
-                            float endLon = item.getJSONObject("coordinates").getLong("longitude");
-                            List<PriceEstimate> priceEstimates = service.getPriceEstimates(startLat, startLong, endLat, endLon).execute().body().getPrices();
+                            JSONObject item = results.getJSONObject(n);
+                            double endLat = item.getJSONObject("coordinates").getLong("latitude");
+                            double endLon = item.getJSONObject("coordinates").getLong("longitude");
+                            List<PriceEstimate> priceEstimates = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body().getPrices();
                             highEstimate = -1;
                             for (int i = 0; i < priceEstimates.size(); i++) {
                                 if (priceEstimates.get(i).getDisplayName().equals("UberX")) {
@@ -233,6 +219,9 @@ public class CreateThirdFragment extends Fragment {
                                 found = true;
                                 mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("lat").setValue(endLat);
                                 mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("long").setValue(endLon);
+                                mDatabase.child("trips").child("testTrip").child("event").child("downloadUrl").setValue(item.get("image_url"));
+                                mDatabase.child("trips").child("testTrip").child("event").child("name").setValue(item.get("name"));
+                                mDatabase.child("trips").child("testTrip").child("event").child("rating").setValue(item.get("rating"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -240,12 +229,13 @@ public class CreateThirdFragment extends Fragment {
                     }
                 }
             });
-            Intent intent = new Intent(getActivity(), StartActivity.class);
-            startActivity(intent);
+
             }
             catch (URISyntaxException e) {
             e.printStackTrace();
         }
+        Intent intent = new Intent(getActivity(), StartActivity.class);
+        startActivity(intent);
     }
 
     public static CreateThirdFragment newInstance() {
