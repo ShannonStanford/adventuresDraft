@@ -6,38 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".StartActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapViewStart"
         android:layout_width="398dp"
-        android:layout_height="331dp"
-        android:layout_alignBottom="@+id/tvStart"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="39dp" />
+        android:layout_height="361dp"
+        android:layout_above="@+id/btLaunch"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/tvStart"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:layout_above="@+id/btLaunch"
         android:layout_alignParentStart="true"
-        android:background="@android:color/holo_blue_dark"
+        android:layout_alignParentTop="true"
+        android:background="#36e4c8"
         android:text="MEET HERE"
         android:textAlignment="center"
-        android:textColor="@android:color/background_dark"
+        android:textColor="@color/uber_black"
         android:textSize="30sp" />
 
     <Button
@@ -46,12 +31,12 @@
         android:layout_height="159dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#00ddfa"
+        android:background="#ec505a"
         android:elevation="0dp"
-        android:text="LAUNCH MY ADVENTURE"
+        android:text="HERE AND READY"
         android:textAlignment="center"
+        android:textColor="@android:color/background_light"
         android:textSize="36sp"
-        android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
 </RelativeLayout>

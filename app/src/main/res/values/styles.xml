@@ -1,16 +1,24 @@
 <resources>
 
      <!--Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
 
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@drawable/cyandarkgradient</item>
+        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="android:navigationBarColor">@drawable/greenishgradient</item>
+        <item name="android:statusBarColor">@drawable/greenishgradient</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="neww" parent="AppTheme" >
+        <item name="colorPrimary">@color/primary_dark_material_dark_1</item>
+    </style>
+
 
 </resources>

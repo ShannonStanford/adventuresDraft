@@ -1,5 +1,6 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -46,6 +47,8 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("trips").child("testTrip").child("uber");
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
+        placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
+        placeAutoComplete.setHint("Set your pick up location");
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -83,7 +86,6 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
         markerOptions.position(p.getLatLng());
         markerOptions.title(p.getName()+"");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
         mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));

@@ -10,94 +10,99 @@
         android:id="@+id/ivDriverPic"
         android:layout_width="184dp"
         android:layout_height="156dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
         android:src="@android:color/background_dark" />
 
     <Button
         android:id="@+id/btDriverMap"
-        android:layout_width="138dp"
-        android:layout_height="93dp"
+        android:layout_width="126dp"
+        android:layout_height="71dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:text="MAP" />
+        android:background="@drawable/map" />
 
     <TextView
         android:id="@+id/tvDriverName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btDriverMap"
         android:layout_alignParentStart="true"
-        android:text="Driver Name"
-        android:textSize="24sp" />
+        android:layout_below="@+id/ivDriverPic"
+        android:text="JOHN"
+        android:textAlignment="center"
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/tvCarMake"
         android:layout_width="200dp"
         android:layout_height="31dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ivDriverPic"
-        android:text="Make"
-        android:textSize="18sp" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvDriverName"
+        android:text="Toyota"
+        android:textAlignment="center"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvCarModel"
-        android:layout_width="200dp"
+        android:layout_width="154dp"
         android:layout_height="35dp"
-        android:layout_below="@+id/tvCarMake"
-        android:layout_toEndOf="@+id/ivDriverPic"
-        android:text="Model"
-        android:textSize="18sp" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvDriverName"
+        android:text="Corolla"
+        android:textAlignment="center"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvCarLicense"
         android:layout_width="200dp"
         android:layout_height="29dp"
-        android:layout_below="@+id/tvCarModel"
-        android:layout_toEndOf="@+id/ivDriverPic"
+        android:layout_alignStart="@+id/ivDriverPic"
+        android:layout_below="@+id/tvCarMake"
         android:text="License#"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tvEta"
-        android:layout_width="match_parent"
-        android:layout_height="176dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/btDriverMap"
-        android:layout_marginTop="60dp"
-        android:text="ETA"
         android:textAlignment="center"
-        android:textSize="@android:dimen/notification_large_icon_width" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btCallDriver"
-        android:layout_width="135dp"
-        android:layout_height="93dp"
-        android:layout_alignBottom="@+id/btDriverMap"
-        android:layout_toEndOf="@+id/btDriverMap"
-        android:text="CALL" />
+        android:layout_width="116dp"
+        android:layout_height="78dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/phone" />
 
     <Button
         android:id="@+id/btCancel"
         android:layout_width="111dp"
-        android:layout_height="95dp"
-        android:layout_alignTop="@+id/btDriverMap"
-        android:layout_toEndOf="@+id/btCallDriver"
-        android:text="CANCEL" />
+        android:layout_height="84dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@drawable/close" />
 
-    <android.support.design.widget.AppBarLayout
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="233dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/tvCarLicense"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/tvEta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_above="@+id/btCallDriver"
+        android:layout_alignParentStart="true"
+        android:text="ETA"
+        android:textAlignment="center"
+        android:textSize="@android:dimen/notification_large_icon_width" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <include layout="@layout/content_eta" />
+    <include
+        layout="@layout/content_eta"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

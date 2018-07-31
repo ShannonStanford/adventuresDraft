@@ -32,7 +32,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".CreateFlowActivity">
+        <activity android:name=".CreateFlowActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,6 +69,7 @@
             android:label="@string/title_activity_rider_cancel"
             android:theme="@style/AppTheme" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".StartActivity" />
         <activity android:name=".TestYelp" />
         <activity android:name=".ReturnHomeActivity"></activity>
     </application>
