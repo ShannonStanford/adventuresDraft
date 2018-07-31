@@ -84,7 +84,7 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    String priceCap = etPeeps.getText().toString();
+                    int priceCap = Integer.parseInt(etPeeps.getText().toString());
                     mDatabase.child("trips").child("testTrip").child("uber").child("numPeeps").setValue(priceCap);
                 }
             }

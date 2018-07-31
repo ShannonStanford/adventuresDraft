@@ -12,4 +12,6 @@
     <string name="google_maps_api_key">AIzaSyBIsVrW1nBUXuhJI65rECOfEXlRIUO_8H4</string>
     <string name="title_activity_test_map_search">testMapSearch</string>
     <string name="title_activity_create_flow">CreateFlowActivity</string>
+    <string name="yelp_key">q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx</string>
+    <string name="search_api_url">https://api.yelp.com/v3/businesses/search</string>
 </resources>

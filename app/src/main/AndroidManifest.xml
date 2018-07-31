@@ -70,6 +70,7 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".TestYelp" />
         <activity android:name=".ReturnHomeActivity"></activity>
+        <activity android:name=".StartActivity"></activity>
     </application>
 
 </manifest>
