@@ -13,6 +13,7 @@
         android:layout_height="87dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/uber_white"
         android:text="Overview" />
 
     <TextView
@@ -22,7 +23,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="110dp"
-        android:text="Pick up location" />
+        android:text="Pick up location"
+        android:textColor="@color/uber_white" />
 
     <TextView
         android:id="@+id/city"
@@ -31,6 +33,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="167dp"
+        android:textColor="@color/uber_white"
         android:text="City of Interest" />
 
     <TextView
@@ -40,6 +43,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="223dp"
+        android:textColor="@color/uber_white"
         android:text="Price Cap" />
 
     <TextView
@@ -49,6 +53,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/pickup"
         android:layout_marginStart="147dp"
+        android:textColor="@color/uber_white"
         android:text="Pickup Ans" />
 
     <TextView
@@ -57,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/pickup_ans"
         android:layout_alignTop="@+id/city"
+        android:textColor="@color/uber_white"
         android:text="City Ans" />
 
     <TextView
@@ -65,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/pickup_ans"
         android:layout_alignTop="@+id/price"
+        android:textColor="@color/uber_white"
         android:text="Price Ans" />
 
     <Button

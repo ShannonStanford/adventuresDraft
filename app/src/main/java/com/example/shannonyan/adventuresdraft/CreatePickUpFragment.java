@@ -1,5 +1,6 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,6 +34,8 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        MapStyleOptions style = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.greyscale);
+        mMap.setMapStyle(style);
     }
 
     public CreatePickUpFragment() { }
@@ -46,6 +50,8 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("trips").child("testTrip").child("uber");
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
+        placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
+        placeAutoComplete.setHint("Set your pick up location");
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorPrimaryDark">#36e4c8</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="place_autocomplete_search_text">@android:color/primary_text_dark</color>
+    <color name="place_autocomplete_search_hint">@android:color/secondary_text_dark</color>
+    <color name="green">#b3dd68</color>
+    <color name="orgag">#f46620</color>
+    <color name="grey">#2B2D42</color>
+    <color name="background_material_light">#fffdfd</color>
+    <color name="foreground_material_light">#f9f7f7</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.shannonyan.adventuresdraft;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -50,6 +51,8 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
         etPeeps = view.findViewById(R.id.etNumPeeps);
         etPrice = view.findViewById(R.id.etPrice);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
+        placeAutoComplete.getView().setBackgroundColor(Color.DKGRAY);
+        placeAutoComplete.setHint("Pick your City of Interest");
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
