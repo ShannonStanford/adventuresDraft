@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.api.client.json.Json;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,12 +32,19 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.URISyntaxException;
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.client.utils.URIBuilder;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class CreateThirdFragment extends Fragment {
 
@@ -56,11 +64,11 @@ public class CreateThirdFragment extends Fragment {
     public static final int priceRange2H = 30;
     public static final int priceRange3L = 31;
     public static final int priceRange3H = 60;
-    public static final int priceRange4L = 61;
     public UberClient uberClient;
     public RidesService service;
     public float startLat;
     public float startLong;
+    public int highEstimate;
 
     public CreateThirdFragment() { }
 
@@ -93,91 +101,13 @@ public class CreateThirdFragment extends Fragment {
                         numPeeps = dataSnapshot.child("trips").child("testTrip").child("uber").child("numPeeps").getValue(float.class);
                         startLat = dataSnapshot.child("trips").child("testTrip").child("uber").child("startLoc").child("lat").getValue(long.class);
                         startLong = dataSnapshot.child("trips").child("testTrip").child("uber").child("startLoc").child("long").getValue(long.class);
-
                         CreateEvent();
-
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
                 });
-
-//                // assembling the foodParam to put in for categories in the search query
-//                String[] food2 = {"chinese", "american"};
-//                StringBuilder foodParam = new StringBuilder();
-//                for (int i = 0; i < food2.length; i++) {
-//                    foodParam.append(food2[i]);
-//                    if (i != food2.length - 1) {
-//                        foodParam.append(",");
-//                    }
-//                }
-//                int priceCap = Integer.parseInt(String.valueOf(priceAns.getText()));
-//                final int uberCap = priceCap/4; // one way uber cap
-//                float foodCap = priceCap/(2 * numPeeps);
-//                // determine the priceRange to query with
-//                if (foodCap <= priceRange1H)
-//                    priceRange = "1";
-//                else if (foodCap >= priceRange2L && foodCap <= priceRange2H)
-//                    priceRange = "2";
-//                else if(foodCap >= priceRange3L && foodCap <= priceRange3H)
-//                    priceRange = "3";
-//                else
-//                    priceRange = "4";
-//
-//                //TODO: pass in above info into yelp API call and determine which restaurant/event from response
-//                client = new AsyncHttpClient();
-//                RequestParams params = new RequestParams();
-//                // add token bearer authentication header
-//                client.addHeader("Authorization", "Bearer " + YELP_KEY);
-//                params.put("term", "restaurant");
-//                params.put("location", cityAns.getText());
-//                params.put("categories", foodParam);
-//                params.put("price", priceRange);
-//                params.put("limit", 50);
-//                params.put("offset", 0);
-//
-//                client.get(SEARCH_API_URL, params, new JsonHttpResponseHandler() {
-//                    @Override
-//                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                        try {
-//                            JSONArray results = response.getJSONArray("businesses");
-//                            boolean[] map = new boolean[results.length()];
-//                            boolean found = false;
-//                            Random rand = new Random();
-//                            while(!found) {
-//                                int n = rand.nextInt(results.length());
-//                                if (map[n]) n = rand.nextInt(results.length());
-//                                map[n] = true;
-//                                JSONObject item = results.getJSONObject(n);
-//                                float endLat = item.getJSONObject("coordinates").getLong("latitude");
-//                                float endLon = item.getJSONObject("coordinates").getLong("longitude");
-//                                // get uber price estimates to figure out if the location fits under the priceCap
-//                                List<PriceEstimate> priceEstimates = service.getPriceEstimates(startLat, startLong, endLat, endLon).execute().body().getPrices();
-//                                int highEstimate = priceEstimates.get(6).getHighEstimate(); // get the normal uberX price estimate
-//                                if (highEstimate <= uberCap) {
-//                                    found = true;
-//                                    mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("lat").setValue(endLat);
-//                                    mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("long").setValue(endLon);
-//                                }
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//
-//                    }
-//                });
-                //TODO: store relevant data about restaurant/event in database
-
-//                CreateEvent();
-                //launch start activity
-
             }
         });
 
@@ -203,7 +133,6 @@ public class CreateThirdFragment extends Fragment {
         super.onResume();
         setValues();
     }
-
 
     public void setValues(){
         mDatabase.child("trips").child("testTrip").child("uber").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -243,23 +172,44 @@ public class CreateThirdFragment extends Fragment {
         else
             priceRange = "4";
 
-        //TODO: pass in above info into yelp API call and determine which restaurant/event from response
-        client = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
-        // add token bearer authentication header
-        client.addHeader("Authorization", "Bearer " + YELP_KEY);
-        params.put("term", "restaurant");
-        params.put("location", cityAns.getText());
-        params.put("categories", foodParam);
-        params.put("price", priceRange);
-        params.put("limit", 50);
-        params.put("offset", 0);
+        OkHttpClient client = new OkHttpClient();
+        try {
+            URIBuilder builder = new URIBuilder(SEARCH_API_URL);
+            builder.addParameter("term", "restaurant");
+            builder.addParameter("location", String.valueOf(cityAns.getText()));
+            builder.addParameter("categories", foodParam.toString());
+            builder.addParameter("limit", "50");
+            builder.addParameter("offset", "0");
+            builder.addParameter("price", priceRange);
+            String url = builder.build().toString();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .get()
+                    .addHeader("Authorization", "Bearer " + YELP_KEY)
+                    .addHeader("Cache-Control", "no-cache")
+                    .addHeader("Postman-Token", "25f7d9ed-02e6-46dc-8915-a68121e1a168")
+                    .build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
 
-        client.get(SEARCH_API_URL, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    JSONArray results = response.getJSONArray("businesses");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String jsonData = response.body().string();
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(jsonData);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    JSONArray results = null; // get the json array from the response
+                    try {
+                        results = jsonObject.getJSONArray("businesses");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     boolean[] map = new boolean[results.length()];
                     boolean found = false;
                     Random rand = new Random();
@@ -267,32 +217,35 @@ public class CreateThirdFragment extends Fragment {
                         int n = rand.nextInt(results.length());
                         if (map[n]) n = rand.nextInt(results.length());
                         map[n] = true;
-                        JSONObject item = results.getJSONObject(n);
-                        float endLat = item.getJSONObject("coordinates").getLong("latitude");
-                        float endLon = item.getJSONObject("coordinates").getLong("longitude");
-                        // get uber price estimates to figure out if the location fits under the priceCap
-                        List<PriceEstimate> priceEstimates = service.getPriceEstimates(startLat, startLong, endLat, endLon).execute().body().getPrices();
-                        int highEstimate = priceEstimates.get(6).getHighEstimate(); // get the normal uberX price estimate
-                        if (highEstimate <= uberCap) {
-                            found = true;
-                            mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("lat").setValue(endLat);
-                            mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("long").setValue(endLon);
+                        JSONObject item = null;
+                        try {
+                            item = results.getJSONObject(n);
+                            float endLat = item.getJSONObject("coordinates").getLong("latitude");
+                            float endLon = item.getJSONObject("coordinates").getLong("longitude");
+                            List<PriceEstimate> priceEstimates = service.getPriceEstimates(startLat, startLong, endLat, endLon).execute().body().getPrices();
+                            highEstimate = -1;
+                            for (int i = 0; i < priceEstimates.size(); i++) {
+                                if (priceEstimates.get(i).getDisplayName().equals("UberX")) {
+                                    highEstimate = priceEstimates.get(i).getHighEstimate();
+                                }
+                            }
+                            if (highEstimate <= uberCap) {
+                                found = true;
+                                mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("lat").setValue(endLat);
+                                mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("long").setValue(endLon);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
-                    Intent intent = new Intent(getActivity(), StartActivity.class);
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+            });
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            startActivity(intent);
             }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
-            }
-        });
+            catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     public static CreateThirdFragment newInstance() {
