@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,24 +22,38 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class StartActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     public Button btLaunch;
+    public GoogleMap gMap;
 
     private MapView mapView;
-    private GoogleMap gMap;
+    private DatabaseReference mDatabase;
+    private static final String TRIPS = "trips";
+    private static final String TEST_TRIPS = "testTrip";
+    private static final String UBER = "uber";
+    private static final String START_LOC = "startLoc";
+    private static final String LAT = "lat";
+    private static final String LONG = "long";
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private final int ZOOM_PREF = 12;
+    private float startLat;
+    private float startLong;
+    private final int ZOOM_PREF = 14;
     private final int STROKE_WIDTH = 6;
     private final int CURR_LOCATION_CIRCLE_RADIUS = 200;
-    private final double HARD_CODE_LAT = 37.4564126;
-    private final double HARD_CODE_LNG = -122.18630009999998;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(TRIPS).child(TEST_TRIPS).child(UBER);
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,7 +65,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
         }
-
         mapView = findViewById(R.id.mapViewStart);
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
@@ -114,7 +128,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
         gMap.setMinZoomPreference(ZOOM_PREF);
-        LatLng ny = new LatLng(HARD_CODE_LAT, HARD_CODE_LNG);
+        getStartLatLong();
+        LatLng ny = new LatLng(startLat, startLong);
         gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
         gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         gMap.setOnMyLocationClickListener(onMyLocationClickListener);
@@ -139,7 +154,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         Toast.makeText(this, "Location permission not granted, " +
                         "showing default location",
                 Toast.LENGTH_SHORT).show();
-        LatLng hotel = new LatLng(HARD_CODE_LAT, HARD_CODE_LNG);
+        LatLng hotel = new LatLng(startLat, startLong);
         gMap.moveCamera(CameraUpdateFactory.newLatLng(hotel));
     }
 
@@ -187,4 +202,32 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 }
             };
 
+    public void getStartLatLong(){
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                startLat = (float) dataSnapshot.child(START_LOC).child(LAT).getValue(float.class);
+                startLong = (float) dataSnapshot.child(START_LOC).child(LONG).getValue(float.class);
+                Log.d("start", String.valueOf(startLat));
+                Log.d("start", String.valueOf(startLong));
+
+                LatLng ny = new LatLng(startLat, startLong);
+                gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+                setPickUpMarker();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("FindActivity", "Firebase cancelled");
+            }
+        });
+
+    }
+
+    public void setPickUpMarker(){
+        gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
+        Log.d("pick up", String.valueOf(startLat));
+        Log.d("pick up", String.valueOf(startLong));
+    }
 }

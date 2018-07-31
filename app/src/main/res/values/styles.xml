@@ -4,12 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
 
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@drawable/cyandarkgradient</item>
-        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorBackground">@color/black</item>
-        <item name="android:navigationBarColor">@drawable/greenishgradient</item>
-        <item name="android:statusBarColor">@drawable/greenishgradient</item>
+        <item name="android:colorForeground">@color/foreground_material_light</item>
+        <item name="android:statusBarColor">@color/green</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/background_material_light</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
