@@ -10,8 +10,8 @@
         android:id="@+id/tvLocationName"
         android:layout_width="match_parent"
         android:layout_height="46dp"
+        android:layout_above="@+id/locationRating"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/ivEvent"
         android:text="Location Name"
         android:textAlignment="center"
         android:textSize="36sp"
@@ -21,8 +21,9 @@
         android:id="@+id/locationRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLocationName"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="152dp"
         android:rating="0" />
 
     <Button
@@ -41,12 +42,4 @@
         android:layout_width="match_parent"
         android:layout_height="286dp"
         android:src="@android:color/holo_blue_dark" />
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-    </android.support.design.widget.AppBarLayout>
-
 </RelativeLayout>

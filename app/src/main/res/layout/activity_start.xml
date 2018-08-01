@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".StartActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-    </android.support.design.widget.AppBarLayout>
-
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapViewStart"
         android:layout_width="match_parent"
@@ -30,7 +23,8 @@
         android:text="MEET HERE"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btLaunch"
@@ -41,10 +35,8 @@
         android:layout_marginBottom="51dp"
         android:background="#EC505A"
         android:elevation="10dp"
-        android:text="LAUNCH MY ADVENTURE"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp"
+        android:text="AT LAUNCH         LOCATION"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

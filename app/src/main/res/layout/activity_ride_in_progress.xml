@@ -10,21 +10,12 @@
         android:id="@+id/ivQuestionMark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@android:drawable/ic_menu_help" />
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/cyandarkgradient"
+        android:scaleType="fitStart"
+        app:srcCompat="@drawable/rocketstart" />
 
     <include layout="@layout/content_ride_in_progress" />
 

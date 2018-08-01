@@ -14,7 +14,6 @@ public class NoDriversFoundActivity extends AppCompatActivity {
 
     public Button tryagain;
     public Button exit;
-    public TextView tvNoDrivers;
     public String rideId;
 
     @Override
@@ -41,7 +40,7 @@ public class NoDriversFoundActivity extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(NoDriversFoundActivity.this, EventActivity.class);
+                Intent intent = new Intent(NoDriversFoundActivity.this, CreateFlowActivity.class);
                 startActivity(intent);
             }
         });

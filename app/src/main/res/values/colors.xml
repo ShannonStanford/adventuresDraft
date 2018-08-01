@@ -10,4 +10,9 @@
     <color name="grey">#2B2D42</color>
     <color name="background_material_light">#fffdfd</color>
     <color name="foreground_material_light">#f9f7f7</color>
+    <color name="black">#303030</color>
+    <color name="primary_dark_material_dark_1">#36e4c8</color>
+    <color name="primary_material_dark">#36e4c8</color>
+    <color name="background_material_dark">#db3535</color>
+    <color name="text_color_primary">#000000</color>
 </resources>

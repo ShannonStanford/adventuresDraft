@@ -185,7 +185,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
             };
 
     private GoogleMap.OnMyLocationClickListener onMyLocationClickListener =
-            new GoogleMap.OnMyLocationClickListener() {
+                new GoogleMap.OnMyLocationClickListener() {
                 @Override
                 public void onMyLocationClick(@NonNull Location location) {
 

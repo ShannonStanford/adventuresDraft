@@ -66,6 +66,7 @@
         android:layout_marginTop="257dp"
         android:text="License#"
         android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
         android:textSize="18sp" />
 
     <TextView
@@ -88,7 +89,7 @@
         android:layout_marginStart="0dp"
         android:text="5 min"
         android:textAlignment="center"
-        android:textSize="@android:dimen/notification_large_icon_width" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btCallDriver"
