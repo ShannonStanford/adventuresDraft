@@ -135,7 +135,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         gMap.setOnMyLocationClickListener(onMyLocationClickListener);
         enableMyLocationIfPermitted();
-        gMap.getUiSettings().setZoomControlsEnabled(true);
+        gMap.getUiSettings().setZoomControlsEnabled(false);
     }
 
     private void enableMyLocationIfPermitted() {

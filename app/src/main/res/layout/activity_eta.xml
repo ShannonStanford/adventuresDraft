@@ -8,96 +8,114 @@
 
     <ImageView
         android:id="@+id/ivDriverPic"
-        android:layout_width="184dp"
-        android:layout_height="156dp"
-        android:src="@android:color/background_dark" />
+        android:layout_width="205dp"
+        android:layout_height="185dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@android:color/background_dark"
+        app:srcCompat="@drawable/driver" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="131dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ivDriverPic"
+        app:srcCompat="@color/common_google_signin_btn_text_light_disabled" />
 
     <Button
         android:id="@+id/btDriverMap"
-        android:layout_width="138dp"
-        android:layout_height="93dp"
+        android:layout_width="110dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:text="MAP" />
+        android:layout_marginBottom="13dp"
+        android:layout_marginStart="14dp"
+        android:background="@drawable/car_icon" />
 
     <TextView
         android:id="@+id/tvDriverName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btDriverMap"
-        android:layout_alignParentStart="true"
-        android:text="Driver Name"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="187dp"
+        android:text="Mark Zuckerberg"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tvCarMake"
-        android:layout_width="200dp"
+        android:layout_width="98dp"
         android:layout_height="31dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ivDriverPic"
-        android:text="Make"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tvCarModel"
-        android:layout_width="200dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/tvCarMake"
-        android:layout_toEndOf="@+id/ivDriverPic"
-        android:text="Model"
+        android:layout_above="@+id/tvCarLicense"
+        android:layout_alignStart="@+id/tvDriverName"
+        android:layout_marginBottom="-257dp"
+        android:text="Toyota"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tvCarLicense"
-        android:layout_width="200dp"
+        android:layout_width="183dp"
         android:layout_height="29dp"
-        android:layout_below="@+id/tvCarModel"
-        android:layout_toEndOf="@+id/ivDriverPic"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="257dp"
         android:text="License#"
-        android:textSize="14sp" />
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvCarModel"
+        android:layout_width="84dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/tvCarMake"
+        android:layout_marginEnd="92dp"
+        android:text="Corolla"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tvEta"
         android:layout_width="match_parent"
-        android:layout_height="176dp"
+        android:layout_height="138dp"
+        android:layout_above="@+id/btDriverMap"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/btDriverMap"
-        android:layout_marginTop="60dp"
-        android:text="ETA"
+        android:layout_marginStart="0dp"
+        android:text="5 min"
         android:textAlignment="center"
         android:textSize="@android:dimen/notification_large_icon_width" />
 
     <Button
         android:id="@+id/btCallDriver"
-        android:layout_width="135dp"
-        android:layout_height="93dp"
+        android:layout_width="109dp"
+        android:layout_height="103dp"
         android:layout_alignBottom="@+id/btDriverMap"
-        android:layout_toEndOf="@+id/btDriverMap"
-        android:text="CALL" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/call_button" />
 
     <Button
         android:id="@+id/btCancel"
-        android:layout_width="111dp"
-        android:layout_height="95dp"
+        android:layout_width="107dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/btDriverMap"
-        android:layout_toEndOf="@+id/btCallDriver"
-        android:text="CANCEL" />
+        android:layout_marginEnd="17dp"
+        android:background="@drawable/cancel" />
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="167dp"
+        android:layout_height="122dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/ivDriverPic"
+        app:srcCompat="@drawable/sample_car" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <include layout="@layout/content_eta" />
 
 </RelativeLayout>
