@@ -17,7 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,14 +28,21 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
     private DatabaseReference mDatabase;
     private double startLat;
     private double startLong;
+    private final int ZOOM_PREF = 14;
+    private final double HARD_LAT = 37.479222;
+    private final double HARD_LNG = -122.152279;
 
     public SupportPlaceAutocompleteFragment placeAutoComplete;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        MapStyleOptions style = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.greyscale);
-        mMap.setMapStyle(style);
+//        MapStyleOptions style = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.greyscale);
+//        mMap.setMapStyle(style);
+        mMap.setMinZoomPreference(ZOOM_PREF);
+        LatLng ny = new LatLng(HARD_LAT, HARD_LNG);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+        mMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
     public CreatePickUpFragment() { }

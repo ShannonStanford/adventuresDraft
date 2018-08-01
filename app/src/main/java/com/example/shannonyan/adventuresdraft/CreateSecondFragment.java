@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,10 +32,16 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
     private String cityInterest;
     private EditText etPeeps;
     private EditText etPrice;
+    private final double HARD_LAT = 37.669695;
+    private final double HARD_LNG = -122.260088;
+    private final int ZOOM_PREF = 9;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMinZoomPreference(ZOOM_PREF);
+        LatLng ny = new LatLng(HARD_LAT, HARD_LNG);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
     }
 
     public CreateSecondFragment() { }
