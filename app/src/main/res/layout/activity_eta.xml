@@ -31,6 +31,7 @@
         android:layout_below="@+id/ivDriverPic"
         android:text="JOHN"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="36sp" />
 
     <TextView
@@ -41,6 +42,7 @@
         android:layout_below="@+id/tvDriverName"
         android:text="Toyota"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="24sp" />
 
     <TextView
@@ -51,6 +53,7 @@
         android:layout_below="@+id/tvDriverName"
         android:text="Corolla"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="24sp" />
 
     <TextView
@@ -61,6 +64,7 @@
         android:layout_below="@+id/tvCarMake"
         android:text="License#"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="18sp" />
 
     <Button
@@ -99,6 +103,7 @@
         android:layout_alignParentStart="true"
         android:text="ETA"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="@android:dimen/notification_large_icon_width" />
 
     <include
