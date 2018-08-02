@@ -122,4 +122,60 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
         dialog = builder.create();
         dialog.show();
     }
+
+    public void onPrefButtonClicked(String choice){
+        AlertDialog dialog;
+        String Title = "";
+        String selectedChoice = "";
+        final String[] options;
+        final ArrayList selections = new ArrayList();
+
+
+        if(choice.equals("food")){
+            Title = "Select the cuisine you prefer:";
+            options = new String[] {"American","Barbeque","Beer Garden", "Brazilian", "Burgers", "Caribbean",
+                    "Chinese", "Fast Food", "French", "German", "Greek", "Hawaiian", "Indian",
+                    "Italian","Japanese", "Korean", "Mediterranean", "Portuguese", "Salad", "Sandwiches", "Seafood", "Southern", "Spanish"};
+            selectedChoice = "food";
+
+        } else {
+            Title = "Select the car you prefer:";
+            options = new String[] {"UberX", "UberXL", "UberSELECT","UberBLACK", "UberSUV", "UberLUX"};
+            selectedChoice = "car";
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(Title);
+        final String finalSelectedChoice = selectedChoice;
+        builder.setMultiChoiceItems(options, null,
+                new DialogInterface.OnMultiChoiceClickListener() {
+                    // indexSelected contains the index of item (of which checkbox checked)
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                        String selected = options[indexSelected];
+                        if (isChecked) {
+                            selections.add(selected);
+                        } else if (selections.contains(selected)) {
+                            selections.remove(selected);
+                        }
+                    }
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        mDatabase.child(finalSelectedChoice).setValue(selections);
+                        Toast.makeText(getBaseContext(),"Preferences updated", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(getBaseContext(),"Preferences not updated", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        dialog = builder.create();
+        dialog.show();
+
+    }
 }

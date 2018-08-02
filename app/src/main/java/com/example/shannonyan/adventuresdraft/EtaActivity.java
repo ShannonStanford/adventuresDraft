@@ -179,6 +179,7 @@ public class EtaActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<RideMap> call, Throwable t) {
+                        Log.d("ETA Activity", "OnMapButtonClick failed");
                     }
                 });
                 // launch the map activity to show their progress
