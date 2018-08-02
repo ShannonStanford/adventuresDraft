@@ -32,5 +32,6 @@ public final class Constants {
     public static final String CAR_PREF ="carPref";
     public static final String PREF = "Preferences";
     public static final String PAST_TRIPS = "Past Trips";
+    public static final String PICK_UP_NAME = "pickUpName";
 
 }
