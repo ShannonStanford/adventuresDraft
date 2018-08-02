@@ -19,24 +19,24 @@
         android:layout_height="46dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#36e4c8"
+        android:background="#36E4C8"
         android:text="MEET HERE"
         android:textAlignment="center"
-        android:textColor="@color/uber_black"
-        android:textSize="30sp" />
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btLaunch"
-        android:layout_width="match_parent"
-        android:layout_height="159dp"
+        android:layout_width="331dp"
+        android:layout_height="120dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="#ec505a"
-        android:elevation="0dp"
-        android:text="HERE AND READY"
-        android:textAlignment="center"
-        android:textSize="36sp"
-        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="51dp"
+        android:background="#EC505A"
+        android:elevation="10dp"
+        android:text="AT LAUNCH         LOCATION"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
