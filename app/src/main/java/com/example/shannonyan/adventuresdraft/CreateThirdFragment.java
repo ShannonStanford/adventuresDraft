@@ -40,6 +40,8 @@ public class CreateThirdFragment extends Fragment {
     private TextView pickupAns;
     private TextView priceAns;
     private TextView cityAns;
+    private TextView numPeep;
+    private TextView numPeepAns;
     private DatabaseReference mDatabase;
     public Button create;
     public final static String YELP_KEY= "q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
@@ -72,10 +74,13 @@ public class CreateThirdFragment extends Fragment {
         priceAns = view.findViewById(R.id.price_ans);
         cityAns = view.findViewById(R.id.city_ans);
         create = view.findViewById(R.id.create);
+        numPeep = view.findViewById(R.id.num_peeps);
+        numPeepAns = view.findViewById(R.id.num_peeps_ans);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         create = (Button) view.findViewById(R.id.create);
         uberClient = UberClient.getUberClientInstance(getContext());
         service = uberClient.service;
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,8 +114,9 @@ public class CreateThirdFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 cityAns.setText(dataSnapshot.child("cityOfInterest").getValue(String.class));
-                priceAns.setText(dataSnapshot.child("priceCap").getValue(String.class));
+                priceAns.setText("$" + dataSnapshot.child("priceCap").getValue(String.class));
                 pickupAns.setText(dataSnapshot.child("pickUpName").getValue(String.class));
+                numPeepAns.setText(String.valueOf(dataSnapshot.child("numPeeps").getValue(Integer.class)));
             }
 
             @Override
