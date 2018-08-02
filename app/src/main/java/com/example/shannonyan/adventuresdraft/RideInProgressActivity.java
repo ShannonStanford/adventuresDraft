@@ -20,7 +20,6 @@ public class RideInProgressActivity extends AppCompatActivity {
     public RidesService service;
     public UberClient uberClient;
     public String rideID;
-    public String status;
     public Timer timer;
 
     @Override

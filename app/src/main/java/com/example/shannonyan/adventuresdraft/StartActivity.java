@@ -52,7 +52,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(TRIPS).child(TEST_TRIPS).child(UBER);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
         getStartLatLong();
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -206,8 +206,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                startLat = (float) dataSnapshot.child(START_LOC).child(LAT).getValue(float.class);
-                startLong = (float) dataSnapshot.child(START_LOC).child(LONG).getValue(float.class);
+                startLat = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LAT).getValue(float.class);
+                startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
                 Log.d("start", String.valueOf(startLat));
                 Log.d("start", String.valueOf(startLong));
 //

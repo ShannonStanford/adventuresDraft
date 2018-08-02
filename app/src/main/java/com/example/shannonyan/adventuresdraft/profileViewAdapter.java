@@ -31,9 +31,9 @@ public class profileViewAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch(position) {
-            case PAGE_0: return "Preferences";
-            case PAGE_1: return "Past Trips";
-            default: return "Preferences";
+            case PAGE_0: return Constants.PREF;
+            case PAGE_1: return Constants.PAST_TRIPS;
+            default: return Constants.PREF;
         }
     }
 }
