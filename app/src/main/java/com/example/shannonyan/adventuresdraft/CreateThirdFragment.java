@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.JsonObject;
 import com.uber.sdk.rides.client.model.PriceEstimate;
 import com.uber.sdk.rides.client.services.RidesService;
 
@@ -44,7 +45,7 @@ public class CreateThirdFragment extends Fragment {
     private TextView numPeepAns;
     private DatabaseReference mDatabase;
     public Button create;
-    public final static String YELP_KEY= "q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
+    public final static String YELP_KEY= "Bearer q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
     public final static String SEARCH_API_URL = "https://api.yelp.com/v3/businesses/search";
     public ArrayList<String> food;
     public float numPeeps;
@@ -60,6 +61,30 @@ public class CreateThirdFragment extends Fragment {
     public double startLong;
     public int highEstimate;
     public boolean found = false;
+
+    private static final String TRIPS = "trips";
+    private static final String TEST_TRIP = "testTrip";
+    private static final String TEST_USER = "testUser";
+    private static final String UBER = "uber";
+    private static final String NUM_PEEPS = "numPeeps";
+    private static final String START_LOC = "startLoc";
+    private static final String END_LOC = "endLoc";
+    private static final String LAT = "lat";
+    private static final String LATITUDE = "latitude";
+    private static final String LONGITUDE = "longitude";
+    private static final String COORDINATES = "coordinates";
+    private static final String LONG = "long";
+    private static final String FOOD_PREF = "foodPref";
+    private static final String USER = "user";
+    private static final String EVENT = "event";
+    private static final String DOWNLOAD_URL = "downloadUrl";
+    private static final String NAME = "name";
+    private static final String RATING = "rating";
+    private static final String IMAGE_URL = "image_url";
+    private static final String UBERX = "UberX";
+    private static final String PRICE_CAP = "priceCap";
+    private static final String PICKUP_NAME = "pickUpName";
+    private static final String CITY_OF_INTEREST = "cityOfInterest";
 
     public CreateThirdFragment() { }
 
@@ -90,10 +115,10 @@ public class CreateThirdFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         // test size
-                        food = (ArrayList<String>) dataSnapshot.child("user").child("testUser").child("foodPref").getValue();
-                        numPeeps = dataSnapshot.child("trips").child("testTrip").child("uber").child("numPeeps").getValue(float.class);
-                        startLat = dataSnapshot.child("trips").child("testTrip").child("uber").child("startLoc").child("lat").getValue(long.class);
-                        startLong = dataSnapshot.child("trips").child("testTrip").child("uber").child("startLoc").child("long").getValue(long.class);
+                        food = (ArrayList<String>) dataSnapshot.child(USER).child(TEST_TRIP).child(FOOD_PREF).getValue();
+                        numPeeps = dataSnapshot.child(TRIPS).child(TEST_TRIP).child(UBER).child(NUM_PEEPS).getValue(float.class);
+                        startLat = dataSnapshot.child(TRIPS).child(TEST_TRIP).child(UBER).child(START_LOC).child(LAT).getValue(long.class);
+                        startLong = dataSnapshot.child(TRIPS).child(TEST_TRIP).child(UBER).child(START_LOC).child(LONG).getValue(long.class);
                         StringBuilder foodParam = new StringBuilder();
                         for (int i = 0; i < food.size(); i++) {
                             foodParam.append(food.get(i));
@@ -111,13 +136,13 @@ public class CreateThirdFragment extends Fragment {
             }
         });
 
-        mDatabase.child("trips").child("testTrip").child("uber").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(TRIPS).child(TEST_TRIP).child(UBER).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cityAns.setText(dataSnapshot.child("cityOfInterest").getValue(String.class));
-                priceAns.setText("$" + dataSnapshot.child("priceCap").getValue(String.class));
-                pickupAns.setText(dataSnapshot.child("pickUpName").getValue(String.class));
-                numPeepAns.setText(String.valueOf(dataSnapshot.child("numPeeps").getValue(Integer.class)));
+                cityAns.setText(dataSnapshot.child(CITY_OF_INTEREST).getValue(String.class));
+                priceAns.setText("$" + dataSnapshot.child(PRICE_CAP).getValue(String.class));
+                pickupAns.setText(dataSnapshot.child(PICKUP_NAME).getValue(String.class));
+                numPeepAns.setText(String.valueOf(dataSnapshot.child(NUM_PEEPS).getValue(Integer.class)));
             }
 
             @Override
@@ -136,12 +161,12 @@ public class CreateThirdFragment extends Fragment {
     }
 
     public void setValues(){
-        mDatabase.child("trips").child("testTrip").child("uber").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(TRIPS).child(TEST_TRIP).child(UBER).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cityAns.setText(dataSnapshot.child("cityOfInterest").getValue(String.class));
-                priceAns.setText(dataSnapshot.child("priceCap").getValue(String.class));
-                pickupAns.setText(dataSnapshot.child("pickUpName").getValue(String.class));
+                cityAns.setText(dataSnapshot.child(CITY_OF_INTEREST).getValue(String.class));
+                priceAns.setText(dataSnapshot.child(PRICE_CAP).getValue(String.class));
+                pickupAns.setText(dataSnapshot.child(PICKUP_NAME).getValue(String.class));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -155,31 +180,17 @@ public class CreateThirdFragment extends Fragment {
         int priceCap = Integer.parseInt(String.valueOf(priceAns.getText()));
         final int uberCap = priceCap/4; // one way uber cap
         float foodCap = priceCap/(2 * numPeeps);
-        //boolean found = false;
         // determine the priceRange to query with
-        if (foodCap <= priceRange1H)
-            priceRange = "1";
-        else if (foodCap >= priceRange2L && foodCap <= priceRange2H)
-            priceRange = "2";
-        else if(foodCap >= priceRange3L && foodCap <= priceRange3H)
-            priceRange = "3";
-        else
-            priceRange = "4";
+        priceRange = PriceRange(foodCap);
 
         OkHttpClient client = new OkHttpClient();
+
         try {
-            URIBuilder builder = new URIBuilder("https://api.yelp.com/v3/businesses/search");
-            builder.addParameter("term", "restaurant");
-            builder.addParameter("location", String.valueOf(cityAns.getText()));
-            builder.addParameter("categories", foodPar.toString());
-            builder.addParameter("limit", "50");
-            builder.addParameter("offset", "0");
-            builder.addParameter("price", priceRange);
-            String url = builder.build().toString();
+            String url = BuildUri(foodPar);
             Request request = new Request.Builder()
                     .url(url)
                     .get()
-                    .addHeader("Authorization", "Bearer q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx")
+                    .addHeader("Authorization", YELP_KEY)
                     .addHeader("Cache-Control", "no-cache")
                     .addHeader("Postman-Token", "25f7d9ed-02e6-46dc-8915-a68121e1a168")
                     .build();
@@ -192,44 +203,41 @@ public class CreateThirdFragment extends Fragment {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String jsonData = response.body().string();
-                    JSONObject jsonObject = null;
+                    JSONArray results = null;
                     try {
-                        jsonObject = new JSONObject(jsonData);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    JSONArray results = null; // get the json array from the response
-                    try {
+                        JSONObject jsonObject = new JSONObject(jsonData);
                         results = jsonObject.getJSONArray("businesses");
-                    } catch (JSONException e) {
+                    } catch(JSONException e) {
                         e.printStackTrace();
                     }
                     boolean[] map = new boolean[results.length()];
-                    //boolean found = false;
                     Random rand = new Random();
+
                     while (!found) {
                         int n = rand.nextInt(results.length());
-                        if (map[n]) n = rand.nextInt(results.length());
+                        // keep creating new random numbers until one is created that has not been visited yet.
+                        while (map[n]) {
+                            n = rand.nextInt(results.length());
+                        }
                         map[n] = true;
-//                        JSONObject item = null;
                         try {
                             JSONObject item = results.getJSONObject(n);
-                            double endLat = item.getJSONObject("coordinates").getLong("latitude");
-                            double endLon = item.getJSONObject("coordinates").getLong("longitude");
+                            double endLat = item.getJSONObject(COORDINATES).getLong(LATITUDE);
+                            double endLon = item.getJSONObject(COORDINATES).getLong(LONGITUDE);
                             List<PriceEstimate> priceEstimates = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body().getPrices();
                             highEstimate = -1;
                             for (int i = 0; i < priceEstimates.size(); i++) {
-                                if (priceEstimates.get(i).getDisplayName().equals("UberX")) {
+                                if (priceEstimates.get(i).getDisplayName().equals(UBERX)) {
                                     highEstimate = priceEstimates.get(i).getHighEstimate();
                                 }
                             }
                             if (highEstimate <= uberCap) {
                                 found = true;
-                                mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("lat").setValue(endLat);
-                                mDatabase.child("trips").child("testTrip").child("uber").child("endLoc").child("long").setValue(endLon);
-                                mDatabase.child("trips").child("testTrip").child("event").child("downloadUrl").setValue(item.get("image_url"));
-                                mDatabase.child("trips").child("testTrip").child("event").child("name").setValue(item.get("name"));
-                                mDatabase.child("trips").child("testTrip").child("event").child("rating").setValue(item.get("rating"));
+                                mDatabase.child(TRIPS).child(TEST_TRIP).child(UBER).child(END_LOC).child(LAT).setValue(endLat);
+                                mDatabase.child(TRIPS).child(TEST_TRIP).child(UBER).child(END_LOC).child(LONG).setValue(endLon);
+                                mDatabase.child(TRIPS).child(TEST_TRIP).child(EVENT).child(DOWNLOAD_URL).setValue(item.get(IMAGE_URL));
+                                mDatabase.child(TRIPS).child(TEST_TRIP).child(EVENT).child(NAME).setValue(item.get(NAME));
+                                mDatabase.child(TRIPS).child(TEST_TRIP).child(EVENT).child(RATING).setValue(item.get(RATING));
                                 Intent intent = new Intent(getActivity(), StartActivity.class);
                                 startActivity(intent);
                             }
@@ -244,8 +252,29 @@ public class CreateThirdFragment extends Fragment {
             catch (URISyntaxException e) {
             e.printStackTrace();
         }
-//        Intent intent = new Intent(getActivity(), StartActivity.class);
-//        startActivity(intent);
+    }
+
+    public String PriceRange(float foodCap) {
+        if (foodCap <= priceRange1H)
+            return "1";
+        else if (foodCap >= priceRange2L && foodCap <= priceRange2H)
+            return "2";
+        else if(foodCap >= priceRange3L && foodCap <= priceRange3H)
+            return "3";
+        else
+            return "4";
+    }
+
+    public String BuildUri(StringBuilder foodPar) throws URISyntaxException {
+        URIBuilder builder = new URIBuilder(SEARCH_API_URL);
+        builder.addParameter("term", "restaurant");
+        builder.addParameter("location", String.valueOf(cityAns.getText()));
+        builder.addParameter("categories", foodPar.toString());
+        builder.addParameter("limit", "50");
+        builder.addParameter("offset", "0");
+        builder.addParameter("price", priceRange);
+        String url = builder.build().toString();
+        return url;
     }
 
     public static CreateThirdFragment newInstance() {
