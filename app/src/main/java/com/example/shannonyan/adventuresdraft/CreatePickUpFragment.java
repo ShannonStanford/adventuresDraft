@@ -96,7 +96,6 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
         markerOptions.position(p.getLatLng());
         markerOptions.title(p.getName()+"");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
         mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));

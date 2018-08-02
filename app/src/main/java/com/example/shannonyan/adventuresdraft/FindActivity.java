@@ -65,8 +65,6 @@ public class FindActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         //UBER instanstiation
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
@@ -76,7 +74,7 @@ public class FindActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             Intent intent = getIntent();
             if (intent.getStringExtra("returnTrip").equals("true")) {
-                setGoingBack();
+                setStartEnd();
                 returnTrip = "true";
             }
         }
@@ -86,9 +84,7 @@ public class FindActivity extends AppCompatActivity {
             returnTrip = "false";
         }
 
-        setStartEnd();
-        //start required API calls for UBER process
-        findDriver();
+        //setStartEnd();
     }
 
     public void findDriver(){
@@ -199,7 +195,6 @@ public class FindActivity extends AppCompatActivity {
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
     public void asynchronousTaskDemo(final String rideId){
-
         // timer thing implement:
         timer = new Timer();
         // creating timer task, timer
@@ -233,7 +228,7 @@ public class FindActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String stat) {
             Log.d("SMART", "ride id is: " + rideId);
-            if (stat.equals(ACCEPT) || stat.equals(ARRIVE) || stat.equals(PROGRESS)) {
+            if (stat.equals(ACCEPT) /*|| stat.equals(ARRIVE) || stat.equals(PROGRESS)*/) {
                 // cancel all scheduled timer tasks and get rid of the cancelled tasks queued to the end
                 Log.d("TAG4", "status in progress or accepted");
                 timer.cancel();
@@ -257,6 +252,12 @@ public class FindActivity extends AppCompatActivity {
                 startLong = (float) dataSnapshot.child(START_LOC).child(LONG).getValue(float.class);
                 endLat = (float) dataSnapshot.child(END_LOC).child(LAT).getValue(float.class);
                 endLong = (float) dataSnapshot.child(END_LOC).child(LONG).getValue(float.class);
+                if (returnTrip.equals("true")){
+                    setGoingBack();
+                }else {
+                    findDriver();
+                }
+
             }
 
             @Override
@@ -276,5 +277,6 @@ public class FindActivity extends AppCompatActivity {
         tempLong = startLong;
         startLong = endLong;
         endLong = tempLong;
+        findDriver();
     }
 }

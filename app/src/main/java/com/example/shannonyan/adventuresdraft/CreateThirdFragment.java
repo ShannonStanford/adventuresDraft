@@ -59,6 +59,7 @@ public class CreateThirdFragment extends Fragment {
     public double startLat;
     public double startLong;
     public int highEstimate;
+    public boolean found = false;
 
     public CreateThirdFragment() { }
 
@@ -154,6 +155,7 @@ public class CreateThirdFragment extends Fragment {
         int priceCap = Integer.parseInt(String.valueOf(priceAns.getText()));
         final int uberCap = priceCap/4; // one way uber cap
         float foodCap = priceCap/(2 * numPeeps);
+        //boolean found = false;
         // determine the priceRange to query with
         if (foodCap <= priceRange1H)
             priceRange = "1";
@@ -203,7 +205,7 @@ public class CreateThirdFragment extends Fragment {
                         e.printStackTrace();
                     }
                     boolean[] map = new boolean[results.length()];
-                    boolean found = false;
+                    //boolean found = false;
                     Random rand = new Random();
                     while (!found) {
                         int n = rand.nextInt(results.length());
@@ -228,6 +230,8 @@ public class CreateThirdFragment extends Fragment {
                                 mDatabase.child("trips").child("testTrip").child("event").child("downloadUrl").setValue(item.get("image_url"));
                                 mDatabase.child("trips").child("testTrip").child("event").child("name").setValue(item.get("name"));
                                 mDatabase.child("trips").child("testTrip").child("event").child("rating").setValue(item.get("rating"));
+                                Intent intent = new Intent(getActivity(), StartActivity.class);
+                                startActivity(intent);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -240,8 +244,8 @@ public class CreateThirdFragment extends Fragment {
             catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(getActivity(), StartActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), StartActivity.class);
+//        startActivity(intent);
     }
 
     public static CreateThirdFragment newInstance() {

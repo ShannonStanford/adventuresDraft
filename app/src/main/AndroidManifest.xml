@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/hello">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -41,36 +41,33 @@
         </activity>
         <activity
             android:name=".EtaActivity"
-            android:label="@string/title_activity_eta"
-            android:theme="@style/AppTheme" />
+            android:label="@string/title_activity_eta" />
         <activity
             android:name=".FindActivity"
-            android:label="@string/title_activity_find"
-            android:theme="@style/AppTheme" />
+            android:label="@string/title_activity_find" />
         <activity
             android:name=".EventActivity"
-            android:label="@string/title_activity_event"
-            android:theme="@style/AppTheme" />
+            android:label="@string/title_activity_event" />
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme" />
+            android:label="@string/title_activity_map" />
         <activity
             android:name=".NoDriversFoundActivity"
-            android:label="@string/title_activity_no_drivers_found"
-            android:theme="@style/AppTheme" />
+            android:label="@string/title_activity_no_drivers_found" />
         <activity
             android:name=".RideInProgressActivity"
             android:label="@string/title_activity_ride_in_progress"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/neww" />
         <activity
             android:name=".RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".ProfileActivity" />
+            android:theme="@style/neww" />
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/neww" />
+        <activity android:name=".StartActivity"
+            android:theme="@style/neww" />
         <activity android:name=".TestYelp" />
         <activity android:name=".ReturnHomeActivity"></activity>
-        <activity android:name=".StartActivity"></activity>
     </application>
 
 </manifest>

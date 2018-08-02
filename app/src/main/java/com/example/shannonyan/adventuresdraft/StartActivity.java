@@ -135,7 +135,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         gMap.setOnMyLocationClickListener(onMyLocationClickListener);
         enableMyLocationIfPermitted();
-        gMap.getUiSettings().setZoomControlsEnabled(true);
+        gMap.getUiSettings().setZoomControlsEnabled(false);
     }
 
     private void enableMyLocationIfPermitted() {
@@ -185,7 +185,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
             };
 
     private GoogleMap.OnMyLocationClickListener onMyLocationClickListener =
-            new GoogleMap.OnMyLocationClickListener() {
+                new GoogleMap.OnMyLocationClickListener() {
                 @Override
                 public void onMyLocationClick(@NonNull Location location) {
 
@@ -211,9 +211,9 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 startLong = (float) dataSnapshot.child(START_LOC).child(LONG).getValue(float.class);
                 Log.d("start", String.valueOf(startLat));
                 Log.d("start", String.valueOf(startLong));
-
-                LatLng ny = new LatLng(startLat, startLong);
-                gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+//
+//                LatLng ny = new LatLng(startLat, startLong);
+//                gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
                 setPickUpMarker();
 
             }
@@ -227,7 +227,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public void setPickUpMarker(){
-        gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
+        //gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
         Log.d("pick up", String.valueOf(startLat));
         Log.d("pick up", String.valueOf(startLong));
     }
