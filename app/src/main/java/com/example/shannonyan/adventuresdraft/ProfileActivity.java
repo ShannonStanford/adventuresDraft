@@ -36,9 +36,9 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
 
     @Override
     public void onButtonClicked(String name) {
-        if(name.equals("food")){
+        if(name.equals(Constants.FOOD)){
             onFoodButtonClicked();
-        } else if (name.equals("car")){
+        } else if (name.equals(Constants.CAR)){
             onCarButtonClicked();
         }
 
@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mDatabase.child("foodPref").setValue(selectedFoods);
+                        mDatabase.child(Constants.FOOD_PREF).setValue(selectedFoods);
                         Toast.makeText(getBaseContext(),"Preferences updated", Toast.LENGTH_LONG).show();
                     }
                 })
@@ -85,12 +85,13 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
     }
 
     public void onCarButtonClicked(){
+        final String Title = "Select the ride you prefer:";
         AlertDialog dialog;
         final String[] foods = {"UberX", "UberXL", "UberSELECT","UberBLACk", "UberSUV", "UberLUX"};
         final ArrayList selectedFoods = new ArrayList();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select the ride you prefer:");
+        builder.setTitle(Title);
         builder.setMultiChoiceItems(foods, null,
                 new DialogInterface.OnMultiChoiceClickListener() {
                     // indexSelected contains the index of item (of which checkbox checked)
@@ -107,7 +108,7 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mDatabase.child("carPref").setValue(selectedFoods);
+                        mDatabase.child(Constants.CAR_PREF).setValue(selectedFoods);
                         Toast.makeText(getBaseContext(),"Preferences updated", Toast.LENGTH_LONG).show();
                     }
                 })

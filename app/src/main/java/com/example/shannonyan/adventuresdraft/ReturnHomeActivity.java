@@ -30,7 +30,7 @@ public class ReturnHomeActivity extends AppCompatActivity {
         service = uberClient.service;
 
         Intent intent = getIntent();
-        rideId = intent.getStringExtra("rideId");
+        rideId = intent.getStringExtra(Constants.RIDE_ID);
 
         // setup and call the timer
         timer = new Timer();
@@ -58,7 +58,7 @@ public class ReturnHomeActivity extends AppCompatActivity {
                     timer.cancel();
                     timer.purge();
                     Intent i = new Intent(ReturnHomeActivity.this, CreateFlowActivity.class);
-                    i.putExtra("rideId", rideId);
+                    i.putExtra(Constants.RIDE_ID, rideId);
                     startActivity(i);
                 }
             }

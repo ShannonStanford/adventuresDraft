@@ -33,7 +33,7 @@ public class RideInProgressActivity extends AppCompatActivity {
         service = uberClient.service;
 
         Intent intent = getIntent();
-        rideID = intent.getStringExtra("rideId");
+        rideID = intent.getStringExtra(Constants.RIDE_ID);
 
         // setup and call the timer
         timer = new Timer();
@@ -63,7 +63,7 @@ public class RideInProgressActivity extends AppCompatActivity {
                         timer.cancel();
                         timer.purge();
                         Intent i = new Intent(RideInProgressActivity.this, EventActivity.class);
-                        i.putExtra("rideId", rideID);
+                        i.putExtra(Constants.RIDE_ID, rideID);
                         startActivity(i);
                     }
                 }

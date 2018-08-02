@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".CreateFlowActivity"
+        <activity android:name=".FindActivity"
             android:theme="@style/neww">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,14 +43,6 @@
         <activity
             android:name=".EtaActivity"
             android:label="@string/title_activity_eta"
-            android:theme="@style/neww" />
-        <activity
-            android:name=".FindActivity"
-            android:label="@string/title_activity_find"
-            android:theme="@style/neww" />
-        <activity
-            android:name=".EventActivity"
-            android:label="@string/title_activity_event"
             android:theme="@style/neww" />
         <activity
             android:name=".MapActivity"

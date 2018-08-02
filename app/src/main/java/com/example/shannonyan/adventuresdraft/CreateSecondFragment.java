@@ -32,12 +32,13 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
     private String cityInterest;
     private EditText etPeeps;
     private EditText etPrice;
-    private final double HARD_LAT = 37.669695;
-    private final double HARD_LNG = -122.260088;
-    private final int ZOOM_PREF = 9;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        final double HARD_LAT = 37.669695;
+        final double HARD_LNG = -122.260088;
+        final int ZOOM_PREF = 9;
+
         mMap = googleMap;
         mMap.setMinZoomPreference(ZOOM_PREF);
         LatLng ny = new LatLng(HARD_LAT, HARD_LNG);
@@ -54,24 +55,20 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
         etPeeps = view.findViewById(R.id.etNumPeeps);
         etPrice = view.findViewById(R.id.etPrice);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
-        placeAutoComplete.getView().setBackgroundColor(Color.DKGRAY);
-        placeAutoComplete.setHint("Pick your City of Interest");
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        setUpPlacesFrag();
 
-        //stores city of interest
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                Log.d("Maps", "Place selected: " + place.getName());
                 addMarker(place);
-                //store in database
                 cityInterest = place.getAddress().toString();
-                mDatabase.child("trips").child("testTrip").child("uber").child("cityOfInterest").setValue(cityInterest);
+                mDatabase.child(Constants.CITY_OF_INTEREST).setValue(cityInterest);
             }
 
             @Override
@@ -85,7 +82,7 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
                     String priceCap = etPrice.getText().toString();
-                    mDatabase.child("trips").child("testTrip").child("uber").child("priceCap").setValue(priceCap);
+                    mDatabase.child(Constants.PRICECAP).setValue(priceCap);
                 }
             }
         });
@@ -95,12 +92,19 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
                     int priceCap = Integer.parseInt(etPeeps.getText().toString());
-                    mDatabase.child("trips").child("testTrip").child("uber").child("numPeeps").setValue(priceCap);
+                    mDatabase.child(Constants.NUM_PEEPS).setValue(priceCap);
                 }
             }
         });
 
         return view;
+    }
+
+    public void setUpPlacesFrag(){
+        final String HINT = "Pick your City of Interest";
+
+        placeAutoComplete.getView().setBackgroundColor(Color.DKGRAY);
+        placeAutoComplete.setHint(HINT);
     }
 
     public static CreateSecondFragment newInstance() {
@@ -110,16 +114,12 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
     }
 
     public void addMarker(Place p){
-
         MarkerOptions markerOptions = new MarkerOptions();
-
         markerOptions.position(p.getLatLng());
-        markerOptions.title(p.getName()+"");
+        markerOptions.title((String)p.getName());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
         mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
-
     }
 }

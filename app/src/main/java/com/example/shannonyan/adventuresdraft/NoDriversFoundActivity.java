@@ -6,9 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.uber.sdk.rides.client.services.RidesService;
 
 public class NoDriversFoundActivity extends AppCompatActivity {
 
@@ -25,7 +22,7 @@ public class NoDriversFoundActivity extends AppCompatActivity {
         // bind buttons
         tryagain = (Button) findViewById(R.id.tryagain);
         exit = (Button) findViewById(R.id.exit);
-        rideId = getIntent().getStringExtra("rideId");
+        rideId = getIntent().getStringExtra(Constants.RIDE_ID);
 
         // cancel ride
         tryagain.setOnClickListener(new View.OnClickListener() {

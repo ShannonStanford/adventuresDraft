@@ -24,21 +24,20 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback {
 
+    public SupportPlaceAutocompleteFragment placeAutoComplete;
+
     private GoogleMap mMap;
     private DatabaseReference mDatabase;
     private double startLat;
     private double startLong;
-    private final int ZOOM_PREF = 14;
-    private final double HARD_LAT = 37.479222;
-    private final double HARD_LNG = -122.152279;
-
-    public SupportPlaceAutocompleteFragment placeAutoComplete;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        final int ZOOM_PREF = 14;
+        final double HARD_LAT = 37.479222;
+        final double HARD_LNG = -122.152279;
+
         mMap = googleMap;
-//        MapStyleOptions style = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.greyscale);
-//        mMap.setMapStyle(style);
         mMap.setMinZoomPreference(ZOOM_PREF);
         LatLng ny = new LatLng(HARD_LAT, HARD_LNG);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
@@ -54,23 +53,21 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final String HINT = "Set your pick up location";
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("trips").child("testTrip").child("uber");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
-        placeAutoComplete.setHint("Set your pick up location");
+        placeAutoComplete.setHint(HINT);
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                Log.d("Maps", "Place selected: " + place.getName());
                 addMarker(place);
-                //store in database
                 startLat = place.getLatLng().latitude;
                 startLong = place.getLatLng().longitude;
-                //reduce repetition, make strings static vars
-                mDatabase.child("pickUpName").setValue(place.getName());
-                mDatabase.child("startLoc").child("lat").setValue(startLat);
-                mDatabase.child("startLoc").child("long").setValue(startLong);
+                mDatabase.child(Constants.PICKUP).setValue(place.getName());
+                mDatabase.child(Constants.START_LOC).child(Constants.LAT).setValue(startLat);
+                mDatabase.child(Constants.START_LOC).child(Constants.LONG).setValue(startLong);
             }
 
             @Override
@@ -90,16 +87,13 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
     }
 
     public void addMarker(Place p){
-
         MarkerOptions markerOptions = new MarkerOptions();
-
         markerOptions.position(p.getLatLng());
-        markerOptions.title(p.getName()+"");
+        markerOptions.title((String)p.getName());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
-
     }
 
 }

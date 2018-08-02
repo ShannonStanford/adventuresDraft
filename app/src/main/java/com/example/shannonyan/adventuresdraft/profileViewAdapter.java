@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class profileViewAdapter extends FragmentPagerAdapter {
+    private static final int PAGE_0 = 0;
+    private static final int PAGE_1 = 1;
 
     public profileViewAdapter(FragmentManager fm) {
         super(fm);
@@ -14,8 +16,8 @@ public class profileViewAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0: return PrefFragment.newInstance();
-            case 1: return PastTripFragment.newInstance();
+            case PAGE_0: return PrefFragment.newInstance();
+            case PAGE_1: return PastTripFragment.newInstance();
             default: return PrefFragment.newInstance();
         }
     }
@@ -29,8 +31,8 @@ public class profileViewAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch(position) {
-            case 0: return "Preferences";
-            case 1: return "Past Trips";
+            case PAGE_0: return "Preferences";
+            case PAGE_1: return "Past Trips";
             default: return "Preferences";
         }
     }
