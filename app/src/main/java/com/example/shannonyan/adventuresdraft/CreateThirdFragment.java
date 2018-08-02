@@ -40,6 +40,8 @@ public class CreateThirdFragment extends Fragment {
     private TextView pickupAns;
     private TextView priceAns;
     private TextView cityAns;
+    private TextView numPeep;
+    private TextView numPeepAns;
     private DatabaseReference mDatabase;
     public Button create;
     public final static String YELP_KEY= "q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
@@ -57,6 +59,7 @@ public class CreateThirdFragment extends Fragment {
     public double startLat;
     public double startLong;
     public int highEstimate;
+    public boolean found = false;
 
     public CreateThirdFragment() { }
 
@@ -72,10 +75,13 @@ public class CreateThirdFragment extends Fragment {
         priceAns = view.findViewById(R.id.price_ans);
         cityAns = view.findViewById(R.id.city_ans);
         create = view.findViewById(R.id.create);
+        numPeep = view.findViewById(R.id.num_peeps);
+        numPeepAns = view.findViewById(R.id.num_peeps_ans);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         create = (Button) view.findViewById(R.id.create);
         uberClient = UberClient.getUberClientInstance(getContext());
         service = uberClient.service;
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,8 +115,9 @@ public class CreateThirdFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 cityAns.setText(dataSnapshot.child("cityOfInterest").getValue(String.class));
-                priceAns.setText(dataSnapshot.child("priceCap").getValue(String.class));
+                priceAns.setText("$" + dataSnapshot.child("priceCap").getValue(String.class));
                 pickupAns.setText(dataSnapshot.child("pickUpName").getValue(String.class));
+                numPeepAns.setText(String.valueOf(dataSnapshot.child("numPeeps").getValue(Integer.class)));
             }
 
             @Override
@@ -148,6 +155,7 @@ public class CreateThirdFragment extends Fragment {
         int priceCap = Integer.parseInt(String.valueOf(priceAns.getText()));
         final int uberCap = priceCap/4; // one way uber cap
         float foodCap = priceCap/(2 * numPeeps);
+        //boolean found = false;
         // determine the priceRange to query with
         if (foodCap <= priceRange1H)
             priceRange = "1";
@@ -197,7 +205,7 @@ public class CreateThirdFragment extends Fragment {
                         e.printStackTrace();
                     }
                     boolean[] map = new boolean[results.length()];
-                    boolean found = false;
+                    //boolean found = false;
                     Random rand = new Random();
                     while (!found) {
                         int n = rand.nextInt(results.length());
@@ -222,6 +230,8 @@ public class CreateThirdFragment extends Fragment {
                                 mDatabase.child("trips").child("testTrip").child("event").child("downloadUrl").setValue(item.get("image_url"));
                                 mDatabase.child("trips").child("testTrip").child("event").child("name").setValue(item.get("name"));
                                 mDatabase.child("trips").child("testTrip").child("event").child("rating").setValue(item.get("rating"));
+                                Intent intent = new Intent(getActivity(), StartActivity.class);
+                                startActivity(intent);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -234,8 +244,8 @@ public class CreateThirdFragment extends Fragment {
             catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(getActivity(), StartActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), StartActivity.class);
+//        startActivity(intent);
     }
 
     public static CreateThirdFragment newInstance() {

@@ -65,7 +65,7 @@ public class FindActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             Intent intent = getIntent();
             if (intent.getStringExtra("returnTrip").equals("true")) {
-                setGoingBack();
+                setStartEnd();
                 returnTrip = "true";
             }
         }
@@ -74,7 +74,6 @@ public class FindActivity extends AppCompatActivity {
             setStartEnd();
             returnTrip = "false";
         }
-
         Glide.with(getBaseContext())
                 .load(R.drawable.rocket_telescope)
                 .into(ivBackgroundFind);
@@ -192,7 +191,6 @@ public class FindActivity extends AppCompatActivity {
 
     //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
     public void asynchronousTaskDemo(final String rideId){
-
         // timer thing implement:
         timer = new Timer();
         // creating timer task, timer
@@ -245,7 +243,6 @@ public class FindActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 startLat = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LAT).getValue(float.class);
                 startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
                 endLat = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LAT).getValue(float.class);
@@ -269,5 +266,6 @@ public class FindActivity extends AppCompatActivity {
         tempLong = startLong;
         startLong = endLong;
         endLong = tempLong;
+        findDriver();
     }
 }
