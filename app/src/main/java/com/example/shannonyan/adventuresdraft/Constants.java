@@ -8,6 +8,7 @@ public final class Constants {
 
     public static final String TRIPS = "trips";
     public static final String TEST_TRIPS = "test_trip";
+    public static final String TEST_USER = "testUser";
     public static final String UBER = "uber";
     public static final String RIDE_ID = "rideId";
     public static final String ACCEPT = "accepted";
@@ -33,5 +34,6 @@ public final class Constants {
     public static final String PREF = "Preferences";
     public static final String PAST_TRIPS = "Past Trips";
     public static final String PICK_UP_NAME = "pickUpName";
+    public static final String USER = "user";
 
 }

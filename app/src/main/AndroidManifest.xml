@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".CreateFlowActivity">
+        <activity android:name=".ProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,16 +56,11 @@
             android:label="@string/title_activity_no_drivers_found" />
         <activity
             android:name=".RideInProgressActivity"
-            android:label="@string/title_activity_ride_in_progress"
-            android:theme="@style/neww" />
+            android:label="@string/title_activity_ride_in_progress" />
         <activity
             android:name=".RiderCancelActivity"
-            android:label="@string/title_activity_rider_cancel"
-            android:theme="@style/neww" />
-        <activity android:name=".ProfileActivity"
-            android:theme="@style/neww" />
-        <activity android:name=".StartActivity"
-            android:theme="@style/neww" />
+            android:label="@string/title_activity_rider_cancel" />
+        <activity android:name=".StartActivity" />
         <activity android:name=".TestYelp" />
         <activity android:name=".ReturnHomeActivity"></activity>
     </application>
