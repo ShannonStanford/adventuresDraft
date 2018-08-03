@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +20,7 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
     private profileViewAdapter adapter;
     private DatabaseReference mDatabase;
     private TabLayout tabLayout;
+    private ImageView ivProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,11 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        ivProfile = findViewById(R.id.ivProfilePic);
+
+        GlideApp.with(getBaseContext())
+                .load(R.drawable.profile)
+                .into(ivProfile);
 
         adapter = new profileViewAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
