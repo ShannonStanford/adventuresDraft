@@ -22,6 +22,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -204,6 +205,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
                 Log.d("start", String.valueOf(startLat));
                 Log.d("start", String.valueOf(startLong));
+                LatLng ny = new LatLng(startLat, startLong);
+                gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
                 setPickUpMarker();
 
             }
@@ -217,7 +220,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public void setPickUpMarker(){
-        //gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
+        gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
         Log.d("pick up", String.valueOf(startLat));
         Log.d("pick up", String.valueOf(startLong));
     }
