@@ -84,7 +84,6 @@ public class FindActivity extends AppCompatActivity {
             returnTrip = "false";
         }
 
-        //setStartEnd();
     }
 
     public void findDriver(){

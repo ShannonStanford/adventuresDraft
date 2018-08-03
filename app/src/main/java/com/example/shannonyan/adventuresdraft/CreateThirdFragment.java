@@ -233,7 +233,6 @@ public class CreateThirdFragment extends Fragment {
                     }
                 }
             });
-
             }
             catch (URISyntaxException e) {
             e.printStackTrace();

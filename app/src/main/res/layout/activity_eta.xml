@@ -89,6 +89,7 @@
         android:layout_marginStart="0dp"
         android:text="5 min"
         android:textAlignment="center"
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
 
     <Button
