@@ -9,19 +9,20 @@
         android:id="@+id/btFood"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="145dp"
+        android:layout_height="168dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/picture" />
+        android:background="@drawable/fork" />
 
     <Button
         android:id="@+id/btCar"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="143dp"
+        android:layout_height="177dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/btFood"
         android:layout_marginStart="0dp"
-        android:background="@drawable/car" />
+        android:layout_marginTop="0dp"
+        android:background="@drawable/car_pref_button" />
 
 </RelativeLayout>

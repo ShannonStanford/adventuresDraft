@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+    private static final int PAGE_0 = 0;
+    private static final int PAGE_1 = 1;
+    private static final int PAGE_2 = 2;
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -30,9 +33,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch(position) {
-            case 0: return "Preferences";
-            case 1: return "Past Trips";
-            default: return "Preferences";
+            case PAGE_0: return Constants.PREF;
+            case PAGE_1: return Constants.PAST_TRIPS;
+            default: return Constants.PREF;
         }
     }
 }

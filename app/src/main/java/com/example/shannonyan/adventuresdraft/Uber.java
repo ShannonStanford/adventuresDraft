@@ -26,8 +26,6 @@ class Uber {
         uber.priceCap = json.getInt(Constants.PRICECAP);
         uber.rideId = json.getString(Constants.RIDE_ID);
         uber.endLoc = (Location) json.get(Constants.END_LOC);
-
-
         return uber;
     }
 }
