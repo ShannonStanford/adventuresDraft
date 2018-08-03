@@ -35,12 +35,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
 
     private MapView mapView;
     private DatabaseReference mDatabase;
-    private static final String TRIPS = "trips";
-    private static final String TEST_TRIPS = "testTrip";
-    private static final String UBER = "uber";
-    private static final String START_LOC = "startLoc";
-    private static final String LAT = "lat";
-    private static final String LONG = "long";
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private float startLat;
@@ -210,9 +204,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
                 Log.d("start", String.valueOf(startLat));
                 Log.d("start", String.valueOf(startLong));
-//
-//                LatLng ny = new LatLng(startLat, startLong);
-//                gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
                 setPickUpMarker();
 
             }
