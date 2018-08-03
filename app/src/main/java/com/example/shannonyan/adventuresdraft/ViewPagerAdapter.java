@@ -14,8 +14,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0: return CreatePickUpFragment.newInstance();
-            case 1: return CreateSecondFragment.newInstance();
+            case 0: return CreateSecondFragment.newInstance();
+            case 1: return CreatePickUpFragment.newInstance();
             case 2: return CreateThirdFragment.newInstance();
             default: return CreatePickUpFragment.newInstance();
         }

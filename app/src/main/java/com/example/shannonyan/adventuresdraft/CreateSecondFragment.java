@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -30,8 +31,8 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
     private GoogleMap mMap;
     private DatabaseReference mDatabase;
     private String cityInterest;
-    private EditText etPeeps;
     private EditText etPrice;
+    private NumberPicker numPicker;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -56,8 +57,12 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
-        etPeeps = view.findViewById(R.id.etNumPeeps);
         etPrice = view.findViewById(R.id.etPrice);
+        numPicker = view.findViewById(R.id.num_picker);
+        numPicker.setMaxValue(6);
+        numPicker.setMinValue(1);
+        numPicker.setWrapSelectorWheel(false);
+
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -87,23 +92,19 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
             }
         });
         //stores new number of people
-        etPeeps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        numPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    int priceCap = Integer.parseInt(etPeeps.getText().toString());
-                    mDatabase.child(Constants.NUM_PEEPS).setValue(priceCap);
-                }
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mDatabase.child(Constants.NUM_PEEPS).setValue(numPicker.getValue());
             }
         });
-
         return view;
     }
 
     public void setUpPlacesFrag(){
         final String HINT = "Pick your City of Interest";
 
-        placeAutoComplete.getView().setBackgroundColor(Color.DKGRAY);
+        placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
         placeAutoComplete.setHint(HINT);
     }
 
