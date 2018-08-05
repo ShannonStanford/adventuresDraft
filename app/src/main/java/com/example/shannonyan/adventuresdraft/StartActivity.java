@@ -221,7 +221,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
 
     public void setPickUpMarker(){
         gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
-        Log.d("pick up", String.valueOf(startLat));
-        Log.d("pick up", String.valueOf(startLong));
+//        Log.d("pick up", String.valueOf(startLat));
+//        Log.d("pick up", String.valueOf(startLong));
     }
 }

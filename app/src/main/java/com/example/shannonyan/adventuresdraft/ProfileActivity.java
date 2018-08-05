@@ -64,12 +64,12 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
             options = new String[] {"American","Barbeque","Beer Garden", "Brazilian", "Burgers", "Caribbean",
                     "Chinese", "Fast Food", "French", "German", "Greek", "Hawaiian", "Indian",
                     "Italian","Japanese", "Korean", "Mediterranean", "Portuguese", "Salad", "Sandwiches", "Seafood", "Southern", "Spanish"};
-            selectedChoice = "foodPref";
+            selectedChoice = Constants.FOOD_PREF;
 
         } else {
             Title = "Select the car you prefer:";
             options = new String[] {"UberX", "UberXL", "UberSELECT","UberBLACK", "UberSUV", "UberLUX"};
-            selectedChoice = "carPref";
+            selectedChoice = Constants.CAR_PREF;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -3,7 +3,7 @@ package com.example.shannonyan.adventuresdraft;
 public final class Constants {
 
     public static final String TRIPS = "trips";
-    public static final String TEST_TRIPS = "test_trip";
+    public static final String TEST_TRIPS = "testTrip";
     public static final String TEST_USER = "testUser";
     public static final String UBER = "uber";
     public static final String RIDE_ID = "rideId";

@@ -78,9 +78,9 @@ public class FindActivity extends AppCompatActivity {
                 .load(R.drawable.rocket_telescope)
                 .into(ivBackgroundFind);
 
-        setStartEnd();
-        //start required API calls for UBER process
-        findDriver();
+//        setStartEnd();
+//        //start required API calls for UBER process
+//        findDriver();
     }
 
     public void findDriver(){
@@ -247,6 +247,7 @@ public class FindActivity extends AppCompatActivity {
                 startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
                 endLat = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LAT).getValue(float.class);
                 endLong = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LONG).getValue(float.class);
+                findDriver();
             }
 
             @Override

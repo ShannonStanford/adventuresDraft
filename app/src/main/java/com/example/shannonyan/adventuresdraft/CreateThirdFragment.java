@@ -78,7 +78,7 @@ public class CreateThirdFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         // test size
-                        food = (ArrayList<String>) dataSnapshot.child(Constants.USER).child(Constants.TEST_TRIPS).child(Constants.FOOD_PREF).getValue();
+                        food = (ArrayList<String>) dataSnapshot.child(Constants.USER).child(Constants.TEST_USER).child(Constants.FOOD_PREF).getValue();
                         numPeeps = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.NUM_PEEPS).getValue(float.class);
                         startLat = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.START_LOC).child(Constants.LAT).getValue(long.class);
                         startLong = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.START_LOC).child(LONG).getValue(long.class);
