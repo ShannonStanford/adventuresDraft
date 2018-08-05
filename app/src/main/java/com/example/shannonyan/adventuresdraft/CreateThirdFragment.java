@@ -99,13 +99,13 @@ public class CreateThirdFragment extends Fragment {
                         startLat = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.START_LOC).child(Constants.LAT).getValue(long.class);
                         startLong = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.START_LOC).child(LONG).getValue(long.class);
                         StringBuilder foodParam = new StringBuilder();
-//                        for (int i = 0; i < food.size(); i++) {
-//                            foodParam.append(food.get(i));
-//                            if (i != food.size() - 1) {
-//                                foodParam.append(",");
-//                            }
-//                        }
-//                        CreateEvent(foodParam);
+                        for (int i = 0; i < food.size(); i++) {
+                            foodParam.append(food.get(i));
+                            if (i != food.size() - 1) {
+                                foodParam.append(",");
+                            }
+                        }
+                        CreateEvent(foodParam);
                     }
 
                     @Override
@@ -213,11 +213,7 @@ public class CreateThirdFragment extends Fragment {
                             if (highEstimate <= uberCap) {
                                 found = true;
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.END_LOC).child(Constants.LAT).setValue(endLat);
-<<<<<<< HEAD
-                                mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.END_LOC).child(LONG).setValue(endLon);
-=======
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.END_LOC).child(Constants.LONG).setValue(endLon);
->>>>>>> bed9ca563e5357303bcb0450b36d2add05ab750f
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.EVENT).child(Constants.DOWNLOAD_URL).setValue(item.get(Constants.IMAGE_URL));
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.EVENT).child(Constants.NAME).setValue(item.get(Constants.NAME));
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.EVENT).child(Constants.RATING).setValue(item.get(Constants.RATING));
