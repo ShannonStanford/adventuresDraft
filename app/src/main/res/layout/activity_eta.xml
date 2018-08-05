@@ -50,8 +50,9 @@
         android:layout_width="98dp"
         android:layout_height="31dp"
         android:layout_above="@+id/tvCarLicense"
-        android:layout_alignStart="@+id/tvDriverName"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="-257dp"
+        android:layout_marginStart="69dp"
         android:text="Toyota"
         android:textAlignment="viewEnd"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
@@ -75,7 +76,7 @@
         android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/tvCarMake"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="67dp"
         android:text="Corolla"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
@@ -89,7 +90,9 @@
         android:layout_marginStart="0dp"
         android:text="5 min"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="36sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btCallDriver"

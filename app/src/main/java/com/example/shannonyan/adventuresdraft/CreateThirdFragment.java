@@ -15,7 +15,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.JsonObject;
 import com.uber.sdk.rides.client.model.PriceEstimate;
 import com.uber.sdk.rides.client.services.RidesService;
 
@@ -36,7 +35,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.example.shannonyan.adventuresdraft.Constants.CACHE_CONTROL;
 import static com.example.shannonyan.adventuresdraft.Constants.LONG;
 
 public class CreateThirdFragment extends Fragment {
@@ -89,6 +87,8 @@ public class CreateThirdFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), StartActivity.class);
+                startActivity(intent);
                 //TODO: get priceCap and users food preferences
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -99,13 +99,13 @@ public class CreateThirdFragment extends Fragment {
                         startLat = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.START_LOC).child(Constants.LAT).getValue(long.class);
                         startLong = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.START_LOC).child(LONG).getValue(long.class);
                         StringBuilder foodParam = new StringBuilder();
-                        for (int i = 0; i < food.size(); i++) {
-                            foodParam.append(food.get(i));
-                            if (i != food.size() - 1) {
-                                foodParam.append(",");
-                            }
-                        }
-                        CreateEvent(foodParam);
+//                        for (int i = 0; i < food.size(); i++) {
+//                            foodParam.append(food.get(i));
+//                            if (i != food.size() - 1) {
+//                                foodParam.append(",");
+//                            }
+//                        }
+//                        CreateEvent(foodParam);
                     }
 
                     @Override
@@ -129,7 +129,7 @@ public class CreateThirdFragment extends Fragment {
 
             }
         });
-        setValues();
+//        setValues();
         return view;
     }
 
@@ -243,6 +243,8 @@ public class CreateThirdFragment extends Fragment {
         else
             return "4";
     }
+
+    // TODO add a random 
 
     public String BuildUri(StringBuilder foodPar) throws URISyntaxException {
         URIBuilder builder = new URIBuilder(SEARCH_API_URL);
