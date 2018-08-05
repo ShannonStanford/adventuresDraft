@@ -254,6 +254,7 @@ public class FindActivity extends AppCompatActivity {
                 Log.d("FindActivity", "Firebase cancelled");
             }
         });
+        Log.d("DEBUGTAG", "going inside setStartEnd");
     }
 
     public void setGoingBack() {
