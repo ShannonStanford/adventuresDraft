@@ -20,14 +20,12 @@ class Uber {
         Uber uber = new Uber();
 
         //extract and fill the values
-        uber.city = json.getString("cityOfInterest");
-        uber.numPeeps = json.getInt("numPeeps");
-        uber.pickUpName = json.getString("pickUpName");
-        uber.priceCap = json.getInt("priceCap");
-        uber.rideId = json.getString("rideId");
-        uber.endLoc = (Location) json.get("endLoc");
-
-
+        uber.city = json.getString(Constants.CITY_OF_INTEREST);
+        uber.numPeeps = json.getInt(Constants.NUM_PEEPS);
+        uber.pickUpName = json.getString(Constants.PICKUP);
+        uber.priceCap = json.getInt(Constants.PRICECAP);
+        uber.rideId = json.getString(Constants.RIDE_ID);
+        uber.endLoc = (Location) json.get(Constants.END_LOC);
         return uber;
     }
 }

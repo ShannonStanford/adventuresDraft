@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="310dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/place_autocomplete" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp" />
 
     <fragment
         android:id="@+id/place_autocomplete"
@@ -19,55 +20,83 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp" />
+        android:layout_below="@+id/map" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="95dp"
-        android:text="Price Cap"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_marginBottom="114dp"
+        android:text="Total Price Cap"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etPrice"
-        android:layout_width="wrap_content"
+        android:layout_width="99dp"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textView2"
+        android:layout_marginEnd="18dp"
         android:ems="10"
-        android:hint="$100.00"
-        android:textColorHint="@color/black"
+        android:hint="100.00"
         android:inputType="number"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
+        android:backgroundTint="@color/uber_white"
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="147dp"
+        android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="34dp"
-        android:text="Total People"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="17dp"
+        android:text="Total Number of People"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/etNumPeeps"
+    <TextView
+        android:id="@+id/dollar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignParentEnd="true"
-        android:ems="10"
-        android:hint="1-6"
-        android:textColorHint="@color/black"
-        android:inputType="number"
-        android:textColor="@color/black" />
+        android:layout_alignBaseline="@+id/etPrice"
+        android:layout_toStartOf="@+id/etPrice"
+        android:text="$"
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
+
+    <NumberPicker
+        android:id="@+id/num_picker"
+        android:layout_width="50dp"
+        android:layout_height="81dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/dollar"
+        android:backgroundTint="@color/uber_white"
+        android:baselineAligned="false"
+        android:visibility="visible"></NumberPicker>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="89dp"
+        android:background="?android:attr/listDivider" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/place_autocomplete"
+        android:background="?android:attr/listDivider" />
 
 </RelativeLayout>

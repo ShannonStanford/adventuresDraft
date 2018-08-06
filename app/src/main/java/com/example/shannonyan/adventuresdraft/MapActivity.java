@@ -24,7 +24,7 @@ public class MapActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        mapURL = intent.getExtras().getString("mapURL");
+        mapURL = intent.getExtras().getString(Constants.MAP_URL);
         loadMapView();
     }
 

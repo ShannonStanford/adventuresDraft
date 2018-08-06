@@ -54,7 +54,7 @@ public class PrefFragment extends Fragment {
         btFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.onButtonClicked("food");
+                callback.onButtonClicked(Constants.FOOD);
             }
         });
     }
@@ -63,7 +63,7 @@ public class PrefFragment extends Fragment {
         btCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.onButtonClicked("car");
+                callback.onButtonClicked(Constants.CAR);
             }
         });
     }

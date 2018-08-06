@@ -13,16 +13,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -48,7 +44,7 @@ public class EventActivity extends AppCompatActivity {
         eventRating = findViewById(R.id.locationRating);
         continueButton = findViewById(R.id.continueAdventure);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.EVENT);
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         context = this;
@@ -58,15 +54,14 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EventActivity.this, FindActivity.class);
-                intent.putExtra("returnTrip", "true");
+                intent.putExtra(Constants.RETURN_TRIP, "true");
                 startActivity(intent);
             }
         });
-
     }
 
     public void populateComponents(){
-        mDatabase.child("trips").child("testTrip").child("event").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Event event = dataSnapshot.getValue(Event.class);

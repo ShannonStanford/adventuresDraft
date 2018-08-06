@@ -72,8 +72,8 @@ public class EtaActivity extends AppCompatActivity {
         service = uberClient.service;
 
         Intent intent = getIntent();
-        rideId = intent.getStringExtra("rideId");
-        returnTrip = intent.getStringExtra("returnTrip");
+        rideId = intent.getStringExtra(Constants.RIDE_ID);
+        returnTrip = intent.getStringExtra(Constants.RETURN_TRIP);
         context = this;
 
         // setup and call the timer
@@ -110,11 +110,12 @@ public class EtaActivity extends AppCompatActivity {
         // run on the main UI thread after the background task is executed
         @Override
         protected void onPostExecute(Ride ride1) {
+            final String CANCELLED = "Driver Cancelled, calling another Uber.";
             // populate the views based on the current status and situation
             // deals with accepted and arriving
             String stat = ride1.getStatus();
             rideId2 = ride1.getRideId();
-            if (stat.equals("accepted") || stat.equals("arriving")) {
+            if (stat.equals(Constants.ACCEPT) || stat.equals(Constants.ARRIVE)) {
                 Log.d("TAG4", "status accepted");
                 driverName.setText(ride1.getDriver().getName());
                 carModel.setText(ride1.getVehicle().getModel());
@@ -130,29 +131,29 @@ public class EtaActivity extends AppCompatActivity {
                         .load(ride1.getDriver().getPictureUrl())
                         .into(driverPic);
 
-                if (stat.equals("arriving")) {
-                    tvEta.setText("Arriving");
+                if (stat.equals(Constants.ARRIVE)) {
+                    tvEta.setText(Constants.ARRIVE);
                     Log.d("TAG4", "status arriving");
                 } else {
                     tvEta.setText(String.valueOf(ride1.getEta()));
                 }
             }
             // deals with driver canceled and rider canceled situations
-            else if (stat.equals("driver_canceled") || stat.equals("rider_canceled")) {
+            else if (stat.equals(Constants.DRIVER_CANCEL) || stat.equals(Constants.RIDER_CANCEL)) {
                 // TODO resolve the logic behind this
                 // TODO
                 timer.cancel();
                 timer.purge();
-                Toast.makeText(EtaActivity.this, "Driver Cancelled, calling another Uber.", Toast.LENGTH_LONG).show();
+                Toast.makeText(EtaActivity.this, CANCELLED, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getBaseContext(), FindActivity.class);
                 startActivity(intent);
-            } else if (stat.equals("in_progress")) {
+            } else if (stat.equals(Constants.PROGRESS)) {
                 Log.d("TAG4", "status in progress");
                 timer.cancel();
                 timer.purge();
                 if (returnTrip.equals("true")) {
                     Intent i = new Intent(EtaActivity.this, ReturnHomeActivity.class);
-                    i.putExtra("rideId", rideId);
+                    i.putExtra(Constants.RIDE_ID, rideId);
                     startActivity(i);
                 }
                 else {
@@ -178,24 +179,26 @@ public class EtaActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<RideMap> call, Throwable t) {
+                        Log.d("ETA Activity", "OnMapButtonClick failed");
                     }
                 });
                 // launch the map activity to show their progress
                 Intent intent = new Intent(getBaseContext(), MapActivity.class);
-                intent.putExtra("mapURL", mapURL);
+                intent.putExtra(Constants.MAP_URL, mapURL);
                 startActivity(intent);
             }
         });
     }
 
     public void onCallButtonClick() {
+        final String callingPermission = "Make sure you granted calling permissions";
         btCallDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:"+driverPhoneNumber));
                 if (ActivityCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getBaseContext(), "Make sure you granted calling permissions", Toast.LENGTH_SHORT);
+                    Toast.makeText(getBaseContext(), callingPermission, Toast.LENGTH_SHORT);
                     return;
                 }
                 startActivity(callIntent);
@@ -210,8 +213,8 @@ public class EtaActivity extends AppCompatActivity {
                 timer.cancel();
                 timer.purge();
                 Intent intent = new Intent(getBaseContext(), RiderCancelActivity.class);
-                intent.putExtra("rideId", rideId2);
-                intent.putExtra("returnTrip", returnTrip);
+                intent.putExtra(Constants.RIDE_ID, rideId2);
+                intent.putExtra(Constants.RETURN_TRIP, returnTrip);
                 startActivity(intent);
             }
         });

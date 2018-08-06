@@ -3,12 +3,12 @@ package com.example.shannonyan.adventuresdraft;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
 import com.uber.sdk.rides.client.services.RidesService;
 
 import java.io.IOException;
@@ -30,8 +30,8 @@ public class RiderCancelActivity extends AppCompatActivity {
         orderNewDriver = (Button) findViewById(R.id.orderNewDriver);
         cancelTrip = (Button) findViewById(R.id.cancelTrip);
 
-        rideId = getIntent().getStringExtra("rideId");
-        returnTrip = getIntent().getStringExtra("returnTrip");
+        rideId = getIntent().getStringExtra(Constants.RIDE_ID);
+        returnTrip = getIntent().getStringExtra(Constants.RETURN_TRIP);
 
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
@@ -47,7 +47,7 @@ public class RiderCancelActivity extends AppCompatActivity {
                 new RiderCancelActivity.ApiOperation().execute(rideId);
                 // launch the findActivity and it'll call an uber in its onCreate
                 Intent intent = new Intent(RiderCancelActivity.this, FindActivity.class);
-                intent.putExtra("returnTrip", returnTrip);
+                intent.putExtra(Constants.RETURN_TRIP, returnTrip);
                 startActivity(intent);
 
                 boolean check = false;

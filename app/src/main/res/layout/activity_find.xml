@@ -8,12 +8,14 @@
 
     <ImageView
         android:id="@+id/ivBackgroundFind"
-        android:layout_width="383dp"
-        android:layout_height="500dp"
+        android:layout_width="500dp"
+        android:layout_height="348dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rocket_telescope"
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
         android:src="@color/colorPrimaryDark"
-        app:srcCompat="@drawable/rocketstart" />
+        app:srcCompat="@drawable/rocket_telescope" />
 
 </RelativeLayout>
