@@ -56,6 +56,7 @@ public class CreateThirdFragment extends Fragment {
     public static final int priceRange2H = 30;
     public static final int priceRange3L = 31;
     public static final int priceRange3H = 60;
+    public static final int limit = 50;
     public UberClient uberClient;
     public RidesService service;
     public double startLat;
@@ -87,8 +88,6 @@ public class CreateThirdFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), StartActivity.class);
-                startActivity(intent);
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -242,12 +241,12 @@ public class CreateThirdFragment extends Fragment {
 
     public String BuildUri(StringBuilder foodPar) throws URISyntaxException {
         Random ran = new Random();
-        int ranN = ran.nextInt(50);
+        int ranN = ran.nextInt(limit);
         URIBuilder builder = new URIBuilder(SEARCH_API_URL);
         builder.addParameter(Constants.TERM, Constants.RESTAURANT);
         builder.addParameter(Constants.LOCATION, String.valueOf(cityAns.getText()));
         builder.addParameter(Constants.CATEGORIES, foodPar.toString());
-        builder.addParameter(Constants.LIMIT, "50");
+        builder.addParameter(Constants.LIMIT, String.valueOf(limit));
         builder.addParameter(Constants.OFFSET, String.valueOf(ranN));
         builder.addParameter(Constants.PRICE, priceRange);
         String url = builder.build().toString();

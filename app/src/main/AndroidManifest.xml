@@ -61,7 +61,6 @@
             android:name=".RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel" />
         <activity android:name=".StartActivity" />
-        <activity android:name=".TestYelp" />
         <activity android:name=".ReturnHomeActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>
     </application>
