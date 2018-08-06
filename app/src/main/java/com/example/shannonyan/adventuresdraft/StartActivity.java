@@ -48,7 +48,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
-        getStartLatLong();
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -123,12 +122,10 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
         gMap.setMinZoomPreference(ZOOM_PREF);
-        getStartLatLong();
-        LatLng ny = new LatLng(startLat, startLong);
-        gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
         gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         gMap.setOnMyLocationClickListener(onMyLocationClickListener);
         enableMyLocationIfPermitted();
+        getStartLatLong();
         gMap.getUiSettings().setZoomControlsEnabled(false);
     }
 
@@ -208,7 +205,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 LatLng ny = new LatLng(startLat, startLong);
                 gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
                 setPickUpMarker();
-
             }
 
             @Override
@@ -221,7 +217,5 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
 
     public void setPickUpMarker(){
         gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
-//        Log.d("pick up", String.valueOf(startLat));
-//        Log.d("pick up", String.valueOf(startLong));
     }
 }
