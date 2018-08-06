@@ -155,8 +155,8 @@ public class CreateThirdFragment extends Fragment {
     public void CreateEvent(StringBuilder foodPar) {
         // assembling the foodParam to put in for categories in the search query
         int priceCap = Integer.parseInt(String.valueOf(priceAns.getText()));
-        final int uberCap = priceCap/4; // one way uber cap
-        float foodCap = priceCap/(2 * numPeeps);
+        final int uberCap = priceCap/Constants.UBER_DIVID; // one way uber cap
+        float foodCap = priceCap/(Constants.FOOD_CAP_DIVID * numPeeps);
         // determine the priceRange to query with
         priceRange = PriceRange(foodCap);
         OkHttpClient client = new OkHttpClient();
@@ -181,7 +181,7 @@ public class CreateThirdFragment extends Fragment {
                     JSONArray results = null;
                     try {
                         JSONObject jsonObject = new JSONObject(jsonData);
-                        results = jsonObject.getJSONArray("businesses");
+                        results = jsonObject.getJSONArray(Constants.BUSINESS);
                     } catch(JSONException e) {
                         e.printStackTrace();
                     }
@@ -231,13 +231,13 @@ public class CreateThirdFragment extends Fragment {
 
     public String PriceRange(float foodCap) {
         if (foodCap <= priceRange1H)
-            return "1";
+            return Constants.PRICE_TIER_1;
         else if (foodCap >= priceRange2L && foodCap <= priceRange2H)
-            return "2";
+            return Constants.PRICE_TIER_2;
         else if(foodCap >= priceRange3L && foodCap <= priceRange3H)
-            return "3";
+            return Constants.PRICE_TIER_3;
         else
-            return "4";
+            return Constants.PRICE_TIER_4;
     }
 
     public String BuildUri(StringBuilder foodPar) throws URISyntaxException {
@@ -247,7 +247,7 @@ public class CreateThirdFragment extends Fragment {
         builder.addParameter(Constants.TERM, Constants.RESTAURANT);
         builder.addParameter(Constants.LOCATION, String.valueOf(cityAns.getText()));
         builder.addParameter(Constants.CATEGORIES, foodPar.toString());
-        builder.addParameter(Constants.LIMIT, "50");
+        builder.addParameter(Constants.LIMIT, Constants.YELP_LIMIT);
         builder.addParameter(Constants.OFFSET, String.valueOf(ranN));
         builder.addParameter(Constants.PRICE, priceRange);
         String url = builder.build().toString();
