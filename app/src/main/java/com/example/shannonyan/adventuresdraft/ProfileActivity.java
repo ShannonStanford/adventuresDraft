@@ -104,6 +104,5 @@ public class ProfileActivity extends AppCompatActivity implements PrefFragment.o
 
         dialog = builder.create();
         dialog.show();
-
     }
 }

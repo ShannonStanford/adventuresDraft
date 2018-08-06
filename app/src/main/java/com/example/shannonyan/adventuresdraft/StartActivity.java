@@ -36,13 +36,14 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
 
     private MapView mapView;
     private DatabaseReference mDatabase;
-    private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private float startLat;
     private float startLong;
-    private final int ZOOM_PREF = 14;
-    private final int STROKE_WIDTH = 6;
-    private final int CURR_LOCATION_CIRCLE_RADIUS = 200;
+    private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int ZOOM_PREF = 14;
+    private static final int STROKE_WIDTH = 6;
+    private static final int CURR_LOCATION_CIRCLE_RADIUS = 200;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +182,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 public void onMyLocationClick(@NonNull Location location) {
 
                     gMap.setMinZoomPreference(ZOOM_PREF);
-
                     CircleOptions circleOptions = new CircleOptions();
                     circleOptions.center(new LatLng(location.getLatitude(),
                             location.getLongitude()));
@@ -189,7 +189,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                     circleOptions.radius(CURR_LOCATION_CIRCLE_RADIUS);
                     circleOptions.fillColor(Color.RED);
                     circleOptions.strokeWidth(STROKE_WIDTH);
-
                     gMap.addCircle(circleOptions);
                 }
             };

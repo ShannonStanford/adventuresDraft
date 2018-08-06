@@ -1,8 +1,9 @@
 package com.example.shannonyan.adventuresdraft;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.services.RidesService;
@@ -51,6 +52,7 @@ public class ReturnHomeActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 if(response.isSuccessful()){
+                    Log.d("ReturnHomeActivity", "check progress was successful");
                 }
                 else{
                     // stop the timer and get rid of all the cancelled tasks in the queue before
@@ -65,6 +67,7 @@ public class ReturnHomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
+                Log.d("ReturnHomeActivity", "get current ride failed");
             }
         });
     }

@@ -44,7 +44,6 @@ public class PrefFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pref, container, false);
         btFood = (Button) view.findViewById(R.id.btFood);
         btCar = (Button) view.findViewById(R.id.btCar);
-
         onFoodButtonClick();
         onCarButtonClick();
         return view;
