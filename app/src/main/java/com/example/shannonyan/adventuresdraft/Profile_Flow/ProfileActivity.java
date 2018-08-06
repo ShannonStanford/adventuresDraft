@@ -10,14 +10,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.Constants;
-import com.example.shannonyan.adventuresdraft.GlideApp;
+import com.example.shannonyan.adventuresdraft.Modules.GlideApp;
+import com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments.profileViewAdapter;
 import com.example.shannonyan.adventuresdraft.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class ProfileActivity extends AppCompatActivity implements PrefFragment.onButtonClickedListener{
+public class ProfileActivity extends AppCompatActivity implements com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments.PrefFragment.onButtonClickedListener{
 
     private ViewPager viewPager;
     private profileViewAdapter adapter;

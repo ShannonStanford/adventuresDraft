@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Create_Flow;
+package com.example.shannonyan.adventuresdraft.Create_Flow.Fragment;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

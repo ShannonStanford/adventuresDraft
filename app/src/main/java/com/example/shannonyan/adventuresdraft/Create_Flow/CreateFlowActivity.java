@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.shannonyan.adventuresdraft.Create_Flow.Fragment.ViewPagerAdapter;
 import com.example.shannonyan.adventuresdraft.Profile_Flow.ProfileActivity;
 import com.example.shannonyan.adventuresdraft.R;
 

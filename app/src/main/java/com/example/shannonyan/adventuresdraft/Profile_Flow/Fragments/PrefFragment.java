@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Profile_Flow;
+package com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Create_Flow;
+package com.example.shannonyan.adventuresdraft.Create_Flow.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -13,7 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.Constants;
-import com.example.shannonyan.adventuresdraft.GlideApp;
+import com.example.shannonyan.adventuresdraft.Modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

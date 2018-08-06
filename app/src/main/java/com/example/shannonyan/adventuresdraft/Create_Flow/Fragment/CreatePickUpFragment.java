@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Create_Flow;
+package com.example.shannonyan.adventuresdraft.Create_Flow.Fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
