@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.GlideApp;
+import com.example.shannonyan.adventuresdraft.R;
+import com.example.shannonyan.adventuresdraft.UberClient;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.model.RideMap;
 import com.uber.sdk.rides.client.services.RidesService;
@@ -152,12 +156,13 @@ public class EtaActivity extends AppCompatActivity {
                 timer.cancel();
                 timer.purge();
                 if (returnTrip.equals("true")) {
-                    Intent i = new Intent(EtaActivity.this, ReturnHomeActivity.class);
+                    Intent i = new Intent(EtaActivity.this,
+                            ReturnHomeActivity.class);
                     i.putExtra(Constants.RIDE_ID, rideId);
                     startActivity(i);
                 }
                 else {
-                    Intent i = new Intent(EtaActivity.this, RideInProgressActivity.class);
+                    Intent i = new Intent(EtaActivity.this, com.example.shannonyan.adventuresdraft.Ongoing_Flow.RideInProgressActivity.class);
                     startActivity(i);
                 }
             }
@@ -165,6 +170,18 @@ public class EtaActivity extends AppCompatActivity {
     }
 
     public void onMapButtonClick() {
+
+        btDriverMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    //Use this method to get the Map Link in a real life ride, (non simulation).
+    public void getMapLinkProduction() {
         btDriverMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

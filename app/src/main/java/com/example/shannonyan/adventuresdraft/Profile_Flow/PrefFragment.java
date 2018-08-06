@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Profile_Flow;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.R;
 
 public class PrefFragment extends Fragment {
 

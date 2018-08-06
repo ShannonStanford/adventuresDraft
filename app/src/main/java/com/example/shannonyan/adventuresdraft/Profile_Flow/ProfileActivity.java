@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Profile_Flow;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.GlideApp;
+import com.example.shannonyan.adventuresdraft.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

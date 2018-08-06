@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.GlideApp;
+import com.example.shannonyan.adventuresdraft.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

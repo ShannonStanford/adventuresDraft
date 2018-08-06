@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Create_Flow;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.shannonyan.adventuresdraft.Profile_Flow.ProfileActivity;
+import com.example.shannonyan.adventuresdraft.R;
 
 public class CreateFlowActivity extends AppCompatActivity {
 

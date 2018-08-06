@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.R;
+import com.example.shannonyan.adventuresdraft.UberClient;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.services.RidesService;
 
