@@ -89,7 +89,6 @@ public class CreateThirdFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 startActivity(intent);
-                //TODO: get priceCap and users food preferences
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -129,7 +128,6 @@ public class CreateThirdFragment extends Fragment {
 
             }
         });
-//        setValues();
         return view;
     }
 
@@ -161,9 +159,7 @@ public class CreateThirdFragment extends Fragment {
         float foodCap = priceCap/(2 * numPeeps);
         // determine the priceRange to query with
         priceRange = PriceRange(foodCap);
-
         OkHttpClient client = new OkHttpClient();
-
         try {
             String url = BuildUri(foodPar);
             Request request = new Request.Builder()
@@ -245,12 +241,14 @@ public class CreateThirdFragment extends Fragment {
     }
 
     public String BuildUri(StringBuilder foodPar) throws URISyntaxException {
+        Random ran = new Random();
+        int ranN = ran.nextInt(50);
         URIBuilder builder = new URIBuilder(SEARCH_API_URL);
         builder.addParameter(Constants.TERM, Constants.RESTAURANT);
         builder.addParameter(Constants.LOCATION, String.valueOf(cityAns.getText()));
         builder.addParameter(Constants.CATEGORIES, foodPar.toString());
         builder.addParameter(Constants.LIMIT, "50");
-        builder.addParameter(Constants.OFFSET, "0");
+        builder.addParameter(Constants.OFFSET, String.valueOf(ranN));
         builder.addParameter(Constants.PRICE, priceRange);
         String url = builder.build().toString();
         return url;
