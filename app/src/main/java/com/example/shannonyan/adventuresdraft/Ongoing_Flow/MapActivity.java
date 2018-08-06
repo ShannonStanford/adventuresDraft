@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -12,6 +12,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.R;
+
 public class MapActivity extends AppCompatActivity {
 
     public String mapURL;
@@ -23,8 +26,7 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Intent intent = getIntent();
-        mapURL = intent.getExtras().getString(Constants.MAP_URL);
+        mapURL = Constants.MAP_LINK;
         loadMapView();
     }
 
@@ -50,7 +52,11 @@ public class MapActivity extends AppCompatActivity {
 
         webview.loadUrl(mapURL);
         setContentView(webview);
-
     }
 
+    //This method would be called when we test the map in a real Uber ride (non simulation).
+    public void mapLinkProductionVersion(){
+        Intent intent = getIntent();
+        mapURL = intent.getExtras().getString(Constants.MAP_URL);
+    }
 }

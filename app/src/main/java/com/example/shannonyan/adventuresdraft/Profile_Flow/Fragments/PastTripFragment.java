@@ -1,10 +1,12 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.shannonyan.adventuresdraft.R;
 
 public class PastTripFragment extends Fragment {
 

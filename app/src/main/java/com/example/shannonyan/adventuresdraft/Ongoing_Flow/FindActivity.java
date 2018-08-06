@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,6 +9,9 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.R;
+import com.example.shannonyan.adventuresdraft.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -256,15 +259,20 @@ public class FindActivity extends AppCompatActivity {
     }
 
     public void setGoingBack() {
-        float tempLat;
-        float tempLong;
-        tempLat = startLat;
-        startLat = endLat;
-        endLat = tempLat;
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                startLat = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LAT).getValue(float.class);
+                startLong = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LONG).getValue(float.class);
+                endLat = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LAT).getValue(float.class);
+                endLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
+                findDriver();
+            }
 
-        tempLong = startLong;
-        startLong = endLong;
-        endLong = tempLong;
-        findDriver();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("FindActivity", "Firebase cancelled on return trip");
+            }
+        });
     }
 }
