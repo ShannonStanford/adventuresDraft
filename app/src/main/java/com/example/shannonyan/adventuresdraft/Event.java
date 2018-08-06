@@ -14,9 +14,9 @@ public class Event {
         Event event = new Event();
 
         //extract and fill the values
-        event.name = json.getString("name");
-        event.rating = json.getInt("rating");
-        event.downloadUrl = json.getString("downloadUrl");
+        event.name = json.getString(Constants.NAME);
+        event.rating = json.getInt(Constants.RATING);
+        event.downloadUrl = json.getString(Constants.DOWNLOAD_URL);
 
         return event;
     }

@@ -59,10 +59,7 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
-        numPicker.setMaxValue(6);
-        numPicker.setMinValue(1);
-        numPicker.setWrapSelectorWheel(false);
-
+        setUpNumPicker();
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -101,15 +98,21 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
         return view;
     }
 
+    public void setUpNumPicker(){
+        final int MAX_PEOPLE = 6;
+        final int MIN_PEOPLE = 1;
+        numPicker.setWrapSelectorWheel(false);
+        numPicker.setMaxValue(MAX_PEOPLE);
+        numPicker.setMinValue(MIN_PEOPLE);
+    }
+
     public void setUpPlacesFrag(){
         final String HINT = "Pick your City of Interest";
-
         placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
         placeAutoComplete.setHint(HINT);
     }
 
     public static CreateSecondFragment newInstance() {
-
         CreateSecondFragment frag = new CreateSecondFragment();
         return frag;
     }

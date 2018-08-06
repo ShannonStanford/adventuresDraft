@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class profileViewAdapter extends FragmentPagerAdapter {
     private static final int PAGE_0 = 0;
     private static final int PAGE_1 = 1;
+    private static final int COUNT = 2;
 
     public profileViewAdapter(FragmentManager fm) {
         super(fm);
@@ -24,7 +25,7 @@ public class profileViewAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return COUNT;
     }
 
     @Nullable

@@ -123,7 +123,7 @@ public class FindActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RideEstimate> call, Throwable t) {
-
+                Log.d("FindActivity", "estimate ride failed");
             }
         });
     }
@@ -143,7 +143,7 @@ public class FindActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
-
+                Log.d("FindActivity", "request ride failed");
             }
         });
     }
@@ -171,7 +171,6 @@ public class FindActivity extends AppCompatActivity {
                     mDatabase.child(Constants.RIDE_ID).setValue(rideId);
                     asynchronousTaskDemo(rideId);
                 } else {
-                    //Api Failure
                     ApiError error = ErrorParser.parseError(response);
                 }
             }

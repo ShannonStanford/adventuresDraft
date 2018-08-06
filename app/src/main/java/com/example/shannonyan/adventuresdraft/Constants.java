@@ -50,7 +50,14 @@ public final class Constants {
     public static final String LIMIT = "limit";
     public static final String OFFSET = "offset";
     public static final String PRICE = "price";
-
+    public static final String BUSINESS = "businesses";
+    public static final String PRICE_TIER_1 = "1";
+    public static final String PRICE_TIER_2 = "2";
+    public static final String PRICE_TIER_3 = "3";
+    public static final String PRICE_TIER_4 = "4";
+    public static final int UBER_DIVID = 4;
+    public static final int FOOD_CAP_DIVID = 2;
+    public static final String YELP_LIMIT ="50";
 
     private Constants() {
     }
