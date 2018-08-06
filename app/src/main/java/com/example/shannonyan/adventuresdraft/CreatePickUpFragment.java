@@ -53,12 +53,10 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final String HINT = "Set your pick up location";
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
-        placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
-        placeAutoComplete.setHint(HINT);
+        setUpPlacesAutoComp();
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -84,6 +82,12 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
     public static CreatePickUpFragment newInstance() {
         CreatePickUpFragment frag = new CreatePickUpFragment();
         return frag;
+    }
+
+    public void setUpPlacesAutoComp() {
+        final String HINT = "Set your pick up location";
+        placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
+        placeAutoComplete.setHint(HINT);
     }
 
     public void addMarker(Place p){

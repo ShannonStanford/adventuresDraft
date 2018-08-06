@@ -15,7 +15,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.JsonObject;
 import com.uber.sdk.rides.client.model.PriceEstimate;
 import com.uber.sdk.rides.client.services.RidesService;
 
@@ -36,7 +35,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.example.shannonyan.adventuresdraft.Constants.CACHE_CONTROL;
 import static com.example.shannonyan.adventuresdraft.Constants.LONG;
 
 public class CreateThirdFragment extends Fragment {
@@ -58,6 +56,7 @@ public class CreateThirdFragment extends Fragment {
     public static final int priceRange2H = 30;
     public static final int priceRange3L = 31;
     public static final int priceRange3H = 60;
+    public static final int limit = 50;
     public UberClient uberClient;
     public RidesService service;
     public double startLat;
@@ -89,12 +88,11 @@ public class CreateThirdFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: get priceCap and users food preferences
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         // test size
-                        food = (ArrayList<String>) dataSnapshot.child(Constants.USER).child(Constants.TEST_TRIPS).child(Constants.FOOD_PREF).getValue();
+                        food = (ArrayList<String>) dataSnapshot.child(Constants.USER).child(Constants.TEST_USER).child(Constants.FOOD_PREF).getValue();
                         numPeeps = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.NUM_PEEPS).getValue(float.class);
                         startLat = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.START_LOC).child(Constants.LAT).getValue(long.class);
                         startLong = dataSnapshot.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.START_LOC).child(LONG).getValue(long.class);
@@ -129,7 +127,6 @@ public class CreateThirdFragment extends Fragment {
 
             }
         });
-        setValues();
         return view;
     }
 
@@ -157,13 +154,11 @@ public class CreateThirdFragment extends Fragment {
     public void CreateEvent(StringBuilder foodPar) {
         // assembling the foodParam to put in for categories in the search query
         int priceCap = Integer.parseInt(String.valueOf(priceAns.getText()));
-        final int uberCap = priceCap/4; // one way uber cap
-        float foodCap = priceCap/(2 * numPeeps);
+        final int uberCap = priceCap/Constants.UBER_DIVID; // one way uber cap
+        float foodCap = priceCap/(Constants.FOOD_CAP_DIVID * numPeeps);
         // determine the priceRange to query with
         priceRange = PriceRange(foodCap);
-
         OkHttpClient client = new OkHttpClient();
-
         try {
             String url = BuildUri(foodPar);
             Request request = new Request.Builder()
@@ -185,7 +180,7 @@ public class CreateThirdFragment extends Fragment {
                     JSONArray results = null;
                     try {
                         JSONObject jsonObject = new JSONObject(jsonData);
-                        results = jsonObject.getJSONArray("businesses");
+                        results = jsonObject.getJSONArray(Constants.BUSINESS);
                     } catch(JSONException e) {
                         e.printStackTrace();
                     }
@@ -213,7 +208,7 @@ public class CreateThirdFragment extends Fragment {
                             if (highEstimate <= uberCap) {
                                 found = true;
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.END_LOC).child(Constants.LAT).setValue(endLat);
-                                mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.END_LOC).child(LONG).setValue(endLon);
+                                mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER).child(Constants.END_LOC).child(Constants.LONG).setValue(endLon);
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.EVENT).child(Constants.DOWNLOAD_URL).setValue(item.get(Constants.IMAGE_URL));
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.EVENT).child(Constants.NAME).setValue(item.get(Constants.NAME));
                                 mDatabase.child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.EVENT).child(Constants.RATING).setValue(item.get(Constants.RATING));
@@ -234,22 +229,24 @@ public class CreateThirdFragment extends Fragment {
 
     public String PriceRange(float foodCap) {
         if (foodCap <= priceRange1H)
-            return "1";
+            return Constants.PRICE_TIER_1;
         else if (foodCap >= priceRange2L && foodCap <= priceRange2H)
-            return "2";
+            return Constants.PRICE_TIER_2;
         else if(foodCap >= priceRange3L && foodCap <= priceRange3H)
-            return "3";
+            return Constants.PRICE_TIER_3;
         else
-            return "4";
+            return Constants.PRICE_TIER_4;
     }
 
     public String BuildUri(StringBuilder foodPar) throws URISyntaxException {
+        Random ran = new Random();
+        int ranN = ran.nextInt(limit);
         URIBuilder builder = new URIBuilder(SEARCH_API_URL);
         builder.addParameter(Constants.TERM, Constants.RESTAURANT);
         builder.addParameter(Constants.LOCATION, String.valueOf(cityAns.getText()));
         builder.addParameter(Constants.CATEGORIES, foodPar.toString());
-        builder.addParameter(Constants.LIMIT, "50");
-        builder.addParameter(Constants.OFFSET, "0");
+        builder.addParameter(Constants.LIMIT, String.valueOf(limit));
+        builder.addParameter(Constants.OFFSET, String.valueOf(ranN));
         builder.addParameter(Constants.PRICE, priceRange);
         String url = builder.build().toString();
         return url;

@@ -14,20 +14,21 @@
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="90dp"
         android:text="Overview"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="22dp" />
+        android:textSize="23dp" />
 
     <TextView
         android:id="@+id/pickup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/pickup_ans"
-        android:layout_marginBottom="70dp"
-        android:layout_marginTop="177dp"
+        android:layout_marginTop="189dp"
+        android:layout_toEndOf="@id/end_loc"
+        android:layout_below="@id/pickup_ans"
+        android:layout_marginBottom="40dp"
         android:text="Pick up location"
         android:textColor="#a9a9a9"
         android:textSize="14dp" />
@@ -36,9 +37,9 @@
         android:id="@+id/pickup_ans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/pickup"
-        android:layout_marginBottom="-177dp"
-        android:layout_marginLeft="70dp"
+        android:layout_above="@+id/pickup_lo"
+        android:layout_alignStart="@+id/pickup"
+        android:layout_marginBottom="-185dp"
         android:text="Pickup Ans"
         android:textColor="@android:color/black"
         android:textSize="18dp" />
@@ -47,9 +48,8 @@
         android:id="@+id/city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/city_ans"
+        android:layout_alignStart="@+id/pickup"
         android:layout_below="@+id/city_ans"
-        android:layout_marginBottom="70dp"
         android:text="City of Interest"
         android:textColor="#a9a9a9" />
 
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/pickup"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="257dp"
         android:text="City Ans"
         android:textColor="@android:color/black"
         android:textSize="18dp" />
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/pickup"
         android:layout_below="@+id/price_ans"
-        android:layout_marginTop="-158dp"
+        android:layout_marginTop="-195dp"
         android:text="Total Price Cap"
         android:textColor="#a9a9a9" />
 
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/pickup"
-        android:layout_marginBottom="158dp"
+        android:layout_marginBottom="195dp"
         android:text="Price Ans"
         android:textColor="@android:color/black"
         android:textSize="18dp" />
@@ -89,10 +89,9 @@
         android:id="@+id/num_peeps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/num_peeps_ans"
-        android:layout_marginBottom="70dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="-237dp"
+        android:layout_alignStart="@+id/pickup"
+        android:layout_below="@+id/num_peeps_ans"
+        android:layout_marginTop="-290dp"
         android:text="Total Number of People"
         android:textColor="#a9a9a9"
         android:textSize="14dp" />
@@ -102,8 +101,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="237dp"
-        android:layout_marginLeft="70dp"
+        android:layout_alignStart="@+id/pickup"
+        android:layout_marginBottom="290dp"
         android:text="numPeepsAns"
         android:textColor="@color/uber_black"
         android:textSize="18dp" />
@@ -149,8 +148,9 @@
         android:id="@+id/pickup_lo"
         android:layout_width="43dp"
         android:layout_height="38dp"
-        android:layout_alignStart="@+id/dollar"
-        android:layout_alignTop="@+id/pickup_ans"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="167dp"
+        android:layout_toStartOf="@+id/city"
         android:src="@drawable/gps" />
 
 </RelativeLayout>

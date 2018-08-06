@@ -9,6 +9,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     private static final int PAGE_0 = 0;
     private static final int PAGE_1 = 1;
     private static final int PAGE_2 = 2;
+    private static final int COUNT = 3;
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -17,16 +18,16 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0: return CreateSecondFragment.newInstance();
-            case 1: return CreatePickUpFragment.newInstance();
-            case 2: return CreateThirdFragment.newInstance();
+            case PAGE_0: return CreateSecondFragment.newInstance();
+            case PAGE_1: return CreatePickUpFragment.newInstance();
+            case PAGE_2: return CreateThirdFragment.newInstance();
             default: return CreatePickUpFragment.newInstance();
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return COUNT;
     }
 
     @Nullable

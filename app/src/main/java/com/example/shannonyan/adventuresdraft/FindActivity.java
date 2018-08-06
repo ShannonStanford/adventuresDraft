@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +41,6 @@ public class FindActivity extends AppCompatActivity {
     public float endLat;
     public float endLong;
     public String rideId;
-    public Boolean check = true;
     //UBER vars
     public RidesService service;
     public UberClient uberClient;
@@ -61,11 +61,10 @@ public class FindActivity extends AppCompatActivity {
         service = uberClient.service;
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
         // check if they are starting their journey, or going back?
-
         if (getIntent().getExtras() != null) {
             Intent intent = getIntent();
             if (intent.getStringExtra("returnTrip").equals("true")) {
-                setStartEnd();
+                setGoingBack();
                 returnTrip = "true";
             }
         }
@@ -77,7 +76,6 @@ public class FindActivity extends AppCompatActivity {
         Glide.with(getBaseContext())
                 .load(R.drawable.rocket_telescope)
                 .into(ivBackgroundFind);
-
     }
 
     public void findDriver(){
@@ -125,7 +123,7 @@ public class FindActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RideEstimate> call, Throwable t) {
-
+                Log.d("FindActivity", "estimate ride failed");
             }
         });
     }
@@ -145,7 +143,7 @@ public class FindActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
-
+                Log.d("FindActivity", "request ride failed");
             }
         });
     }
@@ -173,7 +171,6 @@ public class FindActivity extends AppCompatActivity {
                     mDatabase.child(Constants.RIDE_ID).setValue(rideId);
                     asynchronousTaskDemo(rideId);
                 } else {
-                    //Api Failure
                     ApiError error = ErrorParser.parseError(response);
                 }
             }
@@ -198,8 +195,7 @@ public class FindActivity extends AppCompatActivity {
                 new ApiOperation().execute("");
             }
         };
-        // add a buffer of 5 seconds
-        timer.schedule(tasknew, 0, 5000);
+        timer.schedule(tasknew, 0, TimeUnit.SECONDS.toMillis(5)); // repeat task for 5 seconds
     }
 
     // private class for timer
@@ -221,7 +217,7 @@ public class FindActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String stat) {
             Log.d("SMART", "ride id is: " + rideId);
-            if (stat.equals(Constants.ACCEPT) /*|| stat.equals(ARRIVE) || stat.equals(PROGRESS)*/) {
+            if (stat.equals(Constants.ACCEPT) || stat.equals(Constants.ARRIVE) || stat.equals(Constants.PROGRESS)) {
                 // cancel all scheduled timer tasks and get rid of the cancelled tasks queued to the end
                 Log.d("TAG4", "status in progress or accepted");
                 timer.cancel();
@@ -256,6 +252,7 @@ public class FindActivity extends AppCompatActivity {
                 Log.d("FindActivity", "Firebase cancelled");
             }
         });
+        Log.d("DEBUGTAG", "going inside setStartEnd");
     }
 
     public void setGoingBack() {

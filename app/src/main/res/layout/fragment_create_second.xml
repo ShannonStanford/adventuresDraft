@@ -9,7 +9,7 @@
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="310dp"
+        android:layout_height="377dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="50dp" />
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView3"
-        android:layout_marginBottom="114dp"
+        android:layout_marginBottom="134dp"
         android:text="Total Price Cap"
         android:textColor="@color/black"
         android:textSize="18dp"
@@ -41,12 +41,12 @@
         android:layout_alignBaseline="@+id/textView2"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="18dp"
+        android:backgroundTint="@color/uber_white"
         android:ems="10"
         android:hint="100.00"
         android:inputType="number"
         android:textColor="@color/black"
-        android:textColorHint="@color/grey"
-        android:backgroundTint="@color/uber_white"
+        android:textColorHint="@color/place_autocomplete_search_hint"
         android:textSize="18dp" />
 
     <TextView
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="34dp"
         android:layout_marginStart="17dp"
         android:text="Total Number of People"
         android:textColor="@color/black"
@@ -78,6 +78,7 @@
         android:layout_height="81dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/dollar"
+        android:layout_marginBottom="13dp"
         android:backgroundTint="@color/uber_white"
         android:baselineAligned="false"
         android:visibility="visible"></NumberPicker>
@@ -88,7 +89,7 @@
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="89dp"
+        android:layout_marginBottom="106dp"
         android:background="?android:attr/listDivider" />
 
     <View

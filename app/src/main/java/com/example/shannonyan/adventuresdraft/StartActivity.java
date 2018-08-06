@@ -22,6 +22,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,25 +36,19 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
 
     private MapView mapView;
     private DatabaseReference mDatabase;
-    private static final String TRIPS = "trips";
-    private static final String TEST_TRIPS = "testTrip";
-    private static final String UBER = "uber";
-    private static final String START_LOC = "startLoc";
-    private static final String LAT = "lat";
-    private static final String LONG = "long";
-    private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private float startLat;
     private float startLong;
-    private final int ZOOM_PREF = 14;
-    private final int STROKE_WIDTH = 6;
-    private final int CURR_LOCATION_CIRCLE_RADIUS = 200;
+    private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int ZOOM_PREF = 14;
+    private static final int STROKE_WIDTH = 6;
+    private static final int CURR_LOCATION_CIRCLE_RADIUS = 200;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
-        getStartLatLong();
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -128,12 +123,10 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
         gMap.setMinZoomPreference(ZOOM_PREF);
-        getStartLatLong();
-        LatLng ny = new LatLng(startLat, startLong);
-        gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
         gMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         gMap.setOnMyLocationClickListener(onMyLocationClickListener);
         enableMyLocationIfPermitted();
+        getStartLatLong();
         gMap.getUiSettings().setZoomControlsEnabled(false);
     }
 
@@ -189,7 +182,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 public void onMyLocationClick(@NonNull Location location) {
 
                     gMap.setMinZoomPreference(ZOOM_PREF);
-
                     CircleOptions circleOptions = new CircleOptions();
                     circleOptions.center(new LatLng(location.getLatitude(),
                             location.getLongitude()));
@@ -197,7 +189,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                     circleOptions.radius(CURR_LOCATION_CIRCLE_RADIUS);
                     circleOptions.fillColor(Color.RED);
                     circleOptions.strokeWidth(STROKE_WIDTH);
-
                     gMap.addCircle(circleOptions);
                 }
             };
@@ -210,11 +201,9 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
                 Log.d("start", String.valueOf(startLat));
                 Log.d("start", String.valueOf(startLong));
-//
-//                LatLng ny = new LatLng(startLat, startLong);
-//                gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+                LatLng ny = new LatLng(startLat, startLong);
+                gMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
                 setPickUpMarker();
-
             }
 
             @Override
@@ -226,8 +215,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public void setPickUpMarker(){
-        //gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
-        Log.d("pick up", String.valueOf(startLat));
-        Log.d("pick up", String.valueOf(startLong));
+        gMap.addMarker(new MarkerOptions().position(new LatLng(startLat, startLong)).title("Pickup Location"));
     }
 }
