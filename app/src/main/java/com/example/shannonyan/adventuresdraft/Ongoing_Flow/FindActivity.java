@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +44,6 @@ public class FindActivity extends AppCompatActivity {
     public float endLat;
     public float endLong;
     public String rideId;
-    public Boolean check = true;
     //UBER vars
     public RidesService service;
     public UberClient uberClient;
@@ -64,11 +64,10 @@ public class FindActivity extends AppCompatActivity {
         service = uberClient.service;
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
         // check if they are starting their journey, or going back?
-
         if (getIntent().getExtras() != null) {
             Intent intent = getIntent();
             if (intent.getStringExtra("returnTrip").equals("true")) {
-                setStartEnd();
+                setGoingBack();
                 returnTrip = "true";
             }
         }
@@ -199,8 +198,7 @@ public class FindActivity extends AppCompatActivity {
                 new ApiOperation().execute("");
             }
         };
-        // add a buffer of 5 seconds
-        timer.schedule(tasknew, 0, 5000);
+        timer.schedule(tasknew, 0, TimeUnit.SECONDS.toMillis(5)); // repeat task for 5 seconds
     }
 
     // private class for timer
@@ -245,7 +243,11 @@ public class FindActivity extends AppCompatActivity {
                 startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
                 endLat = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LAT).getValue(float.class);
                 endLong = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LONG).getValue(float.class);
-                findDriver();
+                if (returnTrip.equals("true")){
+                    setGoingBack();
+                }else {
+                    findDriver();
+                }
             }
 
             @Override

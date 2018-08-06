@@ -25,7 +25,7 @@ class Uber {
         uber.pickUpName = json.getString(Constants.PICKUP);
         uber.priceCap = json.getInt(Constants.PRICECAP);
         uber.rideId = json.getString(Constants.RIDE_ID);
-        uber.endLoc = (Location) json.get(Constants.END_LOC);
+//        uber.endLoc = (Location) json.get(Constants.END_LOC);
         return uber;
     }
 }
