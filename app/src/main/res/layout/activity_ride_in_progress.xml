@@ -10,10 +10,10 @@
         android:id="@+id/tvPrepare2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPrepare"
+        android:layout_below="@+id/tvYour"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-137dp"
-        android:text="your destination"
+        android:text="destination"
+        android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="50sp" />
 
@@ -32,10 +32,20 @@
         android:id="@+id/tvPrepare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ivBackgroundFind"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="137dp"
         android:text="heading to "
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/tvYour"
+        android:layout_width="177dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPrepare"
+        android:layout_centerHorizontal="true"
+        android:text="your"
+        android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="50sp" />
 

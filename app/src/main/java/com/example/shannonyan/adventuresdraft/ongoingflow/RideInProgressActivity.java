@@ -43,9 +43,11 @@ public class RideInProgressActivity extends AppCompatActivity {
         service = uberClient.service;
 
         TextView prepare = (TextView) findViewById(R.id.tvPrepare);
+        TextView your = (TextView) findViewById(R.id.tvYour);
         TextView forTakeoff = (TextView) findViewById(R.id.tvPrepare2);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/round.otf");
         prepare.setTypeface(typeface);
+        your.setTypeface(typeface);
         forTakeoff.setTypeface(typeface);
 
         ivBackgroundFind = findViewById(R.id.ivBackgroundFind);
