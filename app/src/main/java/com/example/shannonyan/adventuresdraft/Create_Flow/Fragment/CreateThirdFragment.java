@@ -1,5 +1,7 @@
 package com.example.shannonyan.adventuresdraft.Create_Flow.Fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,11 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.Constants;
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.Uber_Helper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +50,7 @@ public class CreateThirdFragment extends Fragment {
     private TextView cityAns;
     private TextView numPeep;
     private TextView numPeepAns;
+    private ImageView arrow_l;
     private DatabaseReference mDatabase;
     public Button create;
     public final static String YELP_KEY= "Bearer q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
@@ -66,6 +70,22 @@ public class CreateThirdFragment extends Fragment {
     public double startLong;
     public int highEstimate;
     public boolean found = false;
+    private OnButtonClickListener mOnButtonClickListener;
+
+    public interface OnButtonClickListener{
+        void onButtonClicked(View view);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnButtonClickListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(((Activity) context).getLocalClassName()
+                    + " must implement OnButtonClickListener");
+        }
+    }
 
     public CreateThirdFragment() { }
 
@@ -77,6 +97,7 @@ public class CreateThirdFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_third, container, false);
+        arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
         pickupAns = view.findViewById(R.id.pickup_ans);
         priceAns = view.findViewById(R.id.price_ans);
         cityAns = view.findViewById(R.id.city_ans);
@@ -113,6 +134,13 @@ public class CreateThirdFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
+            }
+        });
+
+        arrow_l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnButtonClickListener.onButtonClicked(v);
             }
         });
 
@@ -249,7 +277,7 @@ public class CreateThirdFragment extends Fragment {
         builder.addParameter(Constants.LOCATION, String.valueOf(cityAns.getText()));
         builder.addParameter(Constants.CATEGORIES, foodPar.toString());
         builder.addParameter(Constants.LIMIT, String.valueOf(limit));
-        builder.addParameter(Constants.OFFSET, String.valueOf(ranN));
+        builder.addParameter(Constants.OFFSET, "0");
         builder.addParameter(Constants.PRICE, priceRange);
         String url = builder.build().toString();
         return url;

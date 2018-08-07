@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.Constants;
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.Uber_Helper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

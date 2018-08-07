@@ -7,12 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.shannonyan.adventuresdraft.Create_Flow.Fragment.CreatePickUpFragment;
+import com.example.shannonyan.adventuresdraft.Create_Flow.Fragment.CreateSecondFragment;
+import com.example.shannonyan.adventuresdraft.Create_Flow.Fragment.CreateThirdFragment;
 import com.example.shannonyan.adventuresdraft.Create_Flow.Fragment.ViewPagerAdapter;
 import com.example.shannonyan.adventuresdraft.Profile_Flow.ProfileActivity;
 import com.example.shannonyan.adventuresdraft.R;
 
-public class CreateFlowActivity extends AppCompatActivity {
+public class CreateFlowActivity extends AppCompatActivity implements CreatePickUpFragment.OnButtonClickListener,CreateThirdFragment.OnButtonClickListener,CreateSecondFragment.OnButtonClickListener {
 
     public ViewPagerAdapter vpAdapter;
     public ViewPager pager;
@@ -45,6 +49,24 @@ public class CreateFlowActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    public void onButtonClicked(View view){
+        int currPos = pager.getCurrentItem();
+
+        switch(view.getId()){
+
+            case R.id.arrow_l:
+                //handle currPos is zero
+                pager.setCurrentItem(currPos-1);
+                break;
+
+            case R.id.arrow_r:
+                //handle currPos is reached last item
+                pager.setCurrentItem(currPos+1);
+                break;
         }
     }
 }

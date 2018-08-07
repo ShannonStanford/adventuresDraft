@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.example.shannonyan.adventuresdraft.Constants;
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.Uber_Helper.UberClient;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.services.RidesService;
 

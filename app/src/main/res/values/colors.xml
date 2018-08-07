@@ -19,4 +19,5 @@
     <color name="text_color_primary">#000000</color>
     <color name="background_material_light_1">#009688</color>
     <color name="background_material_light_2">#009688</color>
+    <color name="transparent_white">#99FF7F11</color>
 </resources>
