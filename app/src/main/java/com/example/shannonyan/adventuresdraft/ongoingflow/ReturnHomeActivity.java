@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.example.shannonyan.adventuresdraft.Api;
+import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.R;

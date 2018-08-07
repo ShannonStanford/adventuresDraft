@@ -1,5 +1,7 @@
 package com.example.shannonyan.adventuresdraft.createflow.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,9 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.shannonyan.adventuresdraft.Api;
+import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Database;
@@ -20,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.uber.sdk.rides.client.model.PriceEstimate;
+import com.uber.sdk.rides.client.model.PriceEstimatesResponse;
 import com.uber.sdk.rides.client.services.RidesService;
 
 import org.json.JSONArray;
@@ -48,6 +52,7 @@ public class TripOverviewFragment extends Fragment {
     private TextView cityAns;
     private TextView numPeep;
     private TextView numPeepAns;
+    private ImageView arrow_l;
     private DatabaseReference mDatabase;
     public Button create;
     public final static String YELP_KEY= "Bearer q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
@@ -67,6 +72,22 @@ public class TripOverviewFragment extends Fragment {
     public double startLong;
     public int highEstimate;
     public boolean found = false;
+    private OnButtonClickListener mOnButtonClickListener;
+
+    public interface OnButtonClickListener{
+        void onButtonClicked(View view);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnButtonClickListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(((Activity) context).getLocalClassName()
+                    + " must implement OnButtonClickListener");
+        }
+    }
 
     public TripOverviewFragment() { }
 
@@ -78,6 +99,7 @@ public class TripOverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_third, container, false);
+        arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
         pickupAns = view.findViewById(R.id.pickup_ans);
         priceAns = view.findViewById(R.id.price_ans);
         cityAns = view.findViewById(R.id.city_ans);
@@ -114,6 +136,13 @@ public class TripOverviewFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
+            }
+        });
+
+        arrow_l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnButtonClickListener.onButtonClicked(v);
             }
         });
 
@@ -202,7 +231,9 @@ public class TripOverviewFragment extends Fragment {
                             JSONObject item = results.getJSONObject(n);
                             double endLat = item.getJSONObject(Database.COORDINATES).getLong(Database.LATITUDE);
                             double endLon = item.getJSONObject(Database.COORDINATES).getLong(Database.LONGITUDE);
-                            List<PriceEstimate> priceEstimates = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body().getPrices();
+                            PriceEstimatesResponse response2 = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body();
+                            List<PriceEstimate> priceEstimates = response2.getPrices();
+//                            List<PriceEstimate> priceEstimates = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body().getPrices();
                             highEstimate = -1;
                             for (int i = 0; i < priceEstimates.size(); i++) {
                                 if (priceEstimates.get(i).getDisplayName().equals(Database.UBERX)) {
@@ -250,7 +281,7 @@ public class TripOverviewFragment extends Fragment {
         builder.addParameter(Api.LOCATION, String.valueOf(cityAns.getText()));
         builder.addParameter(Api.CATEGORIES, foodPar.toString());
         builder.addParameter(Api.LIMIT, String.valueOf(limit));
-        builder.addParameter(Api.OFFSET, String.valueOf(ranN));
+        builder.addParameter(Api.OFFSET, "0");
         builder.addParameter(Api.PRICE, priceRange);
         String url = builder.build().toString();
         return url;

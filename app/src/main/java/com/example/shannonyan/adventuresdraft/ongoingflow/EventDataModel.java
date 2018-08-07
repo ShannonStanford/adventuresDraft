@@ -1,6 +1,6 @@
 package com.example.shannonyan.adventuresdraft.ongoingflow;
 
-import com.example.shannonyan.adventuresdraft.Api;
+import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 
 import org.json.JSONException;

@@ -1,5 +1,7 @@
 package com.example.shannonyan.adventuresdraft.createflow.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 
-import com.example.shannonyan.adventuresdraft.Api;
+import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.common.api.Status;
@@ -36,6 +39,23 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     private String cityInterest;
     private EditText etPrice;
     private NumberPicker numPicker;
+    private ImageView arrow_r;
+    private OnButtonClickListener mOnButtonClickListener;
+
+    public interface OnButtonClickListener{
+        void onButtonClicked(View view);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnButtonClickListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(((Activity) context).getLocalClassName()
+                    + " must implement OnButtonClickListener");
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -60,6 +80,8 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
+        arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
         setUpNumPicker();
@@ -67,6 +89,13 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         setUpPlacesFrag();
+
+        arrow_r.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnButtonClickListener.onButtonClicked(v);
+            }
+        });
 
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override

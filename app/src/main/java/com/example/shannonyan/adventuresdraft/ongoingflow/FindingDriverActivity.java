@@ -1,17 +1,19 @@
 package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.shannonyan.adventuresdraft.Api;
-import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.constants.Api;
+import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -78,8 +80,14 @@ public class FindingDriverActivity extends AppCompatActivity {
             returnTrip = "false";
         }
         Glide.with(getBaseContext())
-                .load(R.drawable.rocket_telescope)
+                .load(R.drawable.spaceship_dark)
                 .into(ivBackgroundFind);
+
+        TextView prepare = (TextView) findViewById(R.id.tvPrepare);
+        TextView forTakeoff = (TextView) findViewById(R.id.tvTakeoff);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/round.otf");
+        prepare.setTypeface(typeface);
+        forTakeoff.setTypeface(typeface);
     }
 
     public void findDriver(){

@@ -1,12 +1,16 @@
 package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.example.shannonyan.adventuresdraft.Api;
+import com.bumptech.glide.Glide;
+import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Database;
@@ -27,6 +31,8 @@ public class RideInProgressActivity extends AppCompatActivity {
     public String rideID;
     public Timer timer;
 
+    private ImageView ivBackgroundFind;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,17 @@ public class RideInProgressActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
+
+        TextView prepare = (TextView) findViewById(R.id.tvPrepare);
+        TextView forTakeoff = (TextView) findViewById(R.id.tvPrepare2);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/round.otf");
+        prepare.setTypeface(typeface);
+        forTakeoff.setTypeface(typeface);
+
+        ivBackgroundFind = findViewById(R.id.ivBackgroundFind);
+        Glide.with(getBaseContext())
+                .load(R.drawable.rocket_telescope)
+                .into(ivBackgroundFind);
 
         Intent intent = getIntent();
         rideID = intent.getStringExtra(Database.RIDE_ID);

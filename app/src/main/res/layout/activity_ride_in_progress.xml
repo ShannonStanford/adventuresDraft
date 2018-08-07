@@ -6,17 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".RideInProgressActivity">
 
+    <TextView
+        android:id="@+id/tvPrepare2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPrepare"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-137dp"
+        android:text="your destination"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="50sp" />
+
     <ImageView
-        android:id="@+id/ivQuestionMark"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/ivBackgroundFind"
+        android:layout_width="500dp"
+        android:layout_height="348dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/cyandarkgradient"
-        android:scaleType="fitStart"
-        app:srcCompat="@drawable/rocketstart" />
+        android:background="@drawable/rocket_telescope"
+        android:scaleType="fitXY"
+        android:src="@color/colorPrimaryDark"
+        app:srcCompat="@drawable/rocket_telescope" />
 
-    <include layout="@layout/content_ride_in_progress" />
+    <TextView
+        android:id="@+id/tvPrepare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="137dp"
+        android:text="heading to "
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="50sp" />
+
 
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package com.example.shannonyan.adventuresdraft.createflow.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
-import com.example.shannonyan.adventuresdraft.Api;
+import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.common.api.Status;
@@ -33,6 +37,23 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     private DatabaseReference mDatabase;
     private double startLat;
     private double startLong;
+    private ImageView arrow_l;
+    private OnButtonClickListener mOnButtonClickListener;
+
+    public interface OnButtonClickListener{
+        void onButtonClicked(View view);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnButtonClickListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(((Activity) context).getLocalClassName()
+                    + " must implement OnButtonClickListener");
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -58,6 +79,8 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
+        arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -79,6 +102,12 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_one);
         mapFragment.getMapAsync(this);
 
+        arrow_l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnButtonClickListener.onButtonClicked(v);
+            }
+        });
         return view;
     }
 
@@ -89,7 +118,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
 
     public void setUpPlacesAutoComp() {
         final String HINT = "Set your pick up location";
-        placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
+        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.background_material_light));
         placeAutoComplete.setHint(HINT);
     }
 
