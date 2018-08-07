@@ -58,6 +58,7 @@ public final class Constants {
     public static final int UBER_DIVID = 4;
     public static final int FOOD_CAP_DIVID = 2;
     public static final String MAP_LINK = "https://sandbox-api.uber.com/v1/sandbox/map";
+    public static final String status = "status";
 
     private Constants() {
     }
