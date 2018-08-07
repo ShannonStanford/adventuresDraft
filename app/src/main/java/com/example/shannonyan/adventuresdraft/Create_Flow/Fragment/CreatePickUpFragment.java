@@ -1,5 +1,7 @@
 package com.example.shannonyan.adventuresdraft.Create_Flow.Fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.shannonyan.adventuresdraft.Constants;
 import com.example.shannonyan.adventuresdraft.R;
@@ -32,6 +36,23 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
     private DatabaseReference mDatabase;
     private double startLat;
     private double startLong;
+    private ImageView arrow_l;
+    private OnButtonClickListener mOnButtonClickListener;
+
+    public interface OnButtonClickListener{
+        void onButtonClicked(View view);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnButtonClickListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(((Activity) context).getLocalClassName()
+                    + " must implement OnButtonClickListener");
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -56,6 +77,7 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
+        arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
@@ -78,6 +100,12 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_one);
         mapFragment.getMapAsync(this);
 
+        arrow_l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnButtonClickListener.onButtonClicked(v);
+            }
+        });
         return view;
     }
 
