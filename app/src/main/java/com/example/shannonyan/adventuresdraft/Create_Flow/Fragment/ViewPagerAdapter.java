@@ -1,11 +1,8 @@
 package com.example.shannonyan.adventuresdraft.Create_Flow.Fragment;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import com.example.shannonyan.adventuresdraft.Constants;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private static final int PAGE_0 = 0;
@@ -32,13 +29,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return COUNT;
     }
 
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        switch(position) {
-            case PAGE_0: return Constants.PREF;
-            case PAGE_1: return Constants.PAST_TRIPS;
-            default: return Constants.PREF;
-        }
-    }
 }

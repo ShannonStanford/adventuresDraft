@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.uber.sdk.rides.client.model.PriceEstimate;
+import com.uber.sdk.rides.client.model.PriceEstimatesResponse;
 import com.uber.sdk.rides.client.services.RidesService;
 
 import org.json.JSONArray;
@@ -229,7 +230,9 @@ public class CreateThirdFragment extends Fragment {
                             JSONObject item = results.getJSONObject(n);
                             double endLat = item.getJSONObject(Constants.COORDINATES).getLong(Constants.LATITUDE);
                             double endLon = item.getJSONObject(Constants.COORDINATES).getLong(Constants.LONGITUDE);
-                            List<PriceEstimate> priceEstimates = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body().getPrices();
+                            PriceEstimatesResponse response2 = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body();
+                            List<PriceEstimate> priceEstimates = response2.getPrices();
+//                            List<PriceEstimate> priceEstimates = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body().getPrices();
                             highEstimate = -1;
                             for (int i = 0; i < priceEstimates.size(); i++) {
                                 if (priceEstimates.get(i).getDisplayName().equals(Constants.UBERX)) {

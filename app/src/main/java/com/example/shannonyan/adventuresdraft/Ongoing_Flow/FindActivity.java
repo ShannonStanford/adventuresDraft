@@ -1,12 +1,14 @@
 package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.Constants;
@@ -77,8 +79,14 @@ public class FindActivity extends AppCompatActivity {
             returnTrip = "false";
         }
         Glide.with(getBaseContext())
-                .load(R.drawable.rocket_telescope)
+                .load(R.drawable.spaceship_dark)
                 .into(ivBackgroundFind);
+
+        TextView prepare = (TextView) findViewById(R.id.tvPrepare);
+        TextView forTakeoff = (TextView) findViewById(R.id.tvTakeoff);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/round.otf");
+        prepare.setTypeface(typeface);
+        forTakeoff.setTypeface(typeface);
     }
 
     public void findDriver(){

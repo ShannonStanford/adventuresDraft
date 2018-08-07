@@ -2,6 +2,7 @@ package com.example.shannonyan.adventuresdraft.Create_Flow;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,10 +29,15 @@ public class CreateFlowActivity extends AppCompatActivity implements CreatePickU
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.logo);
 
         vpAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(vpAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
+        tabLayout.setupWithViewPager(pager, true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
