@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,7 +141,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
 
     public void setUpPlacesFrag(){
         final String HINT = "Pick your City of Interest";
-        placeAutoComplete.getView().setBackgroundColor(Color.WHITE);
+        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.background_material_light));
         placeAutoComplete.setHint(HINT);
     }
 
