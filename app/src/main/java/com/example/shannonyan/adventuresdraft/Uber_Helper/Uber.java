@@ -1,6 +1,8 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Uber_Helper;
 
 import android.location.Location;
+
+import com.example.shannonyan.adventuresdraft.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;

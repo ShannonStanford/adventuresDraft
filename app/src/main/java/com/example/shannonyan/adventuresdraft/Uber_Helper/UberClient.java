@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.Uber_Helper;
 
 import android.content.Context;
 
@@ -18,10 +18,10 @@ import java.util.List;
 public final class UberClient {
 //IOC/injection
     private static UberClient uberClientInstance;
-    //UBER API vars
+    //UBER API varsD4bTw-t73c
     public String CLIENT_ID = "D4bTw-t73cglNaTsFlUfjQuFYeWsjP3F";
     public String TOKEN = "ayK8v-qqcB_TVX7IMGb-4KU8sqxAgDk1l40lkWQo"; //serverToken
-    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6InpESnU5a1hyUm5TWUplU1A3MGpEd3c9PSIsImV4cGlyZXNfYXQiOjE1MzUxNTA5MzEsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0._5WMyZ4xbcEOcSi3BNQ3lCy_I4GMrymkKlvc6vinZio";
+    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IjU0UU5CS3lBUk5HOHdEeGJtV0dRZnc9PSIsImV4cGlyZXNfYXQiOjE1MzYxODkxMzAsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.VAGaZ4svjlT3MaF-LBw5ePfWonQbqlGnnwTLP4TI4n8";
     public RidesService service;
     public SessionConfiguration config = new SessionConfiguration.Builder()
             // mandatory

@@ -43,9 +43,6 @@
             android:name=".Ongoing_Flow.EtaActivity"
             android:label="@string/title_activity_eta" />
         <activity
-            android:name=".Ongoing_Flow.FindActivity"
-            android:label="@string/title_activity_find" />
-        <activity
             android:name=".Ongoing_Flow.EventActivity"
             android:label="@string/title_activity_event" />
         <activity
@@ -55,14 +52,13 @@
             android:name=".Ongoing_Flow.NoDriversFoundActivity"
             android:label="@string/title_activity_no_drivers_found" />
         <activity
-            android:name=".Ongoing_Flow.RideInProgressActivity"
-            android:label="@string/title_activity_ride_in_progress" />
-        <activity
             android:name=".Ongoing_Flow.RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel" />
         <activity android:name=".Ongoing_Flow.StartActivity" />
         <activity android:name=".Ongoing_Flow.ReturnHomeActivity"></activity>
         <activity android:name=".Profile_Flow.ProfileActivity"></activity>
+        <activity android:name=".Ongoing_Flow.RideInProgressActivity"></activity>
+        <activity android:name= ".Ongoing_Flow.FindActivity"></activity>
     </application>
 
 </manifest>

@@ -57,7 +57,6 @@ public final class Constants {
     public static final String PRICE_TIER_4 = "4";
     public static final int UBER_DIVID = 4;
     public static final int FOOD_CAP_DIVID = 2;
-    public static final String YELP_LIMIT ="50";
     public static final String MAP_LINK = "https://sandbox-api.uber.com/v1/sandbox/map";
 
     private Constants() {
