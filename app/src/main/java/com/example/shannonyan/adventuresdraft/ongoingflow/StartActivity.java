@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -66,6 +65,11 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         mapView = findViewById(R.id.mapViewStart);
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     public void onClickToFindActivity(){

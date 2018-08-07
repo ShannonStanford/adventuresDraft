@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Database;
@@ -70,7 +69,11 @@ public class RideInProgressActivity extends AppCompatActivity {
         };
         // add a buffer of 5 seconds
         timer.schedule(tasknew, 0, 5000);
+    }
 
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     public void checkProgress() {

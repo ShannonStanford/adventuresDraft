@@ -17,11 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.shannonyan.adventuresdraft.constants.Api;
-import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.model.RideMap;
 import com.uber.sdk.rides.client.services.RidesService;
@@ -94,6 +93,11 @@ public class DriverInfoActivity extends AppCompatActivity {
         };
         // add a buffer of 5 seconds
         timer.schedule(tasknew, 0, 5000);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     // to implement the timer
