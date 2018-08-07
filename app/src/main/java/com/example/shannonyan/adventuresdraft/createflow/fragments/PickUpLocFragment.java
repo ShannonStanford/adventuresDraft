@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Create_Flow.Fragment;
+package com.example.shannonyan.adventuresdraft.createflow.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.Api;
 import com.example.shannonyan.adventuresdraft.R;
+import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -24,7 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback {
+public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
 
     public SupportPlaceAutocompleteFragment placeAutoComplete;
 
@@ -46,7 +47,7 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
         mMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
-    public CreatePickUpFragment() { }
+    public PickUpLocFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -65,9 +66,9 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
                 addMarker(place);
                 startLat = place.getLatLng().latitude;
                 startLong = place.getLatLng().longitude;
-                mDatabase.child(Constants.PICKUP).setValue(place.getName());
-                mDatabase.child(Constants.START_LOC).child(Constants.LAT).setValue(startLat);
-                mDatabase.child(Constants.START_LOC).child(Constants.LONG).setValue(startLong);
+                mDatabase.child(Database.PICKUP).setValue(place.getName());
+                mDatabase.child(Database.START_LOC).child(Database.LAT).setValue(startLat);
+                mDatabase.child(Database.START_LOC).child(Database.LONG).setValue(startLong);
             }
 
             @Override
@@ -81,8 +82,8 @@ public class CreatePickUpFragment extends Fragment implements OnMapReadyCallback
         return view;
     }
 
-    public static CreatePickUpFragment newInstance() {
-        CreatePickUpFragment frag = new CreatePickUpFragment();
+    public static PickUpLocFragment newInstance() {
+        PickUpLocFragment frag = new PickUpLocFragment();
         return frag;
     }
 

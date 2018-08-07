@@ -1,11 +1,12 @@
-package com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments;
+package com.example.shannonyan.adventuresdraft.profileflow.fragments;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.Api;
+import com.example.shannonyan.adventuresdraft.constants.Database;
 
 public class profileViewAdapter extends FragmentPagerAdapter {
     private static final int PAGE_0 = 0;
@@ -20,7 +21,7 @@ public class profileViewAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position) {
             case PAGE_0: return PrefFragment.newInstance();
-            case PAGE_1: return PastTripFragment.newInstance();
+            case PAGE_1: return PastTripsFragment.newInstance();
             default: return PrefFragment.newInstance();
         }
     }
@@ -34,9 +35,9 @@ public class profileViewAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch(position) {
-            case PAGE_0: return Constants.PREF;
-            case PAGE_1: return Constants.PAST_TRIPS;
-            default: return Constants.PREF;
+            case PAGE_0: return Database.PREF;
+            case PAGE_1: return Database.PAST_TRIPS;
+            default: return Database.PREF;
         }
     }
 }

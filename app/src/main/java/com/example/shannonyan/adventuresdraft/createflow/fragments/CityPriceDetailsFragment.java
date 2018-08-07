@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Create_Flow.Fragment;
+package com.example.shannonyan.adventuresdraft.createflow.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
-import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.Api;
 import com.example.shannonyan.adventuresdraft.R;
+import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -26,7 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class CreateSecondFragment extends Fragment implements OnMapReadyCallback {
+public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCallback {
 
     public SupportPlaceAutocompleteFragment placeAutoComplete;
 
@@ -48,7 +49,7 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
     }
 
-    public CreateSecondFragment() { }
+    public CityPriceDetailsFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
         setUpNumPicker();
@@ -72,7 +73,7 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
             public void onPlaceSelected(Place place) {
                 addMarker(place);
                 cityInterest = place.getAddress().toString();
-                mDatabase.child(Constants.CITY_OF_INTEREST).setValue(cityInterest);
+                mDatabase.child(Database.CITY_OF_INTEREST).setValue(cityInterest);
             }
 
             @Override
@@ -86,7 +87,7 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
                     String priceCap = etPrice.getText().toString();
-                    mDatabase.child(Constants.PRICECAP).setValue(priceCap);
+                    mDatabase.child(Database.PRICECAP).setValue(priceCap);
                 }
             }
         });
@@ -94,7 +95,7 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
         numPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mDatabase.child(Constants.NUM_PEEPS).setValue(numPicker.getValue());
+                mDatabase.child(Database.NUM_PEEPS).setValue(numPicker.getValue());
             }
         });
         return view;
@@ -114,8 +115,8 @@ public class CreateSecondFragment extends Fragment implements OnMapReadyCallback
         placeAutoComplete.setHint(HINT);
     }
 
-    public static CreateSecondFragment newInstance() {
-        CreateSecondFragment frag = new CreateSecondFragment();
+    public static CityPriceDetailsFragment newInstance() {
+        CityPriceDetailsFragment frag = new CityPriceDetailsFragment();
         return frag;
     }
 

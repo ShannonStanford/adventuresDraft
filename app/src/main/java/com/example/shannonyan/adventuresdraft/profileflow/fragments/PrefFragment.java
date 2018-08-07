@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments;
+package com.example.shannonyan.adventuresdraft.profileflow.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.Api;
 import com.example.shannonyan.adventuresdraft.R;
+import com.example.shannonyan.adventuresdraft.constants.Database;
 
 public class PrefFragment extends Fragment {
 
@@ -56,7 +57,7 @@ public class PrefFragment extends Fragment {
         btFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.onButtonClicked(Constants.FOOD);
+                callback.onButtonClicked(Database.FOOD);
             }
         });
     }
@@ -65,7 +66,7 @@ public class PrefFragment extends Fragment {
         btCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callback.onButtonClicked(Constants.CAR);
+                callback.onButtonClicked(Database.CAR);
             }
         });
     }

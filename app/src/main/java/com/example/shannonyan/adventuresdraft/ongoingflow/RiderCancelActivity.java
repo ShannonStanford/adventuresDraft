@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
+package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,8 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.shannonyan.adventuresdraft.Constants;
-import com.example.shannonyan.adventuresdraft.Create_Flow.CreateFlowActivity;
+import com.example.shannonyan.adventuresdraft.Api;
+import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
 import com.uber.sdk.rides.client.services.RidesService;
@@ -34,8 +35,8 @@ public class RiderCancelActivity extends AppCompatActivity {
         orderNewDriver = (Button) findViewById(R.id.orderNewDriver);
         cancelTrip = (Button) findViewById(R.id.cancelTrip);
 
-        rideId = getIntent().getStringExtra(Constants.RIDE_ID);
-        returnTrip = getIntent().getStringExtra(Constants.RETURN_TRIP);
+        rideId = getIntent().getStringExtra(Database.RIDE_ID);
+        returnTrip = getIntent().getStringExtra(Database.RETURN_TRIP);
 
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
@@ -50,8 +51,8 @@ public class RiderCancelActivity extends AppCompatActivity {
                 // has to be done in background thread - otherwise - networkonmainthread exception thrown
                 new RiderCancelActivity.ApiOperation().execute(rideId);
                 // launch the findActivity and it'll call an uber in its onCreate
-                Intent intent = new Intent(RiderCancelActivity.this, FindActivity.class);
-                intent.putExtra(Constants.RETURN_TRIP, returnTrip);
+                Intent intent = new Intent(RiderCancelActivity.this, FindingDriverActivity.class);
+                intent.putExtra(Database.RETURN_TRIP, returnTrip);
                 startActivity(intent);
 
                 boolean check = false;

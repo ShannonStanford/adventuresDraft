@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".Create_Flow.CreateFlowActivity">
+        <activity android:name=".createflow.CreateFlowActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,29 +40,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Ongoing_Flow.EtaActivity"
+            android:name=".ongoingflow.DriverInfoActivity"
             android:label="@string/title_activity_eta" />
         <activity
-            android:name=".Ongoing_Flow.FindActivity"
+            android:name=".ongoingflow.FindingDriverActivity"
             android:label="@string/title_activity_find" />
         <activity
-            android:name=".Ongoing_Flow.EventActivity"
+            android:name=".ongoingflow.EventInfoActivity"
             android:label="@string/title_activity_event" />
         <activity
-            android:name=".Ongoing_Flow.MapActivity"
+            android:name=".ongoingflow.UberMapActivity"
             android:label="@string/title_activity_map" />
         <activity
-            android:name=".Ongoing_Flow.NoDriversFoundActivity"
+            android:name=".ongoingflow.NoDriversFoundActivity"
             android:label="@string/title_activity_no_drivers_found" />
         <activity
-            android:name=".Ongoing_Flow.RideInProgressActivity"
+            android:name=".ongoingflow.RideInProgressActivity"
             android:label="@string/title_activity_ride_in_progress" />
         <activity
-            android:name=".Ongoing_Flow.RiderCancelActivity"
+            android:name=".ongoingflow.RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel" />
-        <activity android:name=".Ongoing_Flow.StartActivity" />
-        <activity android:name=".Ongoing_Flow.ReturnHomeActivity"></activity>
-        <activity android:name=".Profile_Flow.ProfileActivity"></activity>
+        <activity android:name=".ongoingflow.StartActivity" />
+        <activity android:name=".ongoingflow.ReturnHomeActivity"></activity>
+        <activity android:name=".profileflow.ProfileActivity"></activity>
     </application>
 
 </manifest>

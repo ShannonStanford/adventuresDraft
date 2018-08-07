@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Profile_Flow;
+package com.example.shannonyan.adventuresdraft.profileflow;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -9,16 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.shannonyan.adventuresdraft.Constants;
-import com.example.shannonyan.adventuresdraft.Modules.GlideApp;
-import com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments.profileViewAdapter;
+import com.example.shannonyan.adventuresdraft.Api;
+import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.modules.GlideApp;
+import com.example.shannonyan.adventuresdraft.profileflow.fragments.profileViewAdapter;
 import com.example.shannonyan.adventuresdraft.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class ProfileActivity extends AppCompatActivity implements com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments.PrefFragment.onButtonClickedListener{
+public class ProfileActivity extends AppCompatActivity implements com.example.shannonyan.adventuresdraft.profileflow.fragments.PrefFragment.onButtonClickedListener{
 
     private ViewPager viewPager;
     private profileViewAdapter adapter;
@@ -42,15 +43,15 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
         adapter = new profileViewAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.USER).child(Constants.TEST_USER);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.USER).child(Database.TEST_USER);
     }
 
     @Override
     public void onButtonClicked(String name) {
-        if(name.equals(Constants.FOOD)){
-            onPrefButtonClicked(Constants.FOOD);
-        } else if (name.equals(Constants.CAR)){
-            onPrefButtonClicked(Constants.CAR);
+        if(name.equals(Database.FOOD)){
+            onPrefButtonClicked(Database.FOOD);
+        } else if (name.equals(Database.CAR)){
+            onPrefButtonClicked(Database.CAR);
         }
 
     }
@@ -68,12 +69,12 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
             options = new String[] {"American","Barbeque","Beer Garden", "Brazilian", "Burgers", "Caribbean",
                     "Chinese", "Fast Food", "French", "German", "Greek", "Hawaiian", "Indian",
                     "Italian","Japanese", "Korean", "Mediterranean", "Portuguese", "Salad", "Sandwiches", "Seafood", "Southern", "Spanish"};
-            selectedChoice = Constants.FOOD_PREF;
+            selectedChoice = Database.FOOD_PREF;
 
         } else {
             Title = "Select the car you prefer:";
             options = new String[] {"UberX", "UberXL", "UberSELECT","UberBLACK", "UberSUV", "UberLUX"};
-            selectedChoice = Constants.CAR_PREF;
+            selectedChoice = Database.CAR_PREF;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

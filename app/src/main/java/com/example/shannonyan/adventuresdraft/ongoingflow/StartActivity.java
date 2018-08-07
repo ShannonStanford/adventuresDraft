@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
+package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.Manifest;
 import android.content.Intent;
@@ -16,8 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.Api;
 import com.example.shannonyan.adventuresdraft.R;
+import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -50,7 +51,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,7 +72,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         btLaunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 Intent i = new Intent(getBaseContext(), FindActivity.class);
+                 Intent i = new Intent(getBaseContext(), FindingDriverActivity.class);
                  startActivity(i);
             }
         });
@@ -199,8 +200,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                startLat = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LAT).getValue(float.class);
-                startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
+                startLat = (float) dataSnapshot.child(Database.START_LOC).child(Database.LAT).getValue(float.class);
+                startLong = (float) dataSnapshot.child(Database.START_LOC).child(Database.LONG).getValue(float.class);
                 Log.d("start", String.valueOf(startLat));
                 Log.d("start", String.valueOf(startLong));
                 LatLng ny = new LatLng(startLat, startLong);
@@ -210,7 +211,7 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("FindActivity", "Firebase cancelled");
+                Log.d("FindingDriverActivity", "Firebase cancelled");
             }
         });
 

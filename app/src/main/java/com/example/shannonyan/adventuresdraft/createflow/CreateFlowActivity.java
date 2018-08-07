@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Create_Flow;
+package com.example.shannonyan.adventuresdraft.createflow;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.shannonyan.adventuresdraft.Create_Flow.Fragment.ViewPagerAdapter;
-import com.example.shannonyan.adventuresdraft.Profile_Flow.ProfileActivity;
+import com.example.shannonyan.adventuresdraft.createflow.fragments.CreateFragmentAdapter;
+import com.example.shannonyan.adventuresdraft.profileflow.ProfileActivity;
 import com.example.shannonyan.adventuresdraft.R;
 
 public class CreateFlowActivity extends AppCompatActivity {
 
-    public ViewPagerAdapter vpAdapter;
+    public CreateFragmentAdapter vpAdapter;
     public ViewPager pager;
 
     @Override
@@ -25,7 +25,7 @@ public class CreateFlowActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        vpAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        vpAdapter = new CreateFragmentAdapter(getSupportFragmentManager());
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(vpAdapter);
     }

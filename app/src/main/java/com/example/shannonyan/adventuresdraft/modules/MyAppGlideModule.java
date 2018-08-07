@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Modules;
+package com.example.shannonyan.adventuresdraft.modules;
 
 import android.content.Context;
 

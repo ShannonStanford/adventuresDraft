@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
+package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.shannonyan.adventuresdraft.Constants;
-import com.example.shannonyan.adventuresdraft.Modules.GlideApp;
+import com.example.shannonyan.adventuresdraft.constants.Api;
+import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
 import com.uber.sdk.rides.client.model.Ride;
@@ -33,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EtaActivity extends AppCompatActivity {
+public class DriverInfoActivity extends AppCompatActivity {
 
     public RidesService service;
     public UberClient uberClient;
@@ -76,8 +77,8 @@ public class EtaActivity extends AppCompatActivity {
         service = uberClient.service;
 
         Intent intent = getIntent();
-        rideId = intent.getStringExtra(Constants.RIDE_ID);
-        returnTrip = intent.getStringExtra(Constants.RETURN_TRIP);
+        rideId = intent.getStringExtra(Database.RIDE_ID);
+        returnTrip = intent.getStringExtra(Database.RETURN_TRIP);
         context = this;
 
         // setup and call the timer
@@ -87,7 +88,7 @@ public class EtaActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // execute the background task
-                new EtaActivity.ApiOperation().execute("");
+                new DriverInfoActivity.ApiOperation().execute("");
 
             }
         };
@@ -119,7 +120,7 @@ public class EtaActivity extends AppCompatActivity {
             // deals with accepted and arriving
             String stat = ride1.getStatus();
             rideId2 = ride1.getRideId();
-            if (stat.equals(Constants.ACCEPT) || stat.equals(Constants.ARRIVE)) {
+            if (stat.equals(Database.ACCEPT) || stat.equals(Database.ARRIVE)) {
                 Log.d("TAG4", "status accepted");
                 driverName.setText(ride1.getDriver().getName());
                 carModel.setText(ride1.getVehicle().getModel());
@@ -135,34 +136,34 @@ public class EtaActivity extends AppCompatActivity {
                         .load(ride1.getDriver().getPictureUrl())
                         .into(driverPic);
 
-                if (stat.equals(Constants.ARRIVE)) {
-                    tvEta.setText(Constants.ARRIVE);
+                if (stat.equals(Database.ARRIVE)) {
+                    tvEta.setText(Database.ARRIVE);
                     Log.d("TAG4", "status arriving");
                 } else {
                     tvEta.setText(String.valueOf(ride1.getEta()));
                 }
             }
             // deals with driver canceled and rider canceled situations
-            else if (stat.equals(Constants.DRIVER_CANCEL) || stat.equals(Constants.RIDER_CANCEL)) {
+            else if (stat.equals(Database.DRIVER_CANCEL) || stat.equals(Database.RIDER_CANCEL)) {
                 // TODO resolve the logic behind this
                 // TODO
                 timer.cancel();
                 timer.purge();
-                Toast.makeText(EtaActivity.this, CANCELLED, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getBaseContext(), FindActivity.class);
+                Toast.makeText(DriverInfoActivity.this, CANCELLED, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
                 startActivity(intent);
-            } else if (stat.equals(Constants.PROGRESS)) {
+            } else if (stat.equals(Database.PROGRESS)) {
                 Log.d("TAG4", "status in progress");
                 timer.cancel();
                 timer.purge();
                 if (returnTrip.equals("true")) {
-                    Intent i = new Intent(EtaActivity.this,
+                    Intent i = new Intent(DriverInfoActivity.this,
                             ReturnHomeActivity.class);
-                    i.putExtra(Constants.RIDE_ID, rideId);
+                    i.putExtra(Database.RIDE_ID, rideId);
                     startActivity(i);
                 }
                 else {
-                    Intent i = new Intent(EtaActivity.this, com.example.shannonyan.adventuresdraft.Ongoing_Flow.RideInProgressActivity.class);
+                    Intent i = new Intent(DriverInfoActivity.this, com.example.shannonyan.adventuresdraft.ongoingflow.RideInProgressActivity.class);
                     startActivity(i);
                 }
             }
@@ -174,7 +175,7 @@ public class EtaActivity extends AppCompatActivity {
         btDriverMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MapActivity.class);
+                Intent intent = new Intent(getBaseContext(), UberMapActivity.class);
                 startActivity(intent);
             }
         });
@@ -200,8 +201,8 @@ public class EtaActivity extends AppCompatActivity {
                     }
                 });
                 // launch the map activity to show their progress
-                Intent intent = new Intent(getBaseContext(), MapActivity.class);
-                intent.putExtra(Constants.MAP_URL, mapURL);
+                Intent intent = new Intent(getBaseContext(), UberMapActivity.class);
+                intent.putExtra(Database.MAP_URL, mapURL);
                 startActivity(intent);
             }
         });
@@ -230,8 +231,8 @@ public class EtaActivity extends AppCompatActivity {
                 timer.cancel();
                 timer.purge();
                 Intent intent = new Intent(getBaseContext(), RiderCancelActivity.class);
-                intent.putExtra(Constants.RIDE_ID, rideId2);
-                intent.putExtra(Constants.RETURN_TRIP, returnTrip);
+                intent.putExtra(Database.RIDE_ID, rideId2);
+                intent.putExtra(Database.RETURN_TRIP, returnTrip);
                 startActivity(intent);
             }
         });

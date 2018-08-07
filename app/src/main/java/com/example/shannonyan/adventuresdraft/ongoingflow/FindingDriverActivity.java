@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
+package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,9 +9,10 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.Api;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FindActivity extends AppCompatActivity {
+public class FindingDriverActivity extends AppCompatActivity {
 
     //Location vars (pickup and drop off)
     public float startLat;
@@ -62,7 +63,7 @@ public class FindActivity extends AppCompatActivity {
         //UBER instanstiation
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.TRIPS).child(Constants.TEST_TRIPS).child(Constants.UBER);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         // check if they are starting their journey, or going back?
         if (getIntent().getExtras() != null) {
             Intent intent = getIntent();
@@ -126,7 +127,7 @@ public class FindActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RideEstimate> call, Throwable t) {
-                Log.d("FindActivity", "estimate ride failed");
+                Log.d("FindingDriverActivity", "estimate ride failed");
             }
         });
     }
@@ -146,7 +147,7 @@ public class FindActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
-                Log.d("FindActivity", "request ride failed");
+                Log.d("FindingDriverActivity", "request ride failed");
             }
         });
     }
@@ -154,7 +155,7 @@ public class FindActivity extends AppCompatActivity {
     public void useCurrentRide(Response<Ride> response){
         Ride ride = response.body();
         rideId = ride.getRideId();
-        mDatabase.child(Constants.RIDE_ID).setValue(rideId);
+        mDatabase.child(Database.RIDE_ID).setValue(rideId);
         Log.v("tag3", "rideid: " + rideId);
         asynchronousTaskDemo(rideId);
     }
@@ -171,7 +172,7 @@ public class FindActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Ride ride = response.body();
                     rideId = ride.getRideId();
-                    mDatabase.child(Constants.RIDE_ID).setValue(rideId);
+                    mDatabase.child(Database.RIDE_ID).setValue(rideId);
                     asynchronousTaskDemo(rideId);
                 } else {
                     ApiError error = ErrorParser.parseError(response);
@@ -220,15 +221,15 @@ public class FindActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String stat) {
             Log.d("SMART", "ride id is: " + rideId);
-            if (stat.equals(Constants.ACCEPT) || stat.equals(Constants.ARRIVE) || stat.equals(Constants.PROGRESS)) {
+            if (stat.equals(Database.ACCEPT) || stat.equals(Database.ARRIVE) || stat.equals(Database.PROGRESS)) {
                 // cancel all scheduled timer tasks and get rid of the cancelled tasks queued to the end
                 Log.d("TAG4", "status in progress or accepted");
                 timer.cancel();
                 timer.purge();
 
                 Log.d("TIMER", "timer cancel successful");
-                Intent intent = new Intent(FindActivity.this, EtaActivity.class);
-                intent.putExtra(Constants.RIDE_ID, rideId);
+                Intent intent = new Intent(FindingDriverActivity.this, DriverInfoActivity.class);
+                intent.putExtra(Database.RIDE_ID, rideId);
                 intent.putExtra("returnTrip", returnTrip);
                 startActivity(intent);
             } else {}
@@ -239,10 +240,10 @@ public class FindActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                startLat = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LAT).getValue(float.class);
-                startLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
-                endLat = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LAT).getValue(float.class);
-                endLong = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LONG).getValue(float.class);
+                startLat = (float) dataSnapshot.child(Database.START_LOC).child(Database.LAT).getValue(float.class);
+                startLong = (float) dataSnapshot.child(Database.START_LOC).child(Database.LONG).getValue(float.class);
+                endLat = (float) dataSnapshot.child(Database.END_LOC).child(Database.LAT).getValue(float.class);
+                endLong = (float) dataSnapshot.child(Database.END_LOC).child(Database.LONG).getValue(float.class);
                 if (returnTrip.equals("true")){
                     setGoingBack();
                 }else {
@@ -252,7 +253,7 @@ public class FindActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("FindActivity", "Firebase cancelled");
+                Log.d("FindingDriverActivity", "Firebase cancelled");
             }
         });
         Log.d("DEBUGTAG", "going inside setStartEnd");
@@ -262,16 +263,16 @@ public class FindActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                startLat = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LAT).getValue(float.class);
-                startLong = (float) dataSnapshot.child(Constants.END_LOC).child(Constants.LONG).getValue(float.class);
-                endLat = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LAT).getValue(float.class);
-                endLong = (float) dataSnapshot.child(Constants.START_LOC).child(Constants.LONG).getValue(float.class);
+                startLat = (float) dataSnapshot.child(Database.END_LOC).child(Database.LAT).getValue(float.class);
+                startLong = (float) dataSnapshot.child(Database.END_LOC).child(Database.LONG).getValue(float.class);
+                endLat = (float) dataSnapshot.child(Database.START_LOC).child(Database.LAT).getValue(float.class);
+                endLong = (float) dataSnapshot.child(Database.START_LOC).child(Database.LONG).getValue(float.class);
                 findDriver();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("FindActivity", "Firebase cancelled on return trip");
+                Log.d("FindingDriverActivity", "Firebase cancelled on return trip");
             }
         });
     }
