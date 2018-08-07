@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#36e4c8</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#344955</color>
+    <color name="colorPrimaryDark">#344955</color>
+    <color name="colorAccent">#ff8540</color>
     <color name="place_autocomplete_search_text">#2B2D42</color>
     <color name="place_autocomplete_search_hint">@android:color/secondary_text_dark</color>
     <color name="green">#b3dd68</color>
     <color name="orgag">#f46620</color>
     <color name="grey">#4b4d66</color>
-    <color name="background_material_light">#fffdfd</color>
+    <color name="background_material_light">#ecf8fe</color>
     <color name="foreground_material_light">#201212</color>
-    <color name="purple">#3700B3</color>
+    <color name="purple">#3700b3</color>
     <color name="lightpurple">#CAB3FF</color>
-    <color name="black">#303030</color>
+    <color name="black">#344955</color>
     <color name="primary_dark_material_dark_1">#36e4c8</color>
     <color name="primary_material_dark">#36e4c8</color>
     <color name="background_material_dark">#db3535</color>
     <color name="text_color_primary">#000000</color>
     <color name="background_material_light_1">#009688</color>
     <color name="background_material_light_2">#009688</color>
+    <color name="light_blue">#ecf8fe</color>
     <color name="transparent_white">#99FF7F11</color>
 </resources>

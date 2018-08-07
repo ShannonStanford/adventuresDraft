@@ -34,7 +34,7 @@ dependencies {
     //for firebase
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
-    //Realtime Database
+    //Realtime DatabaseHelper
     implementation 'com.google.firebase:firebase-firestore:17.0.3'
     //Cloud Firestore
     implementation 'com.google.firebase:firebase-storage:16.0.1'
