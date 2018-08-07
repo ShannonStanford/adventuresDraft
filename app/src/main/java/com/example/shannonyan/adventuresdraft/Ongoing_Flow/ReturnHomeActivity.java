@@ -1,10 +1,14 @@
 package com.example.shannonyan.adventuresdraft.Ongoing_Flow;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.Constants;
 import com.example.shannonyan.adventuresdraft.Create_Flow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.R;
@@ -25,11 +29,21 @@ public class ReturnHomeActivity extends AppCompatActivity {
     RidesService service;
     String rideId;
     Timer timer;
+    ImageView ivEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_return_home);
+
+        ivEnd = findViewById(R.id.ivEnd);
+        Glide.with(getBaseContext())
+                .load(R.drawable.rocket_ending)
+                .into(ivEnd);
+
+        TextView prepare = (TextView) findViewById(R.id.tvLater);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/round.otf");
+        prepare.setTypeface(typeface);
 
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;

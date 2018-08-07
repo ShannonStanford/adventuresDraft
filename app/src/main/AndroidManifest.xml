@@ -32,7 +32,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".Create_Flow.CreateFlowActivity">
+        <activity android:name=".Ongoing_Flow.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +46,7 @@
             android:name=".Ongoing_Flow.EventActivity"
             android:label="@string/title_activity_event" />
         <activity
-            android:name=".Ongoing_Flow.MapActivity"
+            android:name=".Profile_Flow.ProfileActivity"
             android:label="@string/title_activity_map" />
         <activity
             android:name=".Ongoing_Flow.NoDriversFoundActivity"
@@ -55,9 +55,9 @@
             android:name=".Ongoing_Flow.RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel" />
         <activity android:name=".Ongoing_Flow.StartActivity" />
-        <activity android:name=".Ongoing_Flow.ReturnHomeActivity"></activity>
-        <activity android:name=".Profile_Flow.ProfileActivity"></activity>
+        <activity android:name=".Create_Flow.CreateFlowActivity"></activity>
         <activity android:name=".Ongoing_Flow.RideInProgressActivity"></activity>
+        <activity android:name=".Ongoing_Flow.ReturnHomeActivity"></activity>
         <activity android:name= ".Ongoing_Flow.FindActivity"></activity>
     </application>
 

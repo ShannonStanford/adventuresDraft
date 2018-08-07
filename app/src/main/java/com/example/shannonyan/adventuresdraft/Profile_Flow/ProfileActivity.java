@@ -2,14 +2,18 @@ package com.example.shannonyan.adventuresdraft.Profile_Flow;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.Constants;
+import com.example.shannonyan.adventuresdraft.Create_Flow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.Modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.Profile_Flow.Fragments.profileViewAdapter;
 import com.example.shannonyan.adventuresdraft.R;
@@ -25,6 +29,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
     private DatabaseReference mDatabase;
     private TabLayout tabLayout;
     private ImageView ivProfile;
+    private Button btBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,20 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
         adapter = new profileViewAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
+        btBack = findViewById(R.id.btBack);
+        onBackButtonClick();
+
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.USER).child(Constants.TEST_USER);
+    }
+
+    public void onBackButtonClick(){
+        btBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), CreateFlowActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
