@@ -128,7 +128,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="169dp"
         android:text="Your ride will be arriving in"
-        android:textColor="@color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="16dp" />
 
     <TextView
