@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.example.shannonyan.adventuresdraft.ongoingflow.EventInfoActivity;
 import com.example.shannonyan.adventuresdraft.ongoingflow.FindingDriverActivity;
 import com.example.shannonyan.adventuresdraft.yelphelper.YelpClient;

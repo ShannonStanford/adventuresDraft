@@ -1,6 +1,7 @@
 package com.example.shannonyan.adventuresdraft.profileflow;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +13,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.shannonyan.adventuresdraft.constants.Api;
+import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.profileflow.fragments.profileViewAdapter;
-import com.example.shannonyan.adventuresdraft.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProfileActivity extends AppCompatActivity implements com.example.shannonyan.adventuresdraft.profileflow.fragments.PrefFragment.onButtonClickedListener{
 
@@ -33,6 +35,11 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
     private Button btBack;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -41,9 +48,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
         tabLayout.setupWithViewPager(viewPager);
         ivProfile = findViewById(R.id.ivProfilePic);
 
-        GlideApp.with(getBaseContext())
-                .load(R.drawable.profile)
-                .into(ivProfile);
+        GlideApp.with(getBaseContext()).load(R.drawable.profile).into(ivProfile);
 
         adapter = new profileViewAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);

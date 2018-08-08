@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,12 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.shannonyan.adventuresdraft.modules.GlideApp;
-import com.example.shannonyan.adventuresdraft.constants.Api;
+import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
-import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.modules.GlideApp;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +36,7 @@ import com.uber.sdk.rides.client.services.RidesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DriverInfoActivity extends AppCompatActivity {
 
@@ -50,14 +51,22 @@ public class DriverInfoActivity extends AppCompatActivity {
     public TextView carMake;
     public TextView carModel;
     public TextView carLicense;
+    public TextView driverRating;
     public ImageView driverPic;
+    public ImageView car;
     public Button btDriverMap;
     public Button btCallDriver;
     public Button btCancel;
     public Context context;
     public String rideId2;
     public String returnTrip;
+    public ImageView ivCar;
     public DatabaseReference mDatabase;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +81,12 @@ public class DriverInfoActivity extends AppCompatActivity {
         carLicense = (TextView) findViewById(R.id.tvCarLicense);
         tvEta = (TextView) findViewById(R.id.tvEta);
         driverPic = (ImageView) findViewById(R.id.ivDriverPic);
+        driverRating = (TextView) findViewById(R.id.driverrating);
         btDriverMap = (Button) findViewById(R.id.btDriverMap);
         btCallDriver = (Button) findViewById(R.id.btCallDriver);
         btCancel = (Button) findViewById(R.id.btCancel);
 
+        ivCar.setBackground(Drawable.createFromPath("@drawable/circle"));
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
@@ -87,6 +98,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         context = this;
         service.getRideDetails(rideId).enqueue(new Callback<Ride>() {
             @Override
+
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 Ride ride = response.body();
                 driverName.setText(ride.getDriver().getName());
@@ -94,18 +106,20 @@ public class DriverInfoActivity extends AppCompatActivity {
                 carMake.setText(ride.getVehicle().getMake());
                 carLicense.setText(ride.getVehicle().getLicensePlate());
                 driverPhoneNumber = ride.getDriver().getPhoneNumber();
+                driverRating.setText(String.valueOf(ride.getDriver().getRating()));
                 onMapButtonClick();
                 onCallButtonClick();
                 onCancelButtonClick();
-                GlideApp.with(context)
-                        .load(ride.getDriver().getPictureUrl())
+                com.example.shannonyan.adventuresdraft.modules.GlideApp.with(context)
+                        .load(ride.getDriver().getPictureUrl()).circleCrop()
                         .into(driverPic);
+                GlideApp.with(context).load(ride.getVehicle().getPictureUrl()).into(ivCar);
                 tvEta.setText(String.valueOf(ride.getEta()));
             }
 
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
-
+                Log.d("DriverInfoActivity", "getRideDetails failed");
             }
         });
 
@@ -142,6 +156,11 @@ public class DriverInfoActivity extends AppCompatActivity {
                 Log.d("DATABASE", "Value event listener request cancelled.");
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     public void onMapButtonClick() {

@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -44,27 +45,27 @@
         <activity
             android:name=".ongoingflow.DriverInfoActivity"
             android:label="@string/title_activity_eta"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.FindingDriverActivity"
             android:label="@string/title_activity_find"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.EventInfoActivity"
             android:label="@string/title_activity_event"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.UberMapActivity"
             android:label="@string/title_activity_map"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.NoDriversFoundActivity"
             android:label="@string/title_activity_no_drivers_found"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.RideInProgressActivity"
             android:label="@string/title_activity_ride_in_progress"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel"

@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.shannonyan.adventuresdraft.constants.Api;
+import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.fragments.TripOverviewFragment;
 import com.example.shannonyan.adventuresdraft.modules.GlideApp;
@@ -46,6 +47,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class EventInfoActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
@@ -60,6 +63,11 @@ public class EventInfoActivity extends AppCompatActivity {
     public StorageReference storageRef;
     public FirebaseStorage storage;
     public Context context;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +113,11 @@ public class EventInfoActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     public void populateComponents(){

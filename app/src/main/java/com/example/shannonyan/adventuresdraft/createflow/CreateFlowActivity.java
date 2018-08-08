@@ -1,6 +1,8 @@
 package com.example.shannonyan.adventuresdraft.createflow;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -8,19 +10,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
+import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.createflow.fragments.CityPriceDetailsFragment;
 import com.example.shannonyan.adventuresdraft.createflow.fragments.CreateFragmentAdapter;
 import com.example.shannonyan.adventuresdraft.createflow.fragments.PickUpLocFragment;
 import com.example.shannonyan.adventuresdraft.createflow.fragments.TripOverviewFragment;
 import com.example.shannonyan.adventuresdraft.profileflow.ProfileActivity;
-import com.example.shannonyan.adventuresdraft.R;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFragment.OnButtonClickListener,TripOverviewFragment.OnButtonClickListener,CityPriceDetailsFragment.OnButtonClickListener {
 
     public CreateFragmentAdapter vpAdapter;
     public ViewPager pager;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +53,23 @@ public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFr
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.nav_menu, menu);
         return true;
@@ -57,7 +86,6 @@ public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFr
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     public void onButtonClicked(View view){
         int currPos = pager.getCurrentItem();

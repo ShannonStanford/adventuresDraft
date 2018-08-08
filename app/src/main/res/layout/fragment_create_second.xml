@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".CreateSecondFragment">
 
     <fragment
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="377dp"
+        android:layout_height="323dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
@@ -22,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/map" />
+        android:layout_below="@+id/map"
+        android:layout_marginTop="0dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -30,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView3"
-        android:layout_marginBottom="134dp"
+        android:layout_marginBottom="179dp"
+        android:fontFamily="sans-serif"
         android:text="Total Price Cap"
         android:textColor="@color/black"
         android:textSize="18dp"
@@ -38,13 +41,16 @@
 
     <EditText
         android:id="@+id/etPrice"
-        android:layout_width="99dp"
+        android:layout_width="103dp"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView2"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="18dp"
         android:backgroundTint="@color/uber_white"
+        android:clickable="true"
         android:ems="10"
+        android:focusableInTouchMode="true"
+        android:fontFamily="sans-serif"
         android:hint="100.00"
         android:inputType="number"
         android:textColor="@color/black"
@@ -57,8 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="34dp"
-        android:layout_marginStart="17dp"
+        android:layout_marginBottom="94dp"
+        android:layout_marginStart="18dp"
+        android:fontFamily="sans-serif"
         android:text="Total Number of People"
         android:textColor="@color/black"
         android:textSize="18dp"
@@ -70,6 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/etPrice"
         android:layout_toStartOf="@+id/etPrice"
+        android:fontFamily="sans-serif"
         android:text="$"
         android:textColor="@android:color/black"
         android:textSize="18dp" />
@@ -79,19 +87,20 @@
         android:layout_width="50dp"
         android:layout_height="81dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/dollar"
-        android:layout_marginBottom="13dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="74dp"
+        android:layout_marginEnd="56dp"
         android:backgroundTint="@color/uber_white"
         android:baselineAligned="false"
-        android:visibility="visible"></NumberPicker>
+        android:visibility="visible"
+        android:descendantFocusability="blocksDescendants" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="106dp"
+        android:layout_alignTop="@+id/num_picker"
         android:background="?android:attr/listDivider" />
 
     <View
@@ -107,7 +116,16 @@
         android:layout_width="38dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
+        android:layout_alignTop="@+id/num_picker"
         android:src="@drawable/arrow" />
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignEnd="@+id/etPrice"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/next2" />
 
 </RelativeLayout>
