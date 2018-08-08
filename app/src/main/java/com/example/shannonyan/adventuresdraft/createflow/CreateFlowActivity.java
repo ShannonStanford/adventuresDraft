@@ -22,10 +22,17 @@ import com.example.shannonyan.adventuresdraft.createflow.fragments.PickUpLocFrag
 import com.example.shannonyan.adventuresdraft.createflow.fragments.TripOverviewFragment;
 import com.example.shannonyan.adventuresdraft.profileflow.ProfileActivity;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFragment.OnButtonClickListener,TripOverviewFragment.OnButtonClickListener,CityPriceDetailsFragment.OnButtonClickListener {
 
     public CreateFragmentAdapter vpAdapter;
     public ViewPager pager;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

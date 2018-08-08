@@ -27,6 +27,7 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.android.support:design:27.1.1'
     implementation 'org.parceler:parceler-api:1.1.6'
+    implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
     annotationProcessor 'org.parceler:parceler:1.1.6'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class EventInfoActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
@@ -35,6 +37,11 @@ public class EventInfoActivity extends AppCompatActivity {
     public StorageReference storageRef;
     public FirebaseStorage storage;
     public Context context;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

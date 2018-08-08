@@ -21,4 +21,6 @@
     <color name="background_material_light_2">#009688</color>
     <color name="light_blue">#ecf8fe</color>
     <color name="transparent_white">#99FF7F11</color>
+    <color name="Light_Blue">#99e1d9</color>
+    <color name="secondary_text_material_light">#99e1d9</color>
 </resources>

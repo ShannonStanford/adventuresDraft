@@ -15,10 +15,11 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
+        android:fontFamily="@font/cavdramsbold"
         android:text="Overview"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="23dp" />
+        android:textSize="28sp" />
 
     <TextView
         android:id="@+id/pickup"
@@ -26,9 +27,10 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/pickup_ans"
         android:layout_below="@+id/pickup_ans"
+        android:fontFamily="@font/cavdramsbold"
         android:text="Pick up location"
         android:textColor="#a9a9a9"
-        android:textSize="14dp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/pickup_ans"
@@ -37,9 +39,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/pickup_lo"
         android:layout_marginStart="104dp"
+        android:fontFamily="@font/cavdramsbold"
         android:text="Pickup Ans"
         android:textColor="@android:color/black"
-        android:textSize="18dp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/city"
@@ -47,8 +51,10 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/pickup"
         android:layout_below="@+id/city_ans"
+        android:fontFamily="@font/cavdramsbold"
         android:text="City of Interest"
-        android:textColor="#a9a9a9" />
+        android:textColor="#a9a9a9"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/city_ans"
@@ -57,9 +63,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/pickup"
         android:layout_marginTop="255dp"
+        android:fontFamily="@font/cavdramsbold"
         android:text="City Ans"
         android:textColor="@android:color/black"
-        android:textSize="18dp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/price"
@@ -68,8 +76,10 @@
         android:layout_alignStart="@+id/pickup"
         android:layout_below="@+id/price_ans"
         android:layout_marginTop="-201dp"
+        android:fontFamily="@font/cavdramsbold"
         android:text="Total Price Cap"
-        android:textColor="#a9a9a9" />
+        android:textColor="#a9a9a9"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/price_ans"
@@ -78,9 +88,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/pickup"
         android:layout_marginBottom="201dp"
+        android:fontFamily="@font/cavdramsbold"
         android:text="Price Ans"
         android:textColor="@android:color/black"
-        android:textSize="18dp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/num_peeps"
@@ -89,9 +101,10 @@
         android:layout_alignStart="@+id/pickup"
         android:layout_below="@+id/num_peeps_ans"
         android:layout_marginTop="-290dp"
+        android:fontFamily="@font/cavdramsbold"
         android:text="Total Number of People"
         android:textColor="#a9a9a9"
-        android:textSize="14dp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/num_peeps_ans"
@@ -100,9 +113,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/pickup"
         android:layout_marginBottom="290dp"
+        android:fontFamily="@font/cavdramsbold"
         android:text="numPeepsAns"
         android:textColor="@color/uber_black"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/create"
@@ -112,16 +126,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="62dp"
         android:background="@drawable/rounded_button"
-        android:textColor="@android:color/white"
         android:elevation="15dp"
-        android:text="Create" />
+        android:fontFamily="@font/lemon"
+        android:text="Create"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/dollar"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="38dp"
+        android:layout_height="35dp"
         android:layout_alignStart="@+id/group"
         android:layout_alignTop="@+id/price_ans"
+        android:layout_marginStart="-2dp"
         android:src="@drawable/dollar" />
 
     <ImageView

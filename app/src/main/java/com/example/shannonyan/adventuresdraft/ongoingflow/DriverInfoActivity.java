@@ -17,11 +17,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
+import com.example.shannonyan.adventuresdraft.modules.GlideApp;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,7 @@ import com.uber.sdk.rides.client.services.RidesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DriverInfoActivity extends AppCompatActivity {
 
@@ -57,6 +59,11 @@ public class DriverInfoActivity extends AppCompatActivity {
     public String returnTrip;
     public ImageView ivCar;
     public DatabaseReference mDatabase;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +151,11 @@ public class DriverInfoActivity extends AppCompatActivity {
                 Log.d("DATABASE", "Value event listener request cancelled.");
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     public void onMapButtonClick() {

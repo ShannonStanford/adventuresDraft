@@ -35,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="51dp"
-        android:background="?android:attr/colorBackground"
+        android:background="#99e1d9"
         android:elevation="10dp"
         android:text="AT LAUNCH         LOCATION"
         android:textColor="@android:color/black"
