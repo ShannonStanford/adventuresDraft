@@ -6,16 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.shannonyan.adventuresdraft.constants.Api;
+import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.modules.GlideApp;
-import com.example.shannonyan.adventuresdraft.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class EventInfoActivity extends AppCompatActivity {
 
@@ -35,6 +37,11 @@ public class EventInfoActivity extends AppCompatActivity {
     public StorageReference storageRef;
     public FirebaseStorage storage;
     public Context context;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,11 @@ public class EventInfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     public void populateComponents(){

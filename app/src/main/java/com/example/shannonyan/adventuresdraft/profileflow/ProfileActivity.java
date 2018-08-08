@@ -1,6 +1,7 @@
 package com.example.shannonyan.adventuresdraft.profileflow;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class ProfileActivity extends AppCompatActivity implements com.example.shannonyan.adventuresdraft.profileflow.fragments.PrefFragment.onButtonClickedListener{
 
     private ViewPager viewPager;
@@ -32,6 +35,11 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
     private Button btBack;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -40,9 +48,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
         tabLayout.setupWithViewPager(viewPager);
         ivProfile = findViewById(R.id.ivProfilePic);
 
-        GlideApp.with(getBaseContext())
-                .load(R.drawable.profile)
-                .into(ivProfile);
+        GlideApp.with(getBaseContext()).load(R.drawable.profile).into(ivProfile);
 
         adapter = new profileViewAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
@@ -82,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
 
 
         if(choice.equals("food")){
+//            Title = "SELECT THE CUISINE YOU PREFER:";
             Title = "Select the cuisine you prefer:";
             options = new String[] {"American","Barbeque","Beer Garden", "Brazilian", "Burgers", "Caribbean",
                     "Chinese", "Fast Food", "French", "German", "Greek", "Hawaiian", "Indian",
@@ -89,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
             selectedChoice = Database.FOOD_PREF;
 
         } else {
+//            Title = "SELECT THE CAR YOU PREFER:";
             Title = "Select the car you prefer:";
             options = new String[] {"UberX", "UberXL", "UberSELECT","UberBLACK", "UberSUV", "UberLUX"};
             selectedChoice = Database.CAR_PREF;

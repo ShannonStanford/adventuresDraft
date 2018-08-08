@@ -9,12 +9,11 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.shannonyan.adventuresdraft.constants.Api;
-import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

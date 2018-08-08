@@ -1,6 +1,7 @@
 package com.example.shannonyan.adventuresdraft.createflow.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -112,6 +113,9 @@ public class TripOverviewFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                showProgressIndicator();
+
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -287,5 +291,16 @@ public class TripOverviewFragment extends Fragment {
     public static TripOverviewFragment newInstance() {
         TripOverviewFragment frag = new TripOverviewFragment();
         return frag;
+    }
+
+    public void showProgressIndicator(){
+        ProgressDialog progress;
+        progress = new ProgressDialog(getContext());
+        progress.setTitle(Database.LOADING_TITLE);
+        progress.setMessage(Database.LOADING_MESSAGE);
+        progress.setCancelable(true);
+        progress.setIcon(R.drawable.spaceship_dark);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
     }
 }

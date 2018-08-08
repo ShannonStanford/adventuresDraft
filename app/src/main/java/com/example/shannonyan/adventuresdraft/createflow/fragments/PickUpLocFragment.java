@@ -63,7 +63,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         mMap.setMinZoomPreference(ZOOM_PREF);
         LatLng ny = new LatLng(HARD_LAT, HARD_LNG);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(false);
     }
 
     public PickUpLocFragment() { }

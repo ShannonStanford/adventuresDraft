@@ -1,6 +1,7 @@
 package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
+import com.example.shannonyan.adventuresdraft.modules.GlideApp;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +36,7 @@ import com.uber.sdk.rides.client.services.RidesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DriverInfoActivity extends AppCompatActivity {
 
@@ -55,7 +60,13 @@ public class DriverInfoActivity extends AppCompatActivity {
     public Context context;
     public String rideId2;
     public String returnTrip;
+    public ImageView ivCar;
     public DatabaseReference mDatabase;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +86,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         btDriverMap = (Button) findViewById(R.id.btDriverMap);
         btCallDriver = (Button) findViewById(R.id.btCallDriver);
         btCancel = (Button) findViewById(R.id.btCancel);
+        ivCar = (ImageView) findViewById(R.id.ivCar);
 
         car.setBackground(Drawable.createFromPath("@drawable/circle"));
         //UBER instantiations
@@ -88,6 +100,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         context = this;
         service.getRideDetails(rideId).enqueue(new Callback<Ride>() {
             @Override
+
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 Ride ride = response.body();
                 driverName.setText(ride.getDriver().getName());
@@ -102,12 +115,13 @@ public class DriverInfoActivity extends AppCompatActivity {
                 com.example.shannonyan.adventuresdraft.modules.GlideApp.with(context)
                         .load(ride.getDriver().getPictureUrl()).circleCrop()
                         .into(driverPic);
+                GlideApp.with(context).load(ride.getVehicle().getPictureUrl()).into(ivCar);
                 tvEta.setText(String.valueOf(ride.getEta()));
             }
 
             @Override
             public void onFailure(Call<Ride> call, Throwable t) {
-
+                Log.d("DriverInfoActivity", "getRideDetails failed");
             }
         });
 
@@ -133,10 +147,8 @@ public class DriverInfoActivity extends AppCompatActivity {
                         }
                     }
                     else if (status.equals(Database.DRIVER_CANCEL) || status.equals(Database.RIDER_CANCEL)) {
-                        Toast.makeText(DriverInfoActivity.this, CANCELLED, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
+                        driverCancelDialog();
                         mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
-                        startActivity(intent);
                     }
                 }
             }
@@ -146,6 +158,11 @@ public class DriverInfoActivity extends AppCompatActivity {
                 Log.d("DATABASE", "Value event listener request cancelled.");
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     public void onMapButtonClick() {
@@ -205,11 +222,45 @@ public class DriverInfoActivity extends AppCompatActivity {
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), RiderCancelActivity.class);
-                intent.putExtra(Database.RIDE_ID, rideId2);
-                intent.putExtra(Database.RETURN_TRIP, returnTrip);
+                cancelConfirmationDialog();
+            }
+        });
+    }
+
+    public void cancelConfirmationDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(Database.CANCEL_TITLE);
+        alert.setMessage(Database.CANCEL_MESSAGE);
+        alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                service.cancelRide(rideId);
+                Intent intent = new Intent(DriverInfoActivity.this, CreateFlowActivity.class);
                 startActivity(intent);
             }
         });
+        alert.setNegativeButton(Database.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alert.show();
+    }
+
+    public void driverCancelDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(Database.DRIVER_CANCEL_TITLE);
+        alert.setMessage(Database.DRIVER_CANCEL_MESSAGE);
+        alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
+                startActivity(intent);
+            }
+        });
+        alert.setNegativeButton(Database.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alert.show();
     }
 }

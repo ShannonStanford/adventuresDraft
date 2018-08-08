@@ -32,7 +32,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="157dp"
-        android:text="preparing "
+        android:fontFamily="@font/lemon"
+        android:text="PREPARING"
         android:textColor="#D7EFFF "
         android:textSize="50sp" />
 
@@ -43,7 +44,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="83dp"
-        android:text="for takeoff"
+        android:fontFamily="@font/lemon"
+        android:text="FOR TAKEOFF"
         android:textColor="#D7EFFF "
         android:textSize="50sp" />
 

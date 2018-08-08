@@ -19,12 +19,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -32,7 +34,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".createflow.CreateFlowActivity">
+        <activity android:name=".createflow.CreateFlowActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,28 +44,38 @@
         </activity>
         <activity
             android:name=".ongoingflow.DriverInfoActivity"
-            android:label="@string/title_activity_eta" />
+            android:label="@string/title_activity_eta"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.FindingDriverActivity"
-            android:label="@string/title_activity_find" />
+            android:label="@string/title_activity_find"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.EventInfoActivity"
-            android:label="@string/title_activity_event" />
+            android:label="@string/title_activity_event"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.UberMapActivity"
-            android:label="@string/title_activity_map" />
+            android:label="@string/title_activity_map"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.NoDriversFoundActivity"
-            android:label="@string/title_activity_no_drivers_found" />
+            android:label="@string/title_activity_no_drivers_found"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.RideInProgressActivity"
-            android:label="@string/title_activity_ride_in_progress" />
+            android:label="@string/title_activity_ride_in_progress"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ongoingflow.RiderCancelActivity"
-            android:label="@string/title_activity_rider_cancel" />
-        <activity android:name=".ongoingflow.StartActivity" />
-        <activity android:name=".ongoingflow.ReturnHomeActivity"></activity>
-        <activity android:name=".profileflow.ProfileActivity"></activity>
+            android:label="@string/title_activity_rider_cancel"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ongoingflow.StartActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ongoingflow.ReturnHomeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".profileflow.ProfileActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

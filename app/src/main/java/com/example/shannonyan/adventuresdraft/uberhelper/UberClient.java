@@ -1,4 +1,4 @@
-package com.example.shannonyan.adventuresdraft;
+package com.example.shannonyan.adventuresdraft.uberhelper;
 
 import android.content.Context;
 
@@ -21,7 +21,7 @@ public final class UberClient {
     //UBER API varsD4bTw-t73c
     public String CLIENT_ID = "D4bTw-t73cglNaTsFlUfjQuFYeWsjP3F";
     public String TOKEN = "ayK8v-qqcB_TVX7IMGb-4KU8sqxAgDk1l40lkWQo"; //serverToken
-    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6Iis2UEJpQVJvUlpHS0dna0NPWHpPU2c9PSIsImV4cGlyZXNfYXQiOjE1MzYxODkyNzUsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.YIxJFe-E0-wNv0JiBSHi5G7HHMSIqsORYlZYV3gXdcM";
+    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IlY1cFFvNmN4UkxHTXN1YWs2NFpQWVE9PSIsImV4cGlyZXNfYXQiOjE1MzYyODEzNjEsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.i8QzUaw3dvVQF5zq6-gm0Gh1WJqOy8qhslXPPEKiBGw";
     public RidesService service;
     public SessionConfiguration config = new SessionConfiguration.Builder()
             // mandatory
