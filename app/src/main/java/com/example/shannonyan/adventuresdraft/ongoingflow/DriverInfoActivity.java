@@ -81,12 +81,11 @@ public class DriverInfoActivity extends AppCompatActivity {
         carLicense = (TextView) findViewById(R.id.tvCarLicense);
         tvEta = (TextView) findViewById(R.id.tvEta);
         driverPic = (ImageView) findViewById(R.id.ivDriverPic);
-        car = (ImageView) findViewById(R.id.car_pic);
+        car = (ImageView) findViewById(R.id.ivCar);
         driverRating = (TextView) findViewById(R.id.driverrating);
         btDriverMap = (Button) findViewById(R.id.btDriverMap);
         btCallDriver = (Button) findViewById(R.id.btCallDriver);
         btCancel = (Button) findViewById(R.id.btCancel);
-        ivCar = (ImageView) findViewById(R.id.ivCar);
 
         car.setBackground(Drawable.createFromPath("@drawable/circle"));
         //UBER instantiations

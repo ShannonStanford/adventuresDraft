@@ -102,7 +102,7 @@
         android:background="@drawable/phoneicon" />
 
     <ImageView
-        android:id="@+id/car_pic"
+        android:id="@+id/ivCar"
         android:layout_width="138dp"
         android:layout_height="118dp"
         android:layout_alignParentBottom="true"
