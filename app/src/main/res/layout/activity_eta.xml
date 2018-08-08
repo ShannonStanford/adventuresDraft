@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bluegrad"
     tools:context=".ongoingflow.DriverInfoActivity">
 
     <ImageView
@@ -24,7 +25,7 @@
         android:layout_toEndOf="@+id/tvEta"
         android:text="Mark Zuckerberg"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="18dp" />
 
     <TextView
@@ -35,7 +36,7 @@
         android:layout_alignStart="@+id/tvDriverName"
         android:layout_marginTop="306dp"
         android:text="Toyota"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="@android:color/background_light"
         android:textSize="18sp" />
 
     <TextView
@@ -45,7 +46,7 @@
         android:layout_alignTop="@+id/tvCarMake"
         android:layout_toEndOf="@+id/tvCarMake"
         android:text=" Corolla"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="18sp" />
 
     <TextView
@@ -57,7 +58,7 @@
         android:layout_marginBottom="294dp"
         android:text="License#"
         android:textAlignment="center"
-        android:textColor="@android:color/background_dark"
+        android:textColor="@android:color/background_light"
         android:textSize="18sp" />
 
     <TextView
@@ -70,7 +71,7 @@
         android:layout_marginStart="167dp"
         android:text="5"
         android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="@android:color/background_light"
         android:textSize="36dp"
         android:textStyle="bold" />
 
@@ -102,7 +103,7 @@
         android:background="@drawable/phoneicon" />
 
     <ImageView
-        android:id="@+id/car_pic"
+        android:id="@+id/ivCar"
         android:layout_width="138dp"
         android:layout_height="118dp"
         android:layout_alignParentBottom="true"
@@ -138,7 +139,7 @@
         android:layout_alignStart="@+id/tvDriverName"
         android:layout_marginTop="187dp"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="18dp" />
 
     <TextView
@@ -148,7 +149,7 @@
         android:layout_alignStart="@+id/tvDriverName"
         android:layout_alignTop="@+id/tvEta"
         android:text=" min"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="36dp"
         android:textStyle="bold" />
 
@@ -160,7 +161,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp"
         android:text="Driver Info"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="22dp" />
 
 
