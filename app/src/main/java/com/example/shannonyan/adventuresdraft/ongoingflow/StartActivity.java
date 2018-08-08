@@ -67,11 +67,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         mapView.getMapAsync(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        Log.v("onBackPressed", "pressed");
-    }
-
     public void onClickToFindActivity(){
         btLaunch.setOnClickListener(new View.OnClickListener() {
             @Override

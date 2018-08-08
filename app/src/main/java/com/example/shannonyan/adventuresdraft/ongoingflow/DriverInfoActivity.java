@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.uber.sdk.rides.client.model.Ride;
@@ -53,6 +53,7 @@ public class DriverInfoActivity extends AppCompatActivity {
     public Timer timer;
     public String rideId2;
     public String returnTrip;
+    public ImageView ivCar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         btDriverMap = (Button) findViewById(R.id.btDriverMap);
         btCallDriver = (Button) findViewById(R.id.btCallDriver);
         btCancel = (Button) findViewById(R.id.btCancel);
+        ivCar = (ImageView) findViewById(R.id.ivCar);
 
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
@@ -139,6 +141,7 @@ public class DriverInfoActivity extends AppCompatActivity {
                 GlideApp.with(context)
                         .load(ride1.getDriver().getPictureUrl())
                         .into(driverPic);
+                GlideApp.with(context).load(ride1.getVehicle().getPictureUrl()).into(ivCar);
 
                 if (stat.equals(Database.ARRIVE)) {
                     tvEta.setText(Database.ARRIVE);

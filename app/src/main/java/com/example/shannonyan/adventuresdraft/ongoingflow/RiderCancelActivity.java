@@ -9,11 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.shannonyan.adventuresdraft.constants.Api;
+import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
-import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.uber.sdk.rides.client.services.RidesService;
 
 import java.io.IOException;

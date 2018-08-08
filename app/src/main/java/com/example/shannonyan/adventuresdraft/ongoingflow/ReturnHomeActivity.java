@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.uber.sdk.rides.client.model.Ride;

@@ -32,9 +32,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="157dp"
-        android:text="preparing "
+        android:text="PREPARING"
         android:textColor="#D7EFFF "
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvTakeoff"
@@ -43,8 +44,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="83dp"
-        android:text="for takeoff"
+        android:text="FOR TAKEOFF"
         android:textColor="#D7EFFF "
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
