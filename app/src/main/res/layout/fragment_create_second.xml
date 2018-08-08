@@ -115,9 +115,17 @@
         android:id="@+id/arrow_r"
         android:layout_width="38dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="12dp"
+        android:layout_alignTop="@+id/num_picker"
         android:src="@drawable/arrow" />
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignEnd="@+id/etPrice"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/next2" />
 
 </RelativeLayout>

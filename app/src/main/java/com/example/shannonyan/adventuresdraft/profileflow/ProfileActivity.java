@@ -88,7 +88,6 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
 
 
         if(choice.equals("food")){
-//            Title = "SELECT THE CUISINE YOU PREFER:";
             Title = "Select the cuisine you prefer:";
             options = new String[] {"American","Barbeque","Beer Garden", "Brazilian", "Burgers", "Caribbean",
                     "Chinese", "Fast Food", "French", "German", "Greek", "Hawaiian", "Indian",
@@ -96,7 +95,6 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
             selectedChoice = Database.FOOD_PREF;
 
         } else {
-//            Title = "SELECT THE CAR YOU PREFER:";
             Title = "Select the car you prefer:";
             options = new String[] {"UberX", "UberXL", "UberSELECT","UberBLACK", "UberSUV", "UberLUX"};
             selectedChoice = Database.CAR_PREF;

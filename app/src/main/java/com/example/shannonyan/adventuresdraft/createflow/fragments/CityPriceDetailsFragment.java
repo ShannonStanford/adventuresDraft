@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -39,6 +40,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     private NumberPicker numPicker;
     private ImageView arrow_r;
     private OnButtonClickListener mOnButtonClickListener;
+    private Button btNext;
 
     public interface OnButtonClickListener{
         void onButtonClicked(View view);
@@ -88,7 +90,16 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         mapFragment.getMapAsync(this);
         setUpPlacesFrag();
 
+        btNext = view.findViewById(R.id.btNext);
 
+        btNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("here", "clicked");
+                mOnButtonClickListener.onButtonClicked(v);
+            }
+        });
+        btNext.setEnabled(false);
 
         arrow_r.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,8 +136,11 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 mDatabase.child(Database.NUM_PEEPS).setValue(numPicker.getValue());
+                btNext.setEnabled(true);
             }
         });
+
+
         return view;
     }
 
