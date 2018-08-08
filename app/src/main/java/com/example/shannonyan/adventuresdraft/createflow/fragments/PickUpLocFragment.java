@@ -80,6 +80,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
+        arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();

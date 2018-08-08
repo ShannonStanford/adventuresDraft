@@ -132,6 +132,7 @@ public class DriverInfoActivity extends AppCompatActivity {
                     }
                     else if (status.equals(Database.DRIVER_CANCEL) || status.equals(Database.RIDER_CANCEL)) {
                         driverCancelDialog();
+                        mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
                     }
                 }
             }
@@ -231,7 +232,6 @@ public class DriverInfoActivity extends AppCompatActivity {
         alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
-                mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
                 startActivity(intent);
             }
         });

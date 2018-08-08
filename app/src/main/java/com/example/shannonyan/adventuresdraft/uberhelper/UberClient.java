@@ -16,11 +16,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class UberClient {
-//IOC/injection
+    //IOC/injection
     private static UberClient uberClientInstance;
     //UBER API varsD4bTw-t73c
-    public String CLIENT_ID = "D4bTw-t73cglNaTsFlUfjQuFYeWsjP3F";
-    public String TOKEN = "ayK8v-qqcB_TVX7IMGb-4KU8sqxAgDk1l40lkWQo"; //serverToken
+    public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
+    public String TOKEN = "6ykI69JlqFHWUlbKx7D5yps5EEfD9lEfEmKwZWbx"; //serverToken
     public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6Iis2UEJpQVJvUlpHS0dna0NPWHpPU2c9PSIsImV4cGlyZXNfYXQiOjE1MzYxODkyNzUsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.YIxJFe-E0-wNv0JiBSHi5G7HHMSIqsORYlZYV3gXdcM";
     public RidesService service;
     public SessionConfiguration config = new SessionConfiguration.Builder()
