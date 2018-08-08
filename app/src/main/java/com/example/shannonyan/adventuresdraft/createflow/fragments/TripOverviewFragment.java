@@ -1,6 +1,7 @@
 package com.example.shannonyan.adventuresdraft.createflow.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -114,6 +115,9 @@ public class TripOverviewFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                showProgressIndicator();
+
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -290,5 +294,16 @@ public class TripOverviewFragment extends Fragment {
     public static TripOverviewFragment newInstance() {
         TripOverviewFragment frag = new TripOverviewFragment();
         return frag;
+    }
+
+    public void showProgressIndicator(){
+        ProgressDialog progress;
+        progress = new ProgressDialog(getContext());
+        progress.setTitle(Database.LOADING_TITLE);
+        progress.setMessage(Database.LOADING_MESSAGE);
+        progress.setCancelable(true);
+        progress.setIcon(R.drawable.spaceship_dark);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
@@ -149,9 +152,7 @@ public class DriverInfoActivity extends AppCompatActivity {
                 // TODO
                 timer.cancel();
                 timer.purge();
-                Toast.makeText(DriverInfoActivity.this, CANCELLED, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
-                startActivity(intent);
+                driverCancelDialog();
             } else if (stat.equals(Database.PROGRESS)) {
                 Log.d("TAG4", "status in progress");
                 timer.cancel();
@@ -230,11 +231,45 @@ public class DriverInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 timer.cancel();
                 timer.purge();
-                Intent intent = new Intent(getBaseContext(), RiderCancelActivity.class);
-                intent.putExtra(Database.RIDE_ID, rideId2);
-                intent.putExtra(Database.RETURN_TRIP, returnTrip);
+                cancelConfirmationDialog();
+            }
+        });
+    }
+
+    public void cancelConfirmationDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(Database.CANCEL_TITLE);
+        alert.setMessage(Database.CANCEL_MESSAGE);
+        alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                service.cancelRide(rideId);
+                Intent intent = new Intent(DriverInfoActivity.this, CreateFlowActivity.class);
                 startActivity(intent);
             }
         });
+        alert.setNegativeButton(Database.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alert.show();
+    }
+
+    public void driverCancelDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(Database.DRIVER_CANCEL_TITLE);
+        alert.setMessage(Database.DRIVER_CANCEL_MESSAGE);
+        alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
+                startActivity(intent);
+            }
+        });
+        alert.setNegativeButton(Database.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alert.show();
     }
 }
