@@ -38,6 +38,16 @@ public final class Database {
     public static final String RATING = "rating";
     public static final String IMAGE_URL = "image_url";
     public static final String UBERX = "UberX";
+    public static final String status = "status";
+
+    public static final String LOADING_TITLE = "Creating Your Adventure!";
+    public static final String LOADING_MESSAGE = "Loading...";
+    public static final String CANCEL_TITLE = "Cancel";
+    public static final String CANCEL_MESSAGE = "Are you sure you want to cancel your entire Adventure?";
+    public static final String DRIVER_CANCEL_TITLE = "Driver Canceled";
+    public static final String DRIVER_CANCEL_MESSAGE = "Find a new Driver?";
+    public static final String DIALOG_POSITIVE = "Yes";
+    public static final String DIALOG_NEGATIVE = "No";
 
     private Database(){
     }

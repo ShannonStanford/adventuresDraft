@@ -35,6 +35,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     private double startLat;
     private double startLong;
     private ImageView arrow_l;
+    private ImageView arrow_r;
     private OnButtonClickListener mOnButtonClickListener;
 
     public interface OnButtonClickListener{
@@ -77,6 +78,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
+        arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
@@ -105,6 +107,12 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
                 mOnButtonClickListener.onButtonClicked(v);
             }
         });
+        arrow_r.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnButtonClickListener.onButtonClicked(v);
+            }
+        });
         return view;
     }
 
@@ -128,5 +136,4 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
     }
-
 }

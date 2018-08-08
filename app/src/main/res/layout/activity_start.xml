@@ -21,10 +21,10 @@
         android:layout_height="46dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#36E4C8"
+        android:background="@color/colorPrimary"
         android:text="MEET HERE"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="?android:attr/detailsElementBackground"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -35,10 +35,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="51dp"
-        android:background="#EC505A"
+        android:background="?android:attr/colorBackground"
         android:elevation="10dp"
         android:text="AT LAUNCH         LOCATION"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/black"
         android:textSize="30sp"
         android:textStyle="bold" />
 
