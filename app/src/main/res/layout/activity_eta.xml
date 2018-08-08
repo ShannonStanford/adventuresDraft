@@ -4,122 +4,164 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EtaActivity">
+    tools:context=".ongoingflow.DriverInfoActivity">
 
     <ImageView
         android:id="@+id/ivDriverPic"
-        android:layout_width="205dp"
-        android:layout_height="185dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="137dp"
+        android:layout_height="130dp"
         android:layout_alignParentTop="true"
-        android:src="@android:color/background_dark"
+        android:layout_marginTop="114dp"
+        android:layout_toStartOf="@+id/btCallDriver"
         app:srcCompat="@drawable/driver" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="131dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ivDriverPic"
-        app:srcCompat="@color/common_google_signin_btn_text_light_disabled" />
-
-    <Button
-        android:id="@+id/btDriverMap"
-        android:layout_width="110dp"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="13dp"
-        android:layout_marginStart="14dp"
-        android:background="@drawable/car_icon" />
 
     <TextView
         android:id="@+id/tvDriverName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="187dp"
+        android:layout_marginTop="150dp"
+        android:layout_toEndOf="@+id/tvEta"
         android:text="Mark Zuckerberg"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="24sp" />
+        android:textSize="18dp" />
 
     <TextView
         android:id="@+id/tvCarMake"
-        android:layout_width="98dp"
-        android:layout_height="31dp"
-        android:layout_above="@+id/tvCarLicense"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="-257dp"
-        android:layout_marginStart="69dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvDriverName"
+        android:layout_marginTop="306dp"
         android:text="Toyota"
-        android:textAlignment="viewEnd"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/tvCarModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvCarMake"
+        android:layout_toEndOf="@+id/tvCarMake"
+        android:text=" Corolla"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/tvCarLicense"
-        android:layout_width="183dp"
-        android:layout_height="29dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="257dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/tvDriverName"
+        android:layout_marginBottom="294dp"
         android:text="License#"
         android:textAlignment="center"
         android:textColor="@android:color/background_dark"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/tvCarModel"
-        android:layout_width="84dp"
-        android:layout_height="35dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/tvCarMake"
-        android:layout_marginEnd="67dp"
-        android:text="Corolla"
-        android:textColor="@android:color/black"
-        android:textSize="18sp" />
-
-    <TextView
         android:id="@+id/tvEta"
-        android:layout_width="match_parent"
-        android:layout_height="138dp"
-        android:layout_above="@+id/btDriverMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:text="5 min"
+        android:layout_marginBottom="101dp"
+        android:layout_marginStart="167dp"
+        android:text="5"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="36sp"
+        android:textSize="36dp"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/btCallDriver"
-        android:layout_width="109dp"
-        android:layout_height="103dp"
-        android:layout_alignBottom="@+id/btDriverMap"
+        android:layout_width="51dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btCancel"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/call_button" />
+        android:background="@drawable/mapicon" />
 
     <Button
         android:id="@+id/btCancel"
-        android:layout_width="107dp"
-        android:layout_height="100dp"
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/btDriverMap"
-        android:layout_marginEnd="17dp"
-        android:background="@drawable/cancel" />
+        android:layout_marginEnd="52dp"
+        android:background="@drawable/cancelicon" />
+
+    <Button
+        android:id="@+id/btDriverMap"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp"
+        android:layout_marginStart="14dp"
+        android:background="@drawable/phoneicon" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="167dp"
-        android:layout_height="122dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/ivDriverPic"
+        android:id="@+id/car_pic"
+        android:layout_width="138dp"
+        android:layout_height="118dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/ivDriverPic"
+        android:layout_marginBottom="260dp"
         app:srcCompat="@drawable/sample_car" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="364dp"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="228dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/ride"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="169dp"
+        android:text="Your ride will be arriving in"
+        android:textColor="@color/black"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/driverrating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvDriverName"
+        android:layout_marginTop="187dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvDriverName"
+        android:layout_alignTop="@+id/tvEta"
+        android:text=" min"
+        android:textColor="@android:color/black"
+        android:textSize="36dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/driverinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"
+        android:text="Driver Info"
+        android:textColor="@android:color/black"
+        android:textSize="22dp" />
 
 
 </RelativeLayout>

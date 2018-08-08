@@ -3,6 +3,7 @@ package com.example.shannonyan.adventuresdraft.ongoingflow;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.shannonyan.adventuresdraft.Modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Database;
@@ -46,7 +46,9 @@ public class DriverInfoActivity extends AppCompatActivity {
     public TextView carMake;
     public TextView carModel;
     public TextView carLicense;
+    public TextView driverRating;
     public ImageView driverPic;
+    public ImageView car;
     public Button btDriverMap;
     public Button btCallDriver;
     public Button btCancel;
@@ -68,10 +70,13 @@ public class DriverInfoActivity extends AppCompatActivity {
         carLicense = (TextView) findViewById(R.id.tvCarLicense);
         tvEta = (TextView) findViewById(R.id.tvEta);
         driverPic = (ImageView) findViewById(R.id.ivDriverPic);
+        car = (ImageView) findViewById(R.id.car_pic);
+        driverRating = (TextView) findViewById(R.id.driverrating);
         btDriverMap = (Button) findViewById(R.id.btDriverMap);
         btCallDriver = (Button) findViewById(R.id.btCallDriver);
         btCancel = (Button) findViewById(R.id.btCancel);
 
+        car.setBackground(Drawable.createFromPath("@drawable/circle"));
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
@@ -90,11 +95,12 @@ public class DriverInfoActivity extends AppCompatActivity {
                 carMake.setText(ride.getVehicle().getMake());
                 carLicense.setText(ride.getVehicle().getLicensePlate());
                 driverPhoneNumber = ride.getDriver().getPhoneNumber();
+                driverRating.setText(String.valueOf(ride.getDriver().getRating()));
                 onMapButtonClick();
                 onCallButtonClick();
                 onCancelButtonClick();
-                GlideApp.with(context)
-                        .load(ride.getDriver().getPictureUrl())
+                com.example.shannonyan.adventuresdraft.modules.GlideApp.with(context)
+                        .load(ride.getDriver().getPictureUrl()).circleCrop()
                         .into(driverPic);
                 tvEta.setText(String.valueOf(ride.getEta()));
             }

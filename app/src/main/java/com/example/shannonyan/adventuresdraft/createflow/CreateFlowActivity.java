@@ -58,7 +58,6 @@ public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFr
         }
     }
 
-
     public void onButtonClicked(View view){
         int currPos = pager.getCurrentItem();
 
