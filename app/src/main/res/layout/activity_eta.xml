@@ -162,7 +162,8 @@
         android:layout_marginTop="54dp"
         android:text="Driver Info"
         android:textColor="@android:color/background_light"
-        android:textSize="22dp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

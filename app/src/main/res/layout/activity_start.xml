@@ -22,11 +22,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
+        android:fontFamily="@font/lemon"
         android:text="MEET HERE"
         android:textAlignment="center"
         android:textColor="?android:attr/detailsElementBackground"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/btLaunch"
@@ -35,11 +35,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="51dp"
-        android:background="#99e1d9"
+        android:background="@drawable/start_button"
         android:elevation="10dp"
+        android:fontFamily="@font/lemon"
         android:text="AT LAUNCH         LOCATION"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp" />
 
 </RelativeLayout>
