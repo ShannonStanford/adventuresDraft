@@ -14,9 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
+import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,8 +43,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static com.example.shannonyan.adventuresdraft.constants.Database.LONG;
 
 public class TripOverviewFragment extends Fragment {
 
@@ -237,7 +235,6 @@ public class TripOverviewFragment extends Fragment {
                             double endLon = item.getJSONObject(Database.COORDINATES).getLong(Database.LONGITUDE);
                             PriceEstimatesResponse response2 = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body();
                             List<PriceEstimate> priceEstimates = response2.getPrices();
-//                            List<PriceEstimate> priceEstimates = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body().getPrices();
                             highEstimate = -1;
                             for (int i = 0; i < priceEstimates.size(); i++) {
                                 if (priceEstimates.get(i).getDisplayName().equals(Database.UBERX)) {

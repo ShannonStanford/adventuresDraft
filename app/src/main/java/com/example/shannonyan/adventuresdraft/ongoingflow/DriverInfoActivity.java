@@ -5,9 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,19 +18,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
-import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.UberClient;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.uber.sdk.rides.client.model.Ride;
 import com.uber.sdk.rides.client.model.RideMap;
 import com.uber.sdk.rides.client.services.RidesService;
-
-import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +39,7 @@ import retrofit2.Response;
 
 public class DriverInfoActivity extends AppCompatActivity {
 
+    private static final String CANCELLED = "Driver Cancelled, calling another Uber.";
     public RidesService service;
     public UberClient uberClient;
     public String rideId;
@@ -54,9 +55,9 @@ public class DriverInfoActivity extends AppCompatActivity {
     public Button btCallDriver;
     public Button btCancel;
     public Context context;
-    public Timer timer;
     public String rideId2;
     public String returnTrip;
+    public DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,101 +79,71 @@ public class DriverInfoActivity extends AppCompatActivity {
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.status).child(Database.status);
 
         Intent intent = getIntent();
         rideId = intent.getStringExtra(Database.RIDE_ID);
         returnTrip = intent.getStringExtra(Database.RETURN_TRIP);
         context = this;
-
-        // setup and call the timer
-        timer = new Timer();
-        // creating timer task, timer
-        TimerTask tasknew = new TimerTask() {
+        service.getRideDetails(rideId).enqueue(new Callback<Ride>() {
             @Override
-            public void run() {
-                // execute the background task
-                new DriverInfoActivity.ApiOperation().execute("");
-
-            }
-        };
-        // add a buffer of 5 seconds
-        timer.schedule(tasknew, 0, 5000);
-    }
-
-    // to implement the timer
-    // private class for timer
-    private class ApiOperation extends AsyncTask<String, Void, Ride> {
-        Ride ride;
-        public Handler hand;
-
-        @Override
-        protected Ride doInBackground(String... strings) {
-            try {
-                ride = service.getRideDetails(rideId).execute().body();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return ride;
-        }
-
-        // run on the main UI thread after the background task is executed
-        @Override
-        protected void onPostExecute(Ride ride1) {
-            final String CANCELLED = "Driver Cancelled, calling another Uber.";
-            // populate the views based on the current status and situation
-            // deals with accepted and arriving
-            String stat = ride1.getStatus();
-            rideId2 = ride1.getRideId();
-            if (stat.equals(Database.ACCEPT) || stat.equals(Database.ARRIVE)) {
-                Log.d("TAG4", "status accepted");
-                driverName.setText(ride1.getDriver().getName());
-                carModel.setText(ride1.getVehicle().getModel());
-                carMake.setText(ride1.getVehicle().getMake());
-                carLicense.setText(ride1.getVehicle().getLicensePlate());
-                driverPhoneNumber = ride1.getDriver().getPhoneNumber();
-
+            public void onResponse(Call<Ride> call, Response<Ride> response) {
+                Ride ride = response.body();
+                driverName.setText(ride.getDriver().getName());
+                carModel.setText(ride.getVehicle().getModel());
+                carMake.setText(ride.getVehicle().getMake());
+                carLicense.setText(ride.getVehicle().getLicensePlate());
+                driverPhoneNumber = ride.getDriver().getPhoneNumber();
                 onMapButtonClick();
                 onCallButtonClick();
                 onCancelButtonClick();
-
                 GlideApp.with(context)
-                        .load(ride1.getDriver().getPictureUrl())
+                        .load(ride.getDriver().getPictureUrl())
                         .into(driverPic);
+                tvEta.setText(String.valueOf(ride.getEta()));
+            }
 
-                if (stat.equals(Database.ARRIVE)) {
-                    tvEta.setText(Database.ARRIVE);
-                    Log.d("TAG4", "status arriving");
-                } else {
-                    tvEta.setText(String.valueOf(ride1.getEta()));
+            @Override
+            public void onFailure(Call<Ride> call, Throwable t) {
+
+            }
+        });
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String status = dataSnapshot.getValue(String.class);
+                if (status != null) {
+                    if (status.equals(Database.ARRIVE)) {
+                        tvEta.setText("Arriving");
+                    }
+                    else if (status.equals(Database.PROGRESS)) {
+                        if (returnTrip.equals("true")) {
+                            Intent i = new Intent(DriverInfoActivity.this, ReturnHomeActivity.class);
+                            i.putExtra(Database.RIDE_ID, rideId);
+                            mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                            startActivity(i);
+                        }
+                        else {
+                            Intent i = new Intent(DriverInfoActivity.this, com.example.shannonyan.adventuresdraft.ongoingflow.RideInProgressActivity.class);
+                            mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                            startActivity(i);
+                        }
+                    }
+                    else if (status.equals(Database.DRIVER_CANCEL) || status.equals(Database.RIDER_CANCEL)) {
+                        driverCancelDialog();
+                    }
                 }
             }
-            // deals with driver canceled and rider canceled situations
-            else if (stat.equals(Database.DRIVER_CANCEL) || stat.equals(Database.RIDER_CANCEL)) {
-                // TODO resolve the logic behind this
-                // TODO
-                timer.cancel();
-                timer.purge();
-                driverCancelDialog();
-            } else if (stat.equals(Database.PROGRESS)) {
-                Log.d("TAG4", "status in progress");
-                timer.cancel();
-                timer.purge();
-                if (returnTrip.equals("true")) {
-                    Intent i = new Intent(DriverInfoActivity.this,
-                            ReturnHomeActivity.class);
-                    i.putExtra(Database.RIDE_ID, rideId);
-                    startActivity(i);
-                }
-                else {
-                    Intent i = new Intent(DriverInfoActivity.this, com.example.shannonyan.adventuresdraft.ongoingflow.RideInProgressActivity.class);
-                    startActivity(i);
-                }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("DATABASE", "Value event listener request cancelled.");
             }
-        }
+        });
     }
 
     public void onMapButtonClick() {
-
         btDriverMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,8 +200,6 @@ public class DriverInfoActivity extends AppCompatActivity {
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timer.cancel();
-                timer.purge();
                 cancelConfirmationDialog();
             }
         });
@@ -262,6 +231,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
+                mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
                 startActivity(intent);
             }
         });

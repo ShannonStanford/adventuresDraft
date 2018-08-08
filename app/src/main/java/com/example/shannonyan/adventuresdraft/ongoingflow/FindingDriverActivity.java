@@ -2,7 +2,6 @@ package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +11,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.UberClient;
-import com.example.shannonyan.adventuresdraft.constants.Api;
-import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,11 +27,7 @@ import com.uber.sdk.rides.client.model.RideEstimate;
 import com.uber.sdk.rides.client.model.RideRequestParameters;
 import com.uber.sdk.rides.client.services.RidesService;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,7 +45,7 @@ public class FindingDriverActivity extends AppCompatActivity {
     public RidesService service;
     public UberClient uberClient;
     public String returnTrip;
-    public Timer timer;
+    public String status;
 
     private DatabaseReference mDatabase;
     private static final int UBER_X = 2;
@@ -65,7 +59,7 @@ public class FindingDriverActivity extends AppCompatActivity {
         //UBER instanstiation
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         // check if they are starting their journey, or going back?
         if (getIntent().getExtras() != null) {
             Intent intent = getIntent();
@@ -79,6 +73,27 @@ public class FindingDriverActivity extends AppCompatActivity {
             setStartEnd();
             returnTrip = "false";
         }
+        mDatabase.child(Database.status).child(Database.status).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                status = dataSnapshot.getValue(String.class);
+                if (status != null) {
+                    if (status.equals(Database.ACCEPT) || status.equals(Database.ARRIVE) || status.equals(Database.PROGRESS)) {
+                        Intent intent = new Intent(FindingDriverActivity.this, DriverInfoActivity.class);
+                        intent.putExtra(Database.RIDE_ID, rideId);
+                        intent.putExtra("returnTrip", returnTrip);
+                        mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                        startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("DATABASE", "Value event listener request cancelled.");
+            }
+        });
+
         Glide.with(getBaseContext())
                 .load(R.drawable.spaceship_dark)
                 .into(ivBackgroundFind);
@@ -163,9 +178,8 @@ public class FindingDriverActivity extends AppCompatActivity {
     public void useCurrentRide(Response<Ride> response){
         Ride ride = response.body();
         rideId = ride.getRideId();
-        mDatabase.child(Database.RIDE_ID).setValue(rideId);
+        mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.RIDE_ID).setValue(rideId);
         Log.v("tag3", "rideid: " + rideId);
-        asynchronousTaskDemo(rideId);
     }
 
     public void requestNewRide(Response<Ride> response, String productId, String fareId){
@@ -174,14 +188,14 @@ public class FindingDriverActivity extends AppCompatActivity {
                 .setFareId(fareId)
                 .setDropoffCoordinates(endLat, endLong)
                 .build();
+
         service.requestRide(rideRequestParameters).enqueue(new Callback<Ride>() {
             @Override
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 if (response.isSuccessful()) {
                     Ride ride = response.body();
                     rideId = ride.getRideId();
-                    mDatabase.child(Database.RIDE_ID).setValue(rideId);
-                    asynchronousTaskDemo(rideId);
+                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.RIDE_ID).setValue(rideId);
                 } else {
                     ApiError error = ErrorParser.parseError(response);
                 }
@@ -195,57 +209,8 @@ public class FindingDriverActivity extends AppCompatActivity {
         Log.d("SMART", "ride details callback ended: " + rideId);
     }
 
-    //Use Ride ID to change driver status in SANDBOX every X amount of time for DEMO purposes
-    public void asynchronousTaskDemo(final String rideId){
-        // timer thing implement:
-        timer = new Timer();
-        // creating timer task, timer
-        TimerTask tasknew = new TimerTask() {
-            @Override
-            public void run() {
-                // execute the background task
-                new ApiOperation().execute("");
-            }
-        };
-        timer.schedule(tasknew, 0, TimeUnit.SECONDS.toMillis(5)); // repeat task for 5 seconds
-    }
-
-    // private class for timer
-    private class ApiOperation extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String stat = "norun";
-            try {
-                stat = service.getRideDetails(rideId).execute().body().getStatus();
-                Log.d("STAT", "ride status: "+ stat);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return stat;
-        }
-
-        // run on the main UI thread after the background task is executed
-        @Override
-        protected void onPostExecute(String stat) {
-            Log.d("SMART", "ride id is: " + rideId);
-            if (stat.equals(Database.ACCEPT) || stat.equals(Database.ARRIVE) || stat.equals(Database.PROGRESS)) {
-                // cancel all scheduled timer tasks and get rid of the cancelled tasks queued to the end
-                Log.d("TAG4", "status in progress or accepted");
-                timer.cancel();
-                timer.purge();
-
-                Log.d("TIMER", "timer cancel successful");
-                Intent intent = new Intent(FindingDriverActivity.this, DriverInfoActivity.class);
-                intent.putExtra(Database.RIDE_ID, rideId);
-                intent.putExtra("returnTrip", returnTrip);
-                startActivity(intent);
-            } else {}
-        }
-    }
-
     public void setStartEnd() {
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 startLat = (float) dataSnapshot.child(Database.START_LOC).child(Database.LAT).getValue(float.class);
@@ -268,7 +233,7 @@ public class FindingDriverActivity extends AppCompatActivity {
     }
 
     public void setGoingBack() {
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 startLat = (float) dataSnapshot.child(Database.END_LOC).child(Database.LAT).getValue(float.class);

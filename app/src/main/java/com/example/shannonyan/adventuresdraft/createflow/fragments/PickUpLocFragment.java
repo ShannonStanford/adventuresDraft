@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.shannonyan.adventuresdraft.constants.Api;
@@ -38,6 +37,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     private double startLat;
     private double startLong;
     private ImageView arrow_l;
+    private ImageView arrow_r;
     private OnButtonClickListener mOnButtonClickListener;
 
     public interface OnButtonClickListener{
@@ -108,6 +108,12 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
                 mOnButtonClickListener.onButtonClicked(v);
             }
         });
+        arrow_r.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnButtonClickListener.onButtonClicked(v);
+            }
+        });
         return view;
     }
 
@@ -131,5 +137,4 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
     }
-
 }

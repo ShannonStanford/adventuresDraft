@@ -38,6 +38,7 @@ public final class Database {
     public static final String RATING = "rating";
     public static final String IMAGE_URL = "image_url";
     public static final String UBERX = "UberX";
+    public static final String status = "status";
 
     public static final String LOADING_TITLE = "Creating Your Adventure!";
     public static final String LOADING_MESSAGE = "Loading...";
