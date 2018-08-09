@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
@@ -34,19 +35,15 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     private DatabaseReference mDatabase;
     private double startLat;
     private double startLong;
-    private ImageView arrow_l;
-    private ImageView arrow_r;
-    private OnButtonClickListener mOnButtonClickListener;
-
-    public interface OnButtonClickListener{
-        void onButtonClicked(View view);
-    }
+    private Button btPrev;
+    private Button btNext;
+    private FragmentChangeInterface fragmentChangeInterface;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mOnButtonClickListener = (OnButtonClickListener) context;
+            fragmentChangeInterface = (FragmentChangeInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(((Activity) context).getLocalClassName()
                     + " must implement OnButtonClickListener");
@@ -77,8 +74,9 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
-        arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
-        arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
+        btNext = view.findViewById(R.id.btNext);
+        btPrev = view.findViewById(R.id.btPrev);
+        btNext.setEnabled(false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
@@ -91,6 +89,8 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
                 mDatabase.child(Database.PICKUP).setValue(place.getName());
                 mDatabase.child(Database.START_LOC).child(Database.LAT).setValue(startLat);
                 mDatabase.child(Database.START_LOC).child(Database.LONG).setValue(startLong);
+                btNext.setEnabled(true);
+                btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.next2, null));
             }
 
             @Override
@@ -101,16 +101,16 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_one);
         mapFragment.getMapAsync(this);
 
-        arrow_l.setOnClickListener(new View.OnClickListener() {
+        btPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
+                fragmentChangeInterface.onButtonClicked(v);
             }
         });
-        arrow_r.setOnClickListener(new View.OnClickListener() {
+        btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
+                fragmentChangeInterface.onButtonClicked(v);
             }
         });
         return view;

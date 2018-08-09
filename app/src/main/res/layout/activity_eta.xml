@@ -20,9 +20,10 @@
         android:id="@+id/tvDriverName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="150dp"
-        android:layout_toEndOf="@+id/tvEta"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="140dp"
         android:text="Mark Zuckerberg"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
@@ -55,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/tvDriverName"
-        android:layout_marginBottom="294dp"
+        android:layout_marginBottom="290dp"
         android:text="License#"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
@@ -66,10 +67,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="101dp"
-        android:layout_marginStart="167dp"
-        android:text="5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="102dp"
+        android:text="5 min"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="36dp"
@@ -109,7 +109,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/ivDriverPic"
         android:layout_marginBottom="260dp"
-        app:srcCompat="@drawable/sample_car" />
+        android:background="@drawable/circle"
+        app:srcCompat="@drawable/prius" />
 
     <View
         android:id="@+id/divider3"
@@ -121,7 +122,7 @@
         android:background="?android:attr/listDivider" />
 
     <TextView
-        android:id="@+id/ride"
+        android:id="@+id/rideText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -137,21 +138,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/tvDriverName"
-        android:layout_marginTop="187dp"
+        android:layout_marginTop="185dp"
         android:text="TextView"
         android:textColor="@android:color/background_light"
         android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/min"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tvDriverName"
-        android:layout_alignTop="@+id/tvEta"
-        android:text=" min"
-        android:textColor="@android:color/background_light"
-        android:textSize="36dp"
-        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/driverinfo"
@@ -163,6 +153,5 @@
         android:text="Driver Info"
         android:textColor="@android:color/background_light"
         android:textSize="22dp" />
-
 
 </RelativeLayout>

@@ -1,12 +1,8 @@
 package com.example.shannonyan.adventuresdraft.createflow.fragments;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import com.example.shannonyan.adventuresdraft.constants.Api;
-import com.example.shannonyan.adventuresdraft.constants.Database;
 
 public class CreateFragmentAdapter extends FragmentPagerAdapter {
     private static final int PAGE_0 = 0;

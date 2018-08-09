@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.R;
@@ -49,9 +48,8 @@ public class TripOverviewFragment extends Fragment {
     private TextView pickupAns;
     private TextView priceAns;
     private TextView cityAns;
-    private TextView numPeep;
     private TextView numPeepAns;
-    private ImageView arrow_l;
+    private Button btPrev;
     private DatabaseReference mDatabase;
     public Button create;
     public final static String YELP_KEY= "Bearer q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
@@ -71,17 +69,14 @@ public class TripOverviewFragment extends Fragment {
     public double startLong;
     public int highEstimate;
     public boolean found = false;
-    private OnButtonClickListener mOnButtonClickListener;
+    private FragmentChangeInterface fragmentChangeInterface;
 
-    public interface OnButtonClickListener{
-        void onButtonClicked(View view);
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mOnButtonClickListener = (OnButtonClickListener) context;
+            fragmentChangeInterface = (FragmentChangeInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(((Activity) context).getLocalClassName()
                     + " must implement OnButtonClickListener");
@@ -98,15 +93,14 @@ public class TripOverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_third, container, false);
-        arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
         pickupAns = view.findViewById(R.id.pickup_ans);
         priceAns = view.findViewById(R.id.price_ans);
         cityAns = view.findViewById(R.id.city_ans);
         create = view.findViewById(R.id.create);
-        numPeep = view.findViewById(R.id.num_peeps);
         numPeepAns = view.findViewById(R.id.num_peeps_ans);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         create = (Button) view.findViewById(R.id.create);
+        btPrev = (Button) view.findViewById(R.id.btPrev);
         uberClient = UberClient.getUberClientInstance(getContext());
         service = uberClient.service;
 
@@ -115,7 +109,6 @@ public class TripOverviewFragment extends Fragment {
             public void onClick(View v) {
 
                 showProgressIndicator();
-
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -141,10 +134,10 @@ public class TripOverviewFragment extends Fragment {
             }
         });
 
-        arrow_l.setOnClickListener(new View.OnClickListener() {
+        btPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
+                fragmentChangeInterface.onButtonClicked(v);
             }
         });
 
