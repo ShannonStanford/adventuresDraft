@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/pickup_lo"
-        android:layout_marginStart="104dp"
+        android:layout_marginStart="88dp"
         android:fontFamily="@font/cavdramsbold"
         android:text="Pickup Ans"
         android:textColor="@android:color/black"
@@ -70,7 +70,7 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/pickup"
+        android:layout_alignStart="@+id/price_ans"
         android:layout_below="@+id/price_ans"
         android:fontFamily="@font/cavdramsbold"
         android:text="Total Price Cap"
@@ -81,7 +81,7 @@
         android:id="@+id/price_ans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pickup"
+        android:layout_alignStart="@+id/city"
         android:layout_alignTop="@+id/dollar"
         android:fontFamily="@font/cavdramsbold"
         android:text="Price Ans"
@@ -93,7 +93,7 @@
         android:id="@+id/num_peeps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pickup"
+        android:layout_alignStart="@+id/city"
         android:layout_below="@+id/num_peeps_ans"
         android:fontFamily="@font/cavdramsbold"
         android:text="Total Number of People"
@@ -104,7 +104,7 @@
         android:id="@+id/num_peeps_ans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pickup"
+        android:layout_alignStart="@+id/city"
         android:layout_alignTop="@+id/group"
         android:fontFamily="@font/cavdramsbold"
         android:text="numPeepsAns"
@@ -129,8 +129,8 @@
         android:id="@+id/dollar"
         android:layout_width="45dp"
         android:layout_height="47dp"
+        android:layout_alignStart="@id/pickup_lo"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/group"
         android:layout_marginBottom="189dp"
         android:src="@drawable/dollar" />
 
@@ -138,19 +138,20 @@
         android:id="@+id/group"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_alignStart="@id/pickup_lo"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="283dp"
-        android:layout_marginStart="51dp"
+        android:layout_marginBottom="294dp"
+        android:layout_marginEnd="-80dp"
         android:src="@drawable/group" />
 
     <ImageView
         android:id="@+id/end_loc"
         android:layout_width="45dp"
         android:layout_height="46dp"
+        android:layout_alignStart="@id/pickup_lo"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="234dp"
-        android:layout_toStartOf="@+id/pickup"
+        android:layout_marginEnd="-80dp"
+        android:layout_marginTop="230dp"
         android:src="@drawable/maps" />
 
     <ImageView
@@ -158,8 +159,8 @@
         android:layout_width="45dp"
         android:layout_height="46dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="136dp"
-        android:layout_toStartOf="@+id/pickup"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="138dp"
         android:src="@drawable/gps" />
 
     <Button
