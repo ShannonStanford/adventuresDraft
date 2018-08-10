@@ -15,9 +15,7 @@ import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.createflow.fragments.TripOverviewFragment;
 import com.example.shannonyan.adventuresdraft.modules.GlideApp;
-import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.yelphelper.YelpClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,26 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.uber.sdk.rides.client.model.PriceEstimate;
-import com.uber.sdk.rides.client.model.PriceEstimatesResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import cz.msebera.android.httpclient.client.utils.URIBuilder;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -108,7 +88,7 @@ public class EventInfoActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Log.d("DATABASE", "Value event listener request cancelled.");
                     }
                 });
             }
@@ -133,7 +113,7 @@ public class EventInfoActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.d("DATABASE", "Value event listener request cancelled.");
             }
         });
     }

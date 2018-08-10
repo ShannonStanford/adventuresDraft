@@ -79,7 +79,6 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
         arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -91,6 +90,8 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
                 mDatabase.child(Database.PICKUP).setValue(place.getName());
                 mDatabase.child(Database.START_LOC).child(Database.LAT).setValue(startLat);
                 mDatabase.child(Database.START_LOC).child(Database.LONG).setValue(startLong);
+                mDatabase.child(Database.HOME_LOC).child(Database.LAT).setValue(startLat);
+                mDatabase.child(Database.HOME_LOC).child(Database.LONG).setValue(startLong);
             }
 
             @Override

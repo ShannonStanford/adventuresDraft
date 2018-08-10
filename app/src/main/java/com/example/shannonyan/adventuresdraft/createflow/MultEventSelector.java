@@ -1,18 +1,13 @@
 package com.example.shannonyan.adventuresdraft.createflow;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.ongoingflow.DriverInfoActivity;
-import com.example.shannonyan.adventuresdraft.ongoingflow.ReturnHomeActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

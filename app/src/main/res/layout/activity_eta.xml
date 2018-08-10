@@ -106,9 +106,8 @@
         android:id="@+id/ivCar"
         android:layout_width="138dp"
         android:layout_height="118dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/ivDriverPic"
-        android:layout_marginBottom="260dp"
+        android:layout_alignTop="@+id/tvCarLicense"
         app:srcCompat="@drawable/sample_car" />
 
     <View

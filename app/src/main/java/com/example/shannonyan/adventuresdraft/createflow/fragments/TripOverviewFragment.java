@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
-import com.example.shannonyan.adventuresdraft.ongoingflow.EventInfoActivity;
 import com.example.shannonyan.adventuresdraft.ongoingflow.FindingDriverActivity;
 import com.example.shannonyan.adventuresdraft.yelphelper.YelpClient;
 import com.google.firebase.database.DataSnapshot;
@@ -26,26 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.uber.sdk.rides.client.model.PriceEstimate;
-import com.uber.sdk.rides.client.model.PriceEstimatesResponse;
-import com.uber.sdk.rides.client.services.RidesService;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import cz.msebera.android.httpclient.client.utils.URIBuilder;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class TripOverviewFragment extends Fragment {
 
@@ -118,7 +98,7 @@ public class TripOverviewFragment extends Fragment {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Log.d("DATABASE", "Value event listener request cancelled.");
                     }
                 });
             }
@@ -139,10 +119,9 @@ public class TripOverviewFragment extends Fragment {
                 pickupAns.setText(dataSnapshot.child(Database.PICKUP).getValue(String.class));
                 numPeepAns.setText(String.valueOf(dataSnapshot.child(Database.NUM_PEEPS).getValue(Integer.class)));
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.d("DATABASE", "Value event listener request cancelled.");
             }
         });
         return view;
