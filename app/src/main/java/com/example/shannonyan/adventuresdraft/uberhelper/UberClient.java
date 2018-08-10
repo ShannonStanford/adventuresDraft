@@ -19,9 +19,9 @@ public final class UberClient {
     //IOC/injection
     private static UberClient uberClientInstance;
     //UBER API varsD4bTw-t73c
-    public String CLIENT_ID = "0toSWTHkZXJIa-llj9rh900hXrelnQeY";
-    public String TOKEN = "6ykI69JlqFHWUlbKx7D5yps5EEfD9lEfEmKwZWbx"; //serverToken
-    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6Iis2UEJpQVJvUlpHS0dna0NPWHpPU2c9PSIsImV4cGlyZXNfYXQiOjE1MzYxODkyNzUsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.YIxJFe-E0-wNv0JiBSHi5G7HHMSIqsORYlZYV3gXdcM";
+    public String CLIENT_ID = "KVIZ1mELnrgyX7cIhv_xPT3LeD6HBqP7";
+    public String TOKEN = "eNrJY4R7S4AX9ziTAIDJxopr4hmM0XTA3JD2OCyg"; //serverToken
+    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IkpqQWhUWkprUXlPdGtkVlJ2VUhkdGc9PSIsImV4cGlyZXNfYXQiOjE1MzYyNTc2MTIsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.GnWGI9JUR-nP1ZB2jbpInhXxFRyBX5hj6DqEGGHaF2I";
     public RidesService service;
     public SessionConfiguration config = new SessionConfiguration.Builder()
             // mandatory

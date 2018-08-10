@@ -83,6 +83,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         btCallDriver = (Button) findViewById(R.id.btCallDriver);
         btCancel = (Button) findViewById(R.id.btCancel);
         rideText = (TextView) findViewById(R.id.rideText);
+        ivCar = (ImageView) findViewById(R.id.ivCar);
 
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
