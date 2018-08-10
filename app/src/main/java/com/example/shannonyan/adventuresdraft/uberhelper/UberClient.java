@@ -16,12 +16,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class UberClient {
-//IOC/injection
+    //IOC/injection
     private static UberClient uberClientInstance;
     //UBER API varsD4bTw-t73c
     public String CLIENT_ID = "D4bTw-t73cglNaTsFlUfjQuFYeWsjP3F";
     public String TOKEN = "ayK8v-qqcB_TVX7IMGb-4KU8sqxAgDk1l40lkWQo"; //serverToken
-    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IlY1cFFvNmN4UkxHTXN1YWs2NFpQWVE9PSIsImV4cGlyZXNfYXQiOjE1MzYyODEzNjEsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0.i8QzUaw3dvVQF5zq6-gm0Gh1WJqOy8qhslXPPEKiBGw";
+    public String testAccessToken = "KA.eyJ2ZXJzaW9uIjoyLCJpZCI6IlhMZG0yT2NQUUZpUVVIb0ZYZzZwYnc9PSIsImV4cGlyZXNfYXQiOjE1MzY0NDc3NjMsInBpcGVsaW5lX2tleV9pZCI6Ik1RPT0iLCJwaXBlbGluZV9pZCI6MX0._wJKveAGQ1gWnmLTdf_7ujywVlvjTyF7blu0vXvoYXE";
     public RidesService service;
     public SessionConfiguration config = new SessionConfiguration.Builder()
             // mandatory

@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.databasehelper.DatabaseHelper;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -26,15 +26,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCallback {
 
     public SupportPlaceAutocompleteFragment placeAutoComplete;
 
     private GoogleMap mMap;
-    private DatabaseReference mDatabase;
     private String cityInterest;
     private EditText etPrice;
     private NumberPicker numPicker;
@@ -79,9 +76,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
         setUpNumPicker();
@@ -113,7 +108,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
             public void onPlaceSelected(Place place) {
                 addMarker(place);
                 cityInterest = place.getAddress().toString();
-                mDatabase.child(Database.CITY_OF_INTEREST).setValue(cityInterest);
+                DatabaseHelper.setCity(cityInterest);
             }
 
             @Override
@@ -127,7 +122,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
                     String priceCap = etPrice.getText().toString();
-                    mDatabase.child(Database.PRICECAP).setValue(priceCap);
+                    DatabaseHelper.setPriceCap(priceCap);
                 }
             }
         });
@@ -135,11 +130,10 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         numPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mDatabase.child(Database.NUM_PEEPS).setValue(numPicker.getValue());
+                DatabaseHelper.setNumPeople(numPicker.getValue());
                 btNext.setEnabled(true);
             }
         });
-
 
         return view;
     }
@@ -153,8 +147,8 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     }
 
     public void setUpPlacesFrag(){
-        final String HINT = "Pick your City of Interest";
-        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.background_material_light));
+        final String HINT = "City of Interest";
+        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.trans_white));
         placeAutoComplete.setHint(HINT);
     }
 
@@ -169,7 +163,9 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         markerOptions.title((String)p.getName());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mMap.addMarker(markerOptions);
+        mMap.setPadding(0, 0, 0, 0);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
+        mMap.setPadding(0, 50, 0, 0);
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
     }
 }

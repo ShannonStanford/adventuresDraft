@@ -27,7 +27,6 @@
         android:supportsRtl="true"
         android:name=".App"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -35,7 +34,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".createflow.CreateFlowActivity"
+        <activity
+            android:name=".createflow.MultEventSelector"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,12 +70,17 @@
         <activity
             android:name=".ongoingflow.RiderCancelActivity"
             android:label="@string/title_activity_rider_cancel"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ongoingflow.StartActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ongoingflow.ReturnHomeActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".profileflow.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ongoingflow.StartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ongoingflow.ReturnHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profileflow.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".createflow.CreateFlowActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

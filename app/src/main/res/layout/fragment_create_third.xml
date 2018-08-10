@@ -4,119 +4,170 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Create_Flow.Fragment.CreateThirdFragment">
+    tools:context="Create_Flow.Fragment.CreateThirdFragment"
+    android:background="@drawable/mapgrad">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:id="@+id/overview"
-        android:layout_width="358dp"
-        android:layout_height="40dp"
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="338dp"
+        android:layout_height="453dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="Overview"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="28sp" />
+        android:layout_marginTop="47dp"
+        android:clickable="true"
+        card_view:cardBackgroundColor="#4DFFFFFF"
+        card_view:cardCornerRadius="12dp"
+        card_view:cardElevation="0dp"
+        card_view:contentPadding="4dp">
 
-    <TextView
-        android:id="@+id/pickup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pickup_ans"
-        android:layout_below="@+id/pickup_ans"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="Pick up location"
-        android:textColor="#a9a9a9"
-        android:textSize="14sp" />
+        <RelativeLayout
+            android:layout_width="386dp"
+            android:layout_height="593dp"
+            android:padding="16dp">
 
-    <TextView
-        android:id="@+id/pickup_ans"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/pickup_lo"
-        android:layout_marginStart="104dp"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="Pickup Ans"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/pickup_lo"
+                android:layout_width="54dp"
+                android:layout_height="45dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="79dp"
+                android:layout_toStartOf="@+id/pickup"
+                android:src="@drawable/gps" />
 
-    <TextView
-        android:id="@+id/city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pickup"
-        android:layout_below="@+id/city_ans"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="City of Interest"
-        android:textColor="#a9a9a9"
-        android:textSize="14sp" />
+            <TextView
+                android:id="@+id/overview"
+                android:layout_width="293dp"
+                android:layout_height="40dp"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="Overview"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="28sp" />
 
-    <TextView
-        android:id="@+id/city_ans"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/pickup"
-        android:layout_marginTop="255dp"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="City Ans"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/pickup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/pickup_ans"
+                android:layout_below="@+id/pickup_ans"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="Pick up location"
+                android:textColor="#a9a9a9"
+                android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pickup"
-        android:layout_below="@+id/price_ans"
-        android:layout_marginTop="-201dp"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="Total Price Cap"
-        android:textColor="#a9a9a9"
-        android:textSize="14sp" />
+            <TextView
+                android:id="@+id/pickup_ans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/pickup_lo"
+                android:layout_marginStart="104dp"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="Pickup Ans"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/price_ans"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/pickup"
-        android:layout_marginBottom="201dp"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="Price Ans"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/city_ans"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="City of Interest"
+                android:textColor="#a9a9a9"
+                android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/num_peeps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pickup"
-        android:layout_below="@+id/num_peeps_ans"
-        android:layout_marginTop="-290dp"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="Total Number of People"
-        android:textColor="#a9a9a9"
-        android:textSize="14sp" />
+            <TextView
+                android:id="@+id/city_ans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/price_ans"
+                android:layout_marginTop="170dp"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="City Ans"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/num_peeps_ans"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/pickup"
-        android:layout_marginBottom="290dp"
-        android:fontFamily="@font/cavdramsbold"
-        android:text="numPeepsAns"
-        android:textColor="@color/uber_black"
-        android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/end_loc"
+                android:layout_width="56dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@+id/city"
+                android:layout_toStartOf="@+id/pickup"
+                android:src="@drawable/maps" />
+
+            <ImageView
+                android:id="@+id/group"
+                android:layout_width="50dp"
+                android:layout_height="43dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="277dp"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@+id/pickup"
+                android:src="@drawable/group" />
+
+            <TextView
+                android:id="@+id/num_peeps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/group"
+                android:layout_alignStart="@+id/num_peeps_ans"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="Total Number of People"
+                android:textColor="#a9a9a9"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/num_peeps_ans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/group"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="numPeepsAns"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/price_ans"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="Total Price Cap"
+                android:textColor="#a9a9a9"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/price_ans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/pickup_ans"
+                android:layout_alignTop="@+id/dollar"
+                android:fontFamily="@font/cavdramsbold"
+                android:text="Price Ans"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/dollar"
+                android:layout_width="46dp"
+                android:layout_height="56dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="197dp"
+                android:layout_marginEnd="7dp"
+                android:layout_toStartOf="@+id/pickup"
+                android:src="@drawable/dollar" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
     <Button
         android:id="@+id/create"
@@ -124,58 +175,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="89dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/rounded_button"
         android:elevation="15dp"
         android:fontFamily="@font/lemon"
         android:text="Create"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
-
-    <ImageView
-        android:id="@+id/dollar"
-        android:layout_width="38dp"
-        android:layout_height="35dp"
-        android:layout_alignStart="@+id/group"
-        android:layout_alignTop="@+id/price_ans"
-        android:layout_marginStart="-2dp"
-        android:src="@drawable/dollar" />
-
-    <ImageView
-        android:id="@+id/group"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_alignStart="@+id/end_loc"
-        android:layout_alignTop="@+id/num_peeps_ans"
-        android:src="@drawable/group" />
-
-    <ImageView
-        android:id="@+id/end_loc"
-        android:layout_width="43dp"
-        android:layout_height="39dp"
-        android:layout_alignTop="@+id/city_ans"
-        android:layout_toStartOf="@+id/pickup"
-        android:src="@drawable/maps" />
-
-    <ImageView
-        android:id="@+id/pickup_lo"
-        android:layout_width="43dp"
-        android:layout_height="38dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="163dp"
-        android:layout_toStartOf="@+id/pickup"
-        android:src="@drawable/gps" />
-
-    <ImageView
-        android:id="@+id/arrow_l"
-        android:layout_width="42dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/create"
-        android:layout_marginTop="-62dp"
-        android:layout_marginBottom="12dp"
-        android:rotation="180"
-        android:src="@drawable/arrow" />
 
 
 </RelativeLayout>

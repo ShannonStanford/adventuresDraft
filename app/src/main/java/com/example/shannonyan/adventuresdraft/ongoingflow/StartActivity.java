@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -37,23 +36,22 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
     public GoogleMap gMap;
 
     private MapView mapView;
-    private DatabaseReference mDatabase;
     private float startLat;
     private float startLong;
+    private DatabaseReference mDatabase;
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int ZOOM_PREF = 14;
     private static final int STROKE_WIDTH = 6;
     private static final int CURR_LOCATION_CIRCLE_RADIUS = 200;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(com.example.shannonyan.adventuresdraft.constants.Database.TRIPS).child(com.example.shannonyan.adventuresdraft.constants.Database.TEST_TRIPS).child(com.example.shannonyan.adventuresdraft.constants.Database.UBER);
         btLaunch = (Button) findViewById(R.id.btLaunch);
 
         onClickToFindActivity();
@@ -199,8 +197,8 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                startLat = (float) dataSnapshot.child(Database.START_LOC).child(Database.LAT).getValue(float.class);
-                startLong = (float) dataSnapshot.child(Database.START_LOC).child(Database.LONG).getValue(float.class);
+                startLat = (float) dataSnapshot.child(com.example.shannonyan.adventuresdraft.constants.Database.START_LOC).child(com.example.shannonyan.adventuresdraft.constants.Database.LAT).getValue(float.class);
+                startLong = (float) dataSnapshot.child(com.example.shannonyan.adventuresdraft.constants.Database.START_LOC).child(com.example.shannonyan.adventuresdraft.constants.Database.LONG).getValue(float.class);
                 Log.d("start", String.valueOf(startLat));
                 Log.d("start", String.valueOf(startLong));
                 LatLng ny = new LatLng(startLat, startLong);
@@ -213,7 +211,6 @@ public class StartActivity extends AppCompatActivity implements OnMapReadyCallba
                 Log.d("FindingDriverActivity", "Firebase cancelled");
             }
         });
-
     }
 
     public void setPickUpMarker(){

@@ -44,6 +44,7 @@ public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFr
         toolbar.setNavigationIcon(R.drawable.logo);
 
         vpAdapter = new CreateFragmentAdapter(getSupportFragmentManager());
+//        getSupportFragmentManager().beginTransaction().remove(vpAdapter.getItem(2));
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(vpAdapter);
 
