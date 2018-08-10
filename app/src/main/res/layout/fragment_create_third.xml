@@ -175,13 +175,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="55dp"
         android:background="@drawable/rounded_button"
         android:elevation="15dp"
         android:fontFamily="@font/lemon"
         android:text="Create"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btPrev"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/next2"
+        android:rotation="180" />
 
 
 </RelativeLayout>

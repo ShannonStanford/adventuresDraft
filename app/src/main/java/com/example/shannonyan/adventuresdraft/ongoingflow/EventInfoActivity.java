@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.databasehelper.DatabaseHelper;
 import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.yelphelper.YelpClient;
 import com.google.firebase.database.DataSnapshot;
@@ -72,17 +71,28 @@ public class EventInfoActivity extends AppCompatActivity {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itinerary = DatabaseHelper.getItinerary();
+                mDatabaseItinerary.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                if (itinerary != null) {
-                    createNextEvent(itinerary.get(0));
-                    itinerary.remove(0);
-                    DatabaseHelper.setItinerary(itinerary);
-                } else {
-                    Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
-                    intent.putExtra(Database.RETURN_TRIP, "true");
-                    startActivity(intent);
-                }
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        itinerary = (ArrayList<String>) dataSnapshot.getValue();
+                        if (itinerary != null) {
+                            createNextEvent(itinerary.get(0));
+                            itinerary.remove(0);
+                            mDatabaseItinerary.setValue(itinerary);
+                            //DatabaseHelper.setItinerary(itinerary);
+                        } else {
+                            Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
+                            intent.putExtra(Database.RETURN_TRIP, "true");
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
     }

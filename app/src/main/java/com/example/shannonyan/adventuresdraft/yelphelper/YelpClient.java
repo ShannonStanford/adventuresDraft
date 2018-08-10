@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.databasehelper.DatabaseHelper;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,6 +48,8 @@ public final class YelpClient {
     private String totalCap;
     private int highEstimate;
     private Context contextActivity;
+    private double oldEndLat;
+    private double oldEndLon;
 
     public boolean found = false;
     public String city;
@@ -61,31 +62,7 @@ public final class YelpClient {
         Create(eventType,first);
     }
 
-    public void Create(final String eventType, boolean first){
-//        firstEvent = first;
-//        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-////                food = DatabaseHelper.getFoodPref();
-////                numPeeps =  DatabaseHelper.getNumPeeps();
-////                startLat = DatabaseHelper.getStartLat();
-////                startLong = DatabaseHelper.getStartLong();
-////                city = DatabaseHelper.getCityInterest();
-////                totalCap = DatabaseHelper.getPriceCap();
-//                StringBuilder foodParam = new StringBuilder();
-//                for (int i = 0; i < food.size(); i++) {
-//                    foodParam.append(food.get(i));
-//                    if (i != food.size() - 1) {
-//                        foodParam.append(",");
-//                    }
-//                }
-//                CreateEvent(foodParam, eventType);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
-
+    public void Create(final String eventType, final boolean first){
         firstEvent = first;
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -96,6 +73,10 @@ public final class YelpClient {
                 startLong = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LONG).getValue(long.class);
                 city = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.CITY_OF_INTEREST).getValue(String.class);
                 totalCap = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.PRICECAP).getValue(String.class);
+                if(!first) {
+                    oldEndLat = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).getValue(long.class);
+                    oldEndLon = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LONG).getValue(long.class);
+                }
                 StringBuilder foodParam = new StringBuilder();
                 for (int i = 0; i < food.size(); i++) {
                     foodParam.append(food.get(i));
@@ -123,6 +104,7 @@ public final class YelpClient {
     }
 
     public void CreateEvent(StringBuilder foodPar, String eventType) {
+        found = false;
         //determine/set priceCap vars required for algorithm
         int priceCap = Integer.parseInt(String.valueOf(totalCap));
         final int uberCap = determineUberCap(priceCap);
@@ -174,8 +156,8 @@ public final class YelpClient {
                         map[n] = true;
                         try {
                             JSONObject item = results.getJSONObject(n);
-                            float endLat = item.getJSONObject(Database.COORDINATES).getLong(Database.LATITUDE);
-                            float endLon = item.getJSONObject(Database.COORDINATES).getLong(Database.LONGITUDE);
+                            double endLat = item.getJSONObject(Database.COORDINATES).getDouble(Database.LATITUDE);
+                            double endLon = item.getJSONObject(Database.COORDINATES).getDouble(Database.LONGITUDE);
                             PriceEstimatesResponse response2 = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body();
                             List<PriceEstimate> priceEstimates = response2.getPrices();
                             highEstimate = -1;
@@ -187,12 +169,17 @@ public final class YelpClient {
                             if (highEstimate <= uberCap) {
                                 found = true;
                                 if(firstEvent){
-                                    DatabaseHelper.setDropOffInfo(endLat, endLon);
-                                    DatabaseHelper.setEventInfo(item.getString(Database.IMAGE_URL), item.getString(Database.NAME), item.getInt(Database.RATING));
+                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).setValue(endLat);
+                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LONG).setValue(endLon);
+                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.EVENT).child(Database.DOWNLOAD_URL).setValue(item.get(Database.IMAGE_URL));
+                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.EVENT).child(Database.NAME).setValue(item.get(Database.NAME));
+                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.EVENT).child(Database.RATING).setValue(item.get(Database.RATING));
                                     Intent intent = new Intent(contextActivity,  com.example.shannonyan.adventuresdraft.ongoingflow.StartActivity.class);
                                     contextActivity.startActivity(intent);
                                 }else {
-                                    //TODO: store old end lat/long from database into vars then set start lat/long in database to those values before writing new end lat/long to database
+                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LAT).setValue(oldEndLat);
+                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LONG).setValue(oldEndLon);
+                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).setValue(endLat);
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).setValue(endLat);
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LONG).setValue(endLon);
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.EVENT).child(Database.DOWNLOAD_URL).setValue(item.get(Database.IMAGE_URL));

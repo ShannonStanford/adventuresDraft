@@ -8,10 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.databasehelper.DatabaseHelper;
+import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -23,6 +23,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
 
@@ -31,19 +33,16 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private double startLat;
     private double startLong;
-    private ImageView arrow_l;
-    private ImageView arrow_r;
-    private OnButtonClickListener mOnButtonClickListener;
-
-    public interface OnButtonClickListener{
-        void onButtonClicked(View view);
-    }
+    private DatabaseReference mDatabase;
+    private Button btPrev;
+    private Button btNext;
+    private FragmentChangeInterface fragmentChangeInterface;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mOnButtonClickListener = (OnButtonClickListener) context;
+            fragmentChangeInterface = (FragmentChangeInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(((Activity) context).getLocalClassName()
                     + " must implement OnButtonClickListener");
@@ -74,8 +73,10 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
-        arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
-        arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
+        btNext = view.findViewById(R.id.btNext);
+        btPrev = view.findViewById(R.id.btPrev);
+        btNext.setEnabled(false);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(com.example.shannonyan.adventuresdraft.constants.Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
         placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.trans_white));
@@ -85,7 +86,12 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
                 addMarker(place);
                 startLat = place.getLatLng().latitude;
                 startLong = place.getLatLng().longitude;
-                DatabaseHelper.setPickUpInfo((String)place.getName(),startLat, startLong);
+                mDatabase.child(com.example.shannonyan.adventuresdraft.constants.Database.PICKUP).setValue(place.getName());
+                mDatabase.child(Database.START_LOC).child(Database.LAT).setValue(startLat);
+                mDatabase.child(Database.START_LOC).child(Database.LONG).setValue(startLong);
+                mDatabase.child(Database.HOME_LOC).child(Database.LAT).setValue(startLat);
+                mDatabase.child(Database.HOME_LOC).child(Database.LONG).setValue(startLong);
+
             }
 
             @Override
@@ -96,16 +102,16 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_one);
         mapFragment.getMapAsync(this);
 
-        arrow_l.setOnClickListener(new View.OnClickListener() {
+        btPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
+                fragmentChangeInterface.onButtonClicked(v);
             }
         });
-        arrow_r.setOnClickListener(new View.OnClickListener() {
+        btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
+                fragmentChangeInterface.onButtonClicked(v);
             }
         });
         return view;

@@ -16,15 +16,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.createflow.fragments.CityPriceDetailsFragment;
 import com.example.shannonyan.adventuresdraft.createflow.fragments.CreateFragmentAdapter;
-import com.example.shannonyan.adventuresdraft.createflow.fragments.PickUpLocFragment;
-import com.example.shannonyan.adventuresdraft.createflow.fragments.TripOverviewFragment;
+import com.example.shannonyan.adventuresdraft.createflow.fragments.FragmentChangeInterface;
 import com.example.shannonyan.adventuresdraft.profileflow.ProfileActivity;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFragment.OnButtonClickListener,TripOverviewFragment.OnButtonClickListener,CityPriceDetailsFragment.OnButtonClickListener {
+public class CreateFlowActivity extends AppCompatActivity implements FragmentChangeInterface {
 
     public CreateFragmentAdapter vpAdapter;
     public ViewPager pager;
@@ -42,9 +40,7 @@ public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.logo);
-
         vpAdapter = new CreateFragmentAdapter(getSupportFragmentManager());
-//        getSupportFragmentManager().beginTransaction().remove(vpAdapter.getItem(2));
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(vpAdapter);
 
@@ -90,17 +86,15 @@ public class CreateFlowActivity extends AppCompatActivity implements PickUpLocFr
 
     public void onButtonClicked(View view){
         int currPos = pager.getCurrentItem();
-
         switch(view.getId()){
-
-            case R.id.arrow_l:
+            case R.id.btPrev:
                 //handle currPos is zero
-                pager.setCurrentItem(currPos-1);
+                pager.setCurrentItem(currPos - 1);
                 break;
 
-            case R.id.arrow_r:
+            case R.id.btNext:
                 //handle currPos is reached last item
-                pager.setCurrentItem(currPos+1);
+                pager.setCurrentItem(currPos + 1);
                 break;
         }
     }

@@ -55,6 +55,7 @@ public class RideInProgressActivity extends AppCompatActivity {
                     if (status.equals("completed")) {
                         Intent i = new Intent(RideInProgressActivity.this, EventInfoActivity.class);
                         i.putExtra(Database.RIDE_ID, rideID);
+                        mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
                         startActivity(i);
                     }
                 }

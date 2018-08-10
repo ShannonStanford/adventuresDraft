@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.databasehelper.DatabaseHelper;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -176,7 +175,7 @@ public class FindingDriverActivity extends AppCompatActivity {
     public void useCurrentRide(Response<Ride> response){
         Ride ride = response.body();
         rideId = ride.getRideId();
-        DatabaseHelper.setRideId(rideId);
+        mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.RIDE_ID).setValue(rideId);
         Log.v("tag3", "rideid: " + rideId);
     }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:width="150dp"
+        android:drawable="@drawable/circle2" />
+    <item
+        android:width="130dp"
+        android:height="80dp"
+        android:drawable="@drawable/tprius2"
+        android:gravity="center_vertical|center" />
+
+</layer-list>

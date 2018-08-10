@@ -16,9 +16,10 @@ import android.widget.Toast;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
-import com.example.shannonyan.adventuresdraft.databasehelper.DatabaseHelper;
 import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.profileflow.fragments.profileViewAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
     private TabLayout tabLayout;
     private ImageView ivProfile;
     private Button btBack;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -45,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         ivProfile = findViewById(R.id.ivProfilePic);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.USER).child(Database.TEST_USER);
         GlideApp.with(getBaseContext()).load(R.drawable.profile).into(ivProfile);
 
         adapter = new profileViewAdapter(getSupportFragmentManager());
@@ -115,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        DatabaseHelper.setPreferences(finalSelectedChoice, selections);
+                        mDatabase.child(finalSelectedChoice).setValue(selections);
                         Toast.makeText(getBaseContext(),"Preferences updated", Toast.LENGTH_LONG).show();
                     }
                 })

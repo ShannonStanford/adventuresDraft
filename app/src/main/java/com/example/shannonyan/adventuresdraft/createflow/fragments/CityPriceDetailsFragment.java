@@ -4,17 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 
 import com.example.shannonyan.adventuresdraft.R;
-import com.example.shannonyan.adventuresdraft.databasehelper.DatabaseHelper;
+import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -26,6 +26,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCallback {
 
@@ -35,19 +37,19 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     private String cityInterest;
     private EditText etPrice;
     private NumberPicker numPicker;
-    private ImageView arrow_r;
-    private OnButtonClickListener mOnButtonClickListener;
+    private FragmentChangeInterface fragmentChangeInterface;
+    private DatabaseReference mDatabase;
     private Button btNext;
+    private boolean num = false;
+    private boolean pickCity = false;
+    private boolean maxPrice = false;
 
-    public interface OnButtonClickListener{
-        void onButtonClicked(View view);
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mOnButtonClickListener = (OnButtonClickListener) context;
+            fragmentChangeInterface = (FragmentChangeInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(((Activity) context).getLocalClassName()
                     + " must implement OnButtonClickListener");
@@ -76,9 +78,9 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
-        arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS);
         setUpNumPicker();
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -86,20 +88,13 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         setUpPlacesFrag();
 
         btNext = view.findViewById(R.id.btNext);
+        btNext.setEnabled(false);
 
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("here", "clicked");
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
-        btNext.setEnabled(false);
-
-        arrow_r.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
+                fragmentChangeInterface.onButtonClicked(v);
             }
         });
 
@@ -108,7 +103,9 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
             public void onPlaceSelected(Place place) {
                 addMarker(place);
                 cityInterest = place.getAddress().toString();
-                DatabaseHelper.setCity(cityInterest);
+                mDatabase.child(Database.CITY_OF_INTEREST).setValue(cityInterest);
+                pickCity = true;
+                changeButton();
             }
 
             @Override
@@ -122,7 +119,9 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
                     String priceCap = etPrice.getText().toString();
-                    DatabaseHelper.setPriceCap(priceCap);
+                    mDatabase.child(Database.PRICECAP).setValue(priceCap);
+                    maxPrice = true;
+                    changeButton();
                 }
             }
         });
@@ -130,12 +129,26 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         numPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                DatabaseHelper.setNumPeople(numPicker.getValue());
-                btNext.setEnabled(true);
+                mDatabase.child(Database.NUM_PEEPS).setValue(numPicker.getValue());
+                num = true;
+                changeButton();
             }
         });
-
         return view;
+    }
+
+    public boolean checkValuesFilled() {
+        if (maxPrice && pickCity && num) {
+            return true;
+        }
+        return false;
+    }
+
+    public void changeButton() {
+        if (checkValuesFilled()) {
+            btNext.setEnabled(true);
+            btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.next2, null));
+        }
     }
 
     public void setUpNumPicker(){

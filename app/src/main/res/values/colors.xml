@@ -24,5 +24,6 @@
     <color name="Light_Blue">#000000</color>
     <color name="secondary_text_material_light">#99e1d9</color>
     <color name="trans_white">#00FFFFFF</color>
-
+    <color name="orange">#FAA916</color>
+    <color name="white">#FFFFFF</color>
 </resources>

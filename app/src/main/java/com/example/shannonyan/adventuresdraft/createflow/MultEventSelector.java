@@ -9,9 +9,10 @@ import android.view.View;
 
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.databasehelper.DatabaseHelper;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class MultEventSelector extends AppCompatActivity {
     public RecyclerView.LayoutManager layoutManager;
     public RecyclerView.Adapter adapter;
     public ArrayList<String> allEvents;
+    public DatabaseReference mDatabase;
     FloatingActionMenu fabMenu;
     FloatingActionButton done, food, event;
 
@@ -29,6 +31,7 @@ public class MultEventSelector extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mult_event_selector);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.ITINERARY_ARRAY_NAME);
         allEvents = new ArrayList<>();
         allEvents.add(Database.EVENT_TYPE_NORM);
         layoutManager = new LinearLayoutManager(this);
@@ -70,7 +73,8 @@ public class MultEventSelector extends AppCompatActivity {
     }
 
     public void updateItinerary(ArrayList<String> itinerary){
-        DatabaseHelper.setItinerary(itinerary);
+        mDatabase.setValue(itinerary);
+        //DatabaseHelper.setItinerary(itinerary);
     }
 
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreatePickUpFragment">
+    tools:context=".createflow.CreateFlowActivity">
 
     <fragment
         android:id="@+id/map_one"
@@ -47,23 +47,23 @@
 
 
 
-    <ImageView
-        android:id="@+id/arrow_r"
-        android:layout_width="35dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/arrow_l"
-        android:layout_marginBottom="12dp"
-        android:src="@drawable/arrow" />
-
-    <ImageView
-        android:id="@+id/arrow_l"
+    <Button
+        android:id="@+id/btPrev"
         android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="12dp"
-        android:rotation="180"
-        android:src="@drawable/arrow" />
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/next2"
+        android:rotation="180" />
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/btPrev"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/rightarrow" />
 
 </RelativeLayout>

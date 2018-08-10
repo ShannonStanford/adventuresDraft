@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.R;
@@ -32,23 +31,19 @@ public class TripOverviewFragment extends Fragment {
     private TextView priceAns;
     private TextView cityAns;
     private TextView numPeepAns;
-    private ImageView arrow_l;
+    private Button btPrev;
     private DatabaseReference mDatabase;
     private DatabaseReference mDatabaseItinerary;
     public Button create;
+    private FragmentChangeInterface fragmentChangeInterface;
     public ArrayList<String> itinerary;
     public YelpClient yelpClient;
-    private OnButtonClickListener mOnButtonClickListener;
-
-    public interface OnButtonClickListener{
-        void onButtonClicked(View view);
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mOnButtonClickListener = (OnButtonClickListener) context;
+            fragmentChangeInterface = (FragmentChangeInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(((Activity) context).getLocalClassName() + " must implement OnButtonClickListener");
         }
@@ -64,7 +59,6 @@ public class TripOverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_third, container, false);
-        arrow_l = (ImageView) view.findViewById(R.id.arrow_l);
         pickupAns = view.findViewById(R.id.pickup_ans);
         priceAns = view.findViewById(R.id.price_ans);
         cityAns = view.findViewById(R.id.city_ans);
@@ -72,7 +66,7 @@ public class TripOverviewFragment extends Fragment {
         numPeepAns = view.findViewById(R.id.num_peeps_ans);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabaseItinerary = FirebaseDatabase.getInstance().getReference().child("itinerary");
-        create = (Button) view.findViewById(R.id.create);
+        btPrev = view.findViewById(R.id.btPrev);
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +95,12 @@ public class TripOverviewFragment extends Fragment {
             }
         });
 
+        btPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentChangeInterface.onButtonClicked(v);
+            }
+        });
 
         mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

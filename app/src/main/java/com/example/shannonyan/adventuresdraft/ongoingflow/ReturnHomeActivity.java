@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
+import com.example.shannonyan.adventuresdraft.createflow.MultEventSelector;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,7 +55,7 @@ public class ReturnHomeActivity extends AppCompatActivity {
                 status = dataSnapshot.getValue(String.class);
                 if (status != null) {
                     if (status.equals("completed")) {
-                        Intent i = new Intent(ReturnHomeActivity.this, CreateFlowActivity.class);
+                        Intent i = new Intent(ReturnHomeActivity.this, MultEventSelector.class);
                         i.putExtra(Database.RIDE_ID, rideId);
                         mDatabase.removeEventListener(this);
                         startActivity(i);
