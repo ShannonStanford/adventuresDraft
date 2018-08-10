@@ -34,11 +34,11 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     public SupportPlaceAutocompleteFragment placeAutoComplete;
 
     private GoogleMap mMap;
-    private DatabaseReference mDatabase;
     private String cityInterest;
     private EditText etPrice;
     private NumberPicker numPicker;
     private FragmentChangeInterface fragmentChangeInterface;
+    private DatabaseReference mDatabase;
     private Button btNext;
     private boolean num = false;
     private boolean pickCity = false;
@@ -78,10 +78,9 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS);
         setUpNumPicker();
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -161,8 +160,8 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     }
 
     public void setUpPlacesFrag(){
-        final String HINT = "Pick your City of Interest";
-        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.background_material_light));
+        final String HINT = "City of Interest";
+        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.trans_white));
         placeAutoComplete.setHint(HINT);
     }
 
@@ -177,7 +176,9 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         markerOptions.title((String)p.getName());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mMap.addMarker(markerOptions);
+        mMap.setPadding(0, 0, 0, 0);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
+        mMap.setPadding(0, 50, 0, 0);
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
     }
 }

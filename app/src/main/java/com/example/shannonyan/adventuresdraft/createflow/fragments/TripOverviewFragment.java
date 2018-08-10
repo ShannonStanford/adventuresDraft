@@ -111,9 +111,6 @@ public class TripOverviewFragment extends Fragment {
         mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cityAns.setText(dataSnapshot.child(Database.CITY_OF_INTEREST).getValue(String.class));
-                priceAns.setText("$" + dataSnapshot.child(Database.PRICECAP).getValue(String.class));
-                pickupAns.setText(dataSnapshot.child(Database.PICKUP).getValue(String.class));
                 numPeepAns.setText(String.valueOf(dataSnapshot.child(Database.NUM_PEEPS).getValue(Integer.class)));
             }
 
@@ -122,6 +119,7 @@ public class TripOverviewFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
@@ -138,7 +136,11 @@ public class TripOverviewFragment extends Fragment {
                 cityAns.setText(dataSnapshot.child(Database.CITY_OF_INTEREST).getValue(String.class));
                 priceAns.setText(dataSnapshot.child(Database.PRICECAP).getValue(String.class));
                 pickupAns.setText(dataSnapshot.child(Database.PICKUP).getValue(String.class));
+                numPeepAns.setText(String.valueOf(dataSnapshot.child(Database.NUM_PEEPS).getValue(Integer.class)));
+
             }
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

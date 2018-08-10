@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +31,9 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     public SupportPlaceAutocompleteFragment placeAutoComplete;
 
     private GoogleMap mMap;
-    private DatabaseReference mDatabase;
     private double startLat;
     private double startLong;
+    private DatabaseReference mDatabase;
     private Button btPrev;
     private Button btNext;
     private FragmentChangeInterface fragmentChangeInterface;
@@ -57,6 +56,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         final double HARD_LNG = -122.152279;
 
         mMap = googleMap;
+//        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.greyscale));
         mMap.setMinZoomPreference(ZOOM_PREF);
         LatLng ny = new LatLng(HARD_LAT, HARD_LNG);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
@@ -73,24 +73,25 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_pick_up, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         btNext = view.findViewById(R.id.btNext);
         btPrev = view.findViewById(R.id.btPrev);
         btNext.setEnabled(false);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(com.example.shannonyan.adventuresdraft.constants.Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
+        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.trans_white));
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 addMarker(place);
                 startLat = place.getLatLng().latitude;
                 startLong = place.getLatLng().longitude;
-                mDatabase.child(Database.PICKUP).setValue(place.getName());
+                mDatabase.child(com.example.shannonyan.adventuresdraft.constants.Database.PICKUP).setValue(place.getName());
                 mDatabase.child(Database.START_LOC).child(Database.LAT).setValue(startLat);
                 mDatabase.child(Database.START_LOC).child(Database.LONG).setValue(startLong);
-                btNext.setEnabled(true);
-                btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.next2, null));
+                mDatabase.child(Database.HOME_LOC).child(Database.LAT).setValue(startLat);
+                mDatabase.child(Database.HOME_LOC).child(Database.LONG).setValue(startLong);
+
             }
 
             @Override
@@ -122,7 +123,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void setUpPlacesAutoComp() {
-        final String HINT = "Set your pick up location";
+        final String HINT = "Pick up location";
         placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.background_material_light));
         placeAutoComplete.setHint(HINT);
     }

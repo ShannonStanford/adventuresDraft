@@ -53,10 +53,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         if(allEvents.get(i).equals(Database.EVENT_TYPE_NORM)){
-            viewHolder.itemImage.setImageResource(R.drawable.spaceship_dark);
+            viewHolder.itemImage.setImageResource(R.drawable.sunset);
             viewHolder.itemTitle.setText(Database.CARD_TITLE_EVENT_NORM);
         }else{
-            viewHolder.itemImage.setImageResource(R.drawable.fork);
+            viewHolder.itemImage.setImageResource(R.drawable.menu);
             viewHolder.itemTitle.setText(Database.CARD_TITLE_EVENT_FOOD);
         }
     }

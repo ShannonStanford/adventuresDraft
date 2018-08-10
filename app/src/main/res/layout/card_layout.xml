@@ -6,14 +6,14 @@
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
     android:clickable="true"
-    card_view:cardBackgroundColor="@color/background_material_light_2"
     card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="3dp"
-    card_view:contentPadding="4dp">
+    card_view:contentPadding="4dp"
+    card_view:cardBackgroundColor="#4DFFFFFF"
+    card_view:cardElevation="0dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="117dp"
         android:padding="16dp">
 
         <ImageView
@@ -30,6 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="17dp"
+            android:fontFamily="@font/lemon"
             android:text="SURPRISE EVENT"
             android:textSize="23sp" />
 

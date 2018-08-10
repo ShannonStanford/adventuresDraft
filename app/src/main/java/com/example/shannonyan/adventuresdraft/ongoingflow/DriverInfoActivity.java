@@ -82,6 +82,7 @@ public class DriverInfoActivity extends AppCompatActivity {
         btDriverMap = (Button) findViewById(R.id.btDriverMap);
         btCallDriver = (Button) findViewById(R.id.btCallDriver);
         btCancel = (Button) findViewById(R.id.btCancel);
+        ivCar = (ImageView) findViewById(R.id.ivCar);
         rideText = (TextView) findViewById(R.id.rideText);
         ivCar = (ImageView) findViewById(R.id.ivCar);
 
@@ -133,18 +134,18 @@ public class DriverInfoActivity extends AppCompatActivity {
                         if (returnTrip.equals("true")) {
                             Intent i = new Intent(DriverInfoActivity.this, ReturnHomeActivity.class);
                             i.putExtra(Database.RIDE_ID, rideId);
-                            mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                            mDatabase.removeEventListener(this);
                             startActivity(i);
                         }
                         else {
                             Intent i = new Intent(DriverInfoActivity.this, com.example.shannonyan.adventuresdraft.ongoingflow.RideInProgressActivity.class);
-                            mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                            mDatabase.removeEventListener(this);
                             startActivity(i);
                         }
                     }
                     else if (status.equals(Database.DRIVER_CANCEL) || status.equals(Database.RIDER_CANCEL)) {
                         driverCancelDialog();
-                        mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                        mDatabase.removeEventListener(this);
                     }
                 }
             }
