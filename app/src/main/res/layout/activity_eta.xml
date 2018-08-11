@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bluegrad"
+    android:background="@drawable/pinkgradient"
     tools:context=".ongoingflow.DriverInfoActivity">
 
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        android:layout_width="353dp"
+        android:layout_width="321dp"
         android:layout_height="399dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="28dp"
         android:clickable="true"
         card_view:cardBackgroundColor="#4DFFFFFF"
         card_view:cardCornerRadius="12dp"
@@ -23,7 +23,7 @@
         card_view:contentPadding="4dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="311dp"
             android:layout_height="625dp"
             android:padding="16dp">
 
@@ -51,8 +51,9 @@
                 android:id="@+id/driverrating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/tvDriverName"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/tvDriverName"
+                android:layout_marginEnd="54dp"
                 android:text="TextView"
                 android:textColor="@android:color/background_light"
                 android:textSize="18dp" />
@@ -61,9 +62,8 @@
                 android:id="@+id/tvCarMake"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tvDriverName"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="96dp"
+                android:layout_alignTop="@+id/tvCarModel"
+                android:layout_toStartOf="@+id/tvCarModel"
                 android:text="Toyota"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
@@ -72,7 +72,10 @@
                 android:id="@+id/tvCarModel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="306dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="49dp"
+                android:layout_marginTop="249dp"
                 android:text=" Corolla"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
@@ -81,7 +84,8 @@
                 android:id="@+id/tvCarLicense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="338dp"
+                android:layout_alignEnd="@+id/tvDriverName"
+                android:layout_below="@+id/tvCarMake"
                 android:text="License#"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
@@ -91,9 +95,8 @@
                 android:id="@+id/ivCar"
                 android:layout_width="133dp"
                 android:layout_height="154dp"
-                android:layout_alignEnd="@+id/ivDriverPic"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="213dp"
+                android:layout_alignStart="@+id/ivDriverPic"
+                android:layout_centerVertical="true"
                 app:srcCompat="@drawable/img" />
 
             <TextView
@@ -113,7 +116,7 @@
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        android:layout_width="352dp"
+        android:layout_width="323dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -125,7 +128,7 @@
         card_view:contentPadding="4dp">
 
         <RelativeLayout
-            android:layout_width="340dp"
+            android:layout_width="290dp"
             android:layout_height="117dp"
             android:padding="16dp">
 
