@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="Create_Flow.Fragment.CreateThirdFragment"
-    android:background="@drawable/mapgrad">
+    android:background="#FFFFFF">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -42,7 +42,7 @@
                 android:fontFamily="@font/cavdramsbold"
                 android:text="Overview"
                 android:textAlignment="center"
-                android:textColor="@color/cardview_light_background"
+                android:textColor="@color/Light_Blue"
                 android:textSize="28sp" />
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_marginStart="104dp"
                 android:fontFamily="@font/cavdramsbold"
                 android:text="Pickup Ans"
-                android:textColor="@android:color/background_light"
+                android:textColor="@color/Light_Blue"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                 android:layout_marginTop="170dp"
                 android:fontFamily="@font/cavdramsbold"
                 android:text="City Ans"
-                android:textColor="@android:color/background_light"
+                android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -129,7 +129,7 @@
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/cavdramsbold"
                 android:text="numPeepsAns"
-                android:textColor="@android:color/background_light"
+                android:textColor="@color/Light_Blue"
                 android:textSize="18sp" />
 
             <TextView
@@ -151,7 +151,7 @@
                 android:layout_alignTop="@+id/dollar"
                 android:fontFamily="@font/cavdramsbold"
                 android:text="Price Ans"
-                android:textColor="@color/cardview_light_background"
+                android:textColor="@color/Light_Blue"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -180,7 +180,7 @@
         android:elevation="15dp"
         android:fontFamily="@font/lemon"
         android:text="Create"
-        android:textColor="@android:color/black"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <Button

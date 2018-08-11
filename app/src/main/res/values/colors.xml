@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#e7924d</color>
+    <color name="colorPrimary">#bd3e71</color>
     <color name="colorPrimaryDark">#e7924d</color>
     <color name="colorAccent">#ff8540</color>
     <color name="place_autocomplete_search_text">#2B2D42</color>
