@@ -43,6 +43,7 @@ public class EventInfoActivity extends AppCompatActivity {
     public StorageReference storageRef;
     public FirebaseStorage storage;
     public Context context;
+    public Button btHome;
     public int itinerarySize;
 
     @Override
@@ -61,6 +62,7 @@ public class EventInfoActivity extends AppCompatActivity {
         tvEventName = findViewById(R.id.tvLocationName);
         eventRating = findViewById(R.id.locationRating);
         continueButton = findViewById(R.id.continueAdventure);
+        btHome = findViewById(R.id.btHome);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.EVENT);
         mDatabaseItinerary = FirebaseDatabase.getInstance().getReference().child(Database.ITINERARY_ARRAY_NAME);
         storage = FirebaseStorage.getInstance();
@@ -95,6 +97,15 @@ public class EventInfoActivity extends AppCompatActivity {
 
                     }
                 });
+            }
+        });
+
+        btHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
+                intent.putExtra(Database.RETURN_TRIP, "true");
+                startActivity(intent);
             }
         });
     }
