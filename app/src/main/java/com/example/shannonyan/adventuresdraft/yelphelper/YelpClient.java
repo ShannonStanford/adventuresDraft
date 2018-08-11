@@ -45,23 +45,30 @@ public final class YelpClient {
     private ArrayList<String> food;
     private UberClient uberClient;
     private RidesService service;
-    private float startLat;
-    private float startLong;
-    private Float numPeeps;
+    private double startLat;
+    private double startLong;
+    private double homeLat;
+    private double homeLong;
+    private float numPeeps;
     private String totalCap;
     private int highEstimate;
+    private int homeEstimate;
     private Context contextActivity;
+    private float numEvents;
+    private int rangeAvg;
+    private boolean lastEvent;
     private double oldEndLat;
     private double oldEndLon;
 
     public boolean found = false;
     public String city;
 
-    private YelpClient(Context context, final String eventType, boolean first){
+    private YelpClient(Context context, final String eventType, boolean first, boolean last){
         contextActivity = context;
         uberClient = UberClient.getUberClientInstance(context);
         service = uberClient.service;
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        lastEvent = last;
         Create(eventType,first);
     }
 
@@ -70,10 +77,13 @@ public final class YelpClient {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                numEvents = dataSnapshot.child(Database.EVENT_COUNT).getValue(float.class);
                 food = (ArrayList<String>) dataSnapshot.child(Database.USER).child(Database.TEST_USER).child(Database.FOOD_PREF).getValue();
                 numPeeps = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.NUM_PEEPS).getValue(float.class);
-                startLat = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LAT).getValue(long.class);
-                startLong = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LONG).getValue(long.class);
+                startLat = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LAT).getValue(double.class);
+                startLong = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LONG).getValue(double.class);
+                homeLat = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.HOME_LOC).child(Database.LAT).getValue(double.class);
+                homeLong = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.HOME_LOC).child(Database.LONG).getValue(double.class);
                 city = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.CITY_OF_INTEREST).getValue(String.class);
                 totalCap = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.PRICECAP).getValue(String.class);
                 if(!first) {
@@ -95,30 +105,18 @@ public final class YelpClient {
         });
     }
 
-    //TODO: optimize 3 pricing algorithms below
-    public int determineUberCap(int priceCap){
-        return priceCap/ Api.UBER_DIVID;
-    }
-    public float determineFoodCap(int priceCap){
-        return priceCap/(Api.FOOD_CAP_DIVID * numPeeps);
-    }
+    // determine the priceCap for the events
     public float determineEventCap(int priceCap){
-        return priceCap/(Api.FOOD_CAP_DIVID * numPeeps);
+        return priceCap/(numEvents * numPeeps);
     }
 
     public void CreateEvent(StringBuilder foodPar, String eventType) {
+        // determine/set priceCap vars required for algorithm
+        final int priceCap = Integer.parseInt(String.valueOf(totalCap));
+        // price cap is the same for food/normal event
+        final float priceChunk = determineEventCap(priceCap);
+        priceRange = PriceRange(priceChunk);
         found = false;
-        //determine/set priceCap vars required for algorithm
-        int priceCap = Integer.parseInt(String.valueOf(totalCap));
-        final int uberCap = determineUberCap(priceCap);
-
-        if(eventType.equals(Database.EVENT_TYPE_NORM)){
-            float eventCap = determineEventCap(priceCap);
-            priceRange = PriceRange(eventCap);
-        }else{
-            float foodCap = determineFoodCap(priceCap);
-            priceRange = PriceRange(foodCap);
-        }
 
         OkHttpClient client = new OkHttpClient();
         try {
@@ -160,6 +158,14 @@ public final class YelpClient {
                             JSONObject item = results.getJSONObject(n);
                             double endLat = item.getJSONObject(Database.COORDINATES).getDouble(Database.LATITUDE);
                             double endLon = item.getJSONObject(Database.COORDINATES).getDouble(Database.LONGITUDE);
+                            if (lastEvent) {
+                                List<PriceEstimate> homePriceEstimate = service.getPriceEstimates((float) endLat, (float) endLon, (float) homeLat, (float) homeLong).execute().body().getPrices();
+                                for (int i = 0; i < homePriceEstimate.size(); i++) {
+                                    if (homePriceEstimate.get(i).getDisplayName().equals(Database.UBERX)) {
+                                        homeEstimate = homePriceEstimate.get(i).getHighEstimate();
+                                    }
+                                }
+                            }
                             PriceEstimatesResponse response2 = service.getPriceEstimates((float) startLat, (float) startLong, (float) endLat, (float) endLon).execute().body();
                             List<PriceEstimate> priceEstimates = response2.getPrices();
                             highEstimate = -1;
@@ -168,7 +174,13 @@ public final class YelpClient {
                                     highEstimate = priceEstimates.get(i).getHighEstimate();
                                 }
                             }
-                            if (highEstimate <= uberCap) {
+                            int upperCap = -1;
+                            if (lastEvent) {
+                                upperCap = highEstimate + rangeAvg + homeEstimate;
+                            }
+                            else upperCap = highEstimate + rangeAvg;
+
+                            if (upperCap <= priceChunk) {
                                 found = true;
                                 if(firstEvent){
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).setValue(endLat);
@@ -192,6 +204,7 @@ public final class YelpClient {
                             e.printStackTrace();
                         }
                     }
+                    found = false;
                 }
             });
         }
@@ -205,7 +218,7 @@ public final class YelpClient {
             Random ran = new Random();
             int ranN = ran.nextInt(Api.YELP_LIMIT);
             URIBuilder builder = new URIBuilder(Api.SEARCH_API_URL);
-            builder.addParameter(Api.TERM, "Active Life");
+            builder.addParameter(Api.TERM, "Active Life,Arts & Entertainment,Arcades,Beer Garden,Local Flavor");
             builder.addParameter(Api.LOCATION, String.valueOf(city));
             builder.addParameter(Api.LIMIT, String.valueOf(Api.YELP_LIMIT));
             builder.addParameter(Api.OFFSET, "0");
@@ -228,19 +241,31 @@ public final class YelpClient {
     }
 
     public String PriceRange(float foodCap) {
-        if (foodCap <= Api.PRICE_RANGE_1H)
+        if (foodCap <= Api.PRICE_RANGE_1H) {
+            rangeAvg = Api.RANGE1_AVG;
             return Api.PRICE_TIER_1;
-        else if (foodCap >= Api.PRICE_RANGE_2L && foodCap <= Api.PRICE_RANGE_2H)
+        }
+        else if (foodCap >= Api.PRICE_RANGE_2L && foodCap <= Api.PRICE_RANGE_2H) {
+            rangeAvg = Api.RANGE1_AVG;
+            return Api.PRICE_TIER_1;
+        }
+        else if(foodCap >= Api.PRICE_RANGE_3L && foodCap <= Api.PRICE_RANGE_3H) {
+            rangeAvg = Api.RANGE2_AVG;
             return Api.PRICE_TIER_2;
-        else if(foodCap >= Api.PRICE_RANGE_3L && foodCap <= Api.PRICE_RANGE_3H)
+        }
+        else if(foodCap >= Api.PRICE_RANGE_3H && foodCap <= Api.PRICE_RANGE_4) {
+            rangeAvg = Api.RANGE3_AVG;
             return Api.PRICE_TIER_3;
-        else
+        }
+        else {
+            rangeAvg = Api.RANGE4_AVG;
             return Api.PRICE_TIER_4;
+        }
     }
 
-    public static YelpClient getYelpClientInstance(Context context, String eventType, boolean first){
+    public static YelpClient getYelpClientInstance(Context context, String eventType, boolean first, boolean last){
         if(null == yelpClientInstance){
-            yelpClientInstance = new YelpClient(context, eventType, first);
+            yelpClientInstance = new YelpClient(context, eventType, first, last);
         }
         return yelpClientInstance;
     }

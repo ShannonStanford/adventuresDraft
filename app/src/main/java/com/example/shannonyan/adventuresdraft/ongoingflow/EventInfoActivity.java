@@ -43,6 +43,8 @@ public class EventInfoActivity extends AppCompatActivity {
     public StorageReference storageRef;
     public FirebaseStorage storage;
     public Context context;
+    public Button btHome;
+    public int itinerarySize;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -60,6 +62,7 @@ public class EventInfoActivity extends AppCompatActivity {
         tvEventName = findViewById(R.id.tvLocationName);
         eventRating = findViewById(R.id.locationRating);
         continueButton = findViewById(R.id.continueAdventure);
+        btHome = findViewById(R.id.btHome);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.EVENT);
         mDatabaseItinerary = FirebaseDatabase.getInstance().getReference().child(Database.ITINERARY_ARRAY_NAME);
         storage = FirebaseStorage.getInstance();
@@ -76,7 +79,8 @@ public class EventInfoActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         itinerary = (ArrayList<String>) dataSnapshot.getValue();
-                        if (itinerary != null) {
+                        if(itinerary != null){
+                            itinerarySize = itinerary.size();
                             createNextEvent(itinerary.get(0));
                             itinerary.remove(0);
                             mDatabaseItinerary.setValue(itinerary);
@@ -93,6 +97,15 @@ public class EventInfoActivity extends AppCompatActivity {
                         Log.d("DATABASE", "Value event listener request cancelled.");
                     }
                 });
+            }
+        });
+
+        btHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
+                intent.putExtra(Database.RETURN_TRIP, "true");
+                startActivity(intent);
             }
         });
     }
@@ -122,13 +135,15 @@ public class EventInfoActivity extends AppCompatActivity {
 
     //decides on whether to create restaurant or non-restaurant event
     public void createNextEvent(String eventType){
+        boolean last = false;
+        if (itinerarySize == 1) last = true;
         if(eventType.equals(Database.EVENT_TYPE_NORM)){
-            yelpClient = YelpClient.getYelpClientInstance(EventInfoActivity.this, Database.EVENT_TYPE_NORM, false);
+            yelpClient = YelpClient.getYelpClientInstance(EventInfoActivity.this, Database.EVENT_TYPE_NORM, false, last);
             yelpClient.Create(Database.EVENT_TYPE_NORM, false);
             Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
             startActivity(intent);
         }else{
-            yelpClient = YelpClient.getYelpClientInstance(EventInfoActivity.this, Database.EVENT_TYPE_FOOD, false);
+            yelpClient = YelpClient.getYelpClientInstance(EventInfoActivity.this, Database.EVENT_TYPE_FOOD, false, last);
             yelpClient.Create(Database.EVENT_TYPE_FOOD, false);
             Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
             startActivity(intent);

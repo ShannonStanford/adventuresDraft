@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +79,6 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         btPrev = view.findViewById(R.id.btPrev);
         btNext.setEnabled(false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(com.example.shannonyan.adventuresdraft.constants.Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
-
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
 
@@ -101,6 +101,8 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
                 mDatabase.child(Database.START_LOC).child(Database.LONG).setValue(startLong);
                 mDatabase.child(Database.HOME_LOC).child(Database.LAT).setValue(startLat);
                 mDatabase.child(Database.HOME_LOC).child(Database.LONG).setValue(startLong);
+                btNext.setEnabled(true);
+                btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.next2, null));
             }
 
             @Override

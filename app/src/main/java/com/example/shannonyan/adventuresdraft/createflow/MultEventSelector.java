@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
@@ -42,13 +43,22 @@ public class MultEventSelector extends AppCompatActivity {
         event = (FloatingActionButton) findViewById(R.id.fabEvent);
 
         recyclerView.setAdapter(adapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback((ItemTouchHelperAdapter) adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
+
         updateItinerary(allEvents);
 
-        done.setOnClickListener(new View.OnClickListener() {
+        done.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MultEventSelector.this, CreateFlowActivity.class);
-                startActivity(i);
+                if(allEvents.size() == 0) {
+
+                } else {
+                    Intent i = new Intent(MultEventSelector.this, CreateFlowActivity.class);
+                    startActivity(i);
+                }
+
             }
         });
 

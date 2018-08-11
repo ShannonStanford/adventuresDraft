@@ -24,9 +24,12 @@ public final class Api {
     public static final int PRICE_RANGE_2H = 30;
     public static final int PRICE_RANGE_3L = 31;
     public static final int PRICE_RANGE_3H = 60;
-    public static final int UBER_DIVID = 4;
-    public static final int FOOD_CAP_DIVID = 2;
-    public static final int YELP_LIMIT =50;
+    public static final int PRICE_RANGE_4 = 90;
+    public static final int RANGE1_AVG = 10;
+    public static final int RANGE2_AVG = 21;
+    public static final int RANGE3_AVG = 46;
+    public static final int RANGE4_AVG = 60;
+    public static final int YELP_LIMIT = 50;
     public static final String MAP_LINK = "https://sandbox-api.uber.com/v1/sandbox/map";
     public final static String YELP_KEY= "Bearer q0zcjpMA9Yfk8Ek0RQcmKX1dyfT-erS7RBpHeaizy0z5OirjaGHO1NThswb9Mi8EXyekovS1HUA4UGsGVUpZ0OS0onBLR2xIzy2ur7XtIIPspOXuXpZyy39YKahQW3Yx";
     public final static String SEARCH_API_URL = "https://api.yelp.com/v3/businesses/search";

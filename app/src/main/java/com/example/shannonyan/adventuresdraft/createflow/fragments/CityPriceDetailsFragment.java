@@ -38,6 +38,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     private String cityInterest;
     private EditText etPrice;
     private NumberPicker numPicker;
+    private Button hackN;
     private FragmentChangeInterface fragmentChangeInterface;
     private DatabaseReference mDatabase;
     private Button btNext;
@@ -101,7 +102,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("here", "clicked");
+                Log.v("here", "clicked");
                 fragmentChangeInterface.onButtonClicked(v);
             }
         });

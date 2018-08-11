@@ -9,24 +9,10 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapViewStart"
         android:layout_width="match_parent"
-        android:layout_height="521dp"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="46dp" />
-
-    <TextView
-        android:id="@+id/tvStart"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
-        android:fontFamily="@font/lemon"
-        android:text="MEET HERE"
-        android:textAlignment="center"
-        android:textColor="?android:attr/detailsElementBackground"
-        android:textSize="30sp" />
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:id="@+id/btLaunch"
