@@ -94,7 +94,7 @@ public class EventInfoActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Log.d("DATABASE", "Value event listener request cancelled.");
                     }
                 });
             }
@@ -128,7 +128,7 @@ public class EventInfoActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.d("DATABASE", "Value event listener request cancelled.");
             }
         });
     }

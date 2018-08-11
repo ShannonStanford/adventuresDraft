@@ -91,7 +91,6 @@ public class CreateFlowActivity extends AppCompatActivity implements FragmentCha
                 //handle currPos is zero
                 pager.setCurrentItem(currPos - 1);
                 break;
-
             case R.id.btNext:
                 //handle currPos is reached last item
                 pager.setCurrentItem(currPos + 1);

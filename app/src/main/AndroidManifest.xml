@@ -80,6 +80,7 @@
         <activity
             android:name=".profileflow.ProfileActivity"
             android:screenOrientation="portrait" />
+
         <activity android:name=".createflow.CreateFlowActivity"
             android:screenOrientation="portrait"></activity>
     </application>

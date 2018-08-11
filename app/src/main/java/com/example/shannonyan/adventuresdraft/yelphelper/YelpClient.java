@@ -3,7 +3,10 @@ package com.example.shannonyan.adventuresdraft.yelphelper;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.view.ActionProvider;
+import android.view.ContextMenu;
 
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
@@ -190,7 +193,6 @@ public final class YelpClient {
                                 }else {
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LAT).setValue(oldEndLat);
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LONG).setValue(oldEndLon);
-                                    mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).setValue(endLat);
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).setValue(endLat);
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LONG).setValue(endLon);
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.EVENT).child(Database.DOWNLOAD_URL).setValue(item.get(Database.IMAGE_URL));

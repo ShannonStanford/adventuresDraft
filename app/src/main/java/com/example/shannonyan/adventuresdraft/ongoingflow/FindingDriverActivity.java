@@ -67,7 +67,6 @@ public class FindingDriverActivity extends AppCompatActivity {
             }
         }
         else {
-            //populate location variables
             setStartEnd();
             returnTrip = "false";
         }
@@ -120,6 +119,7 @@ public class FindingDriverActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ProductsResponse> call, Throwable t) {
                 //Network Failure
+                Log.d("FindingDriverActivity", "network failure");
             }
         });
     }
@@ -235,8 +235,8 @@ public class FindingDriverActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 startLat = (float) dataSnapshot.child(Database.END_LOC).child(Database.LAT).getValue(float.class);
                 startLong = (float) dataSnapshot.child(Database.END_LOC).child(Database.LONG).getValue(float.class);
-                endLat = (float) dataSnapshot.child(Database.START_LOC).child(Database.LAT).getValue(float.class);
-                endLong = (float) dataSnapshot.child(Database.START_LOC).child(Database.LONG).getValue(float.class);
+                endLat = (float) dataSnapshot.child(Database.HOME_LOC).child(Database.LAT).getValue(float.class);
+                endLong = (float) dataSnapshot.child(Database.HOME_LOC).child(Database.LONG).getValue(float.class);
                 findDriver();
             }
 

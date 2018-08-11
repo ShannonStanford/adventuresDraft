@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#bd3e71</color>
     <color name="colorPrimaryDark">#e7924d</color>
-    <color name="colorAccent">#ff8540</color>
+    <color name="colorAccent">#3ee136</color>
     <color name="place_autocomplete_search_text">#2B2D42</color>
     <color name="place_autocomplete_search_hint">@android:color/secondary_text_dark</color>
     <color name="green">#b3dd68</color>
@@ -28,4 +28,6 @@
     <color name="white">#FFFFFF</color>
     <color name="trans_blue">#B3ecf8fe</color>
     <color name="dark_blue">#19284f</color>
+    <color name="transparentColor">#00FFFFFF</color>
+    <color name="dividerWhite">#B3FFFFFF</color>
 </resources>

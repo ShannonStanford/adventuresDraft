@@ -16,6 +16,7 @@ import android.widget.NumberPicker;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
@@ -37,13 +38,13 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     private String cityInterest;
     private EditText etPrice;
     private NumberPicker numPicker;
+    private Button hackN;
     private FragmentChangeInterface fragmentChangeInterface;
     private DatabaseReference mDatabase;
     private Button btNext;
     private boolean num = false;
     private boolean pickCity = false;
     private boolean maxPrice = false;
-
 
     @Override
     public void onAttach(Context context) {
@@ -80,9 +81,17 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         setUpNumPicker();
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
+
+        AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(Place.TYPE_COUNTRY)
+                .setCountry("US")
+                .build();
+
+        placeAutoComplete.setFilter(autocompleteFilter);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         setUpPlacesFrag();
@@ -93,7 +102,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("here", "clicked");
+                Log.v("here", "clicked");
                 fragmentChangeInterface.onButtonClicked(v);
             }
         });
