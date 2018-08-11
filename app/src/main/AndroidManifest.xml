@@ -35,7 +35,7 @@
             android:value="@string/google_maps_api_key" />
 
         <activity
-            android:name=".ongoingflow.DriverInfoActivity"
+            android:name=".createflow.MultEventSelector"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".createflow.MultEventSelector"
+            android:name=".ongoingflow.DriverInfoActivity"
             android:label="@string/title_activity_eta"
             android:screenOrientation="portrait"/>
         <activity
