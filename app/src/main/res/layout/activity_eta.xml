@@ -4,161 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pinkgradient"
+    android:background="@drawable/bluegrad"
     tools:context=".ongoingflow.DriverInfoActivity">
 
+    <ImageView
+        android:id="@+id/ivDriverPic"
+        android:layout_width="137dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="114dp"
+        android:layout_marginLeft="20dp"
+        app:srcCompat="@drawable/driver" />
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_width="321dp"
-        android:layout_height="399dp"
+    <TextView
+        android:id="@+id/tvDriverName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="180dp"
+        android:layout_marginTop="140dp"
+        android:text="Mark Zuckerberg"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/driverrating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:clickable="true"
-        card_view:cardBackgroundColor="#4DFFFFFF"
-        card_view:cardCornerRadius="12dp"
-        card_view:cardElevation="0dp"
-        card_view:contentPadding="4dp">
+        android:layout_alignStart="@+id/tvDriverName"
+        android:layout_marginTop="175dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_light"
+        android:textSize="18dp" />
 
-        <RelativeLayout
-            android:layout_width="311dp"
-            android:layout_height="625dp"
-            android:padding="16dp">
+    <TextView
+        android:id="@+id/tvCarMake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="306dp"
+        android:layout_marginLeft="180dp"
+        android:text="Toyota"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/ivDriverPic"
-                android:layout_width="137dp"
-                android:layout_height="130dp"
-                android:layout_marginTop="53dp"
-                app:srcCompat="@drawable/driver" />
+    <TextView
+        android:id="@+id/tvCarModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tvCarMake"
+        android:layout_marginTop="306dp"
+        android:text=" Corolla"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tvDriverName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="29dp"
-                android:layout_marginTop="104dp"
-                android:text="Mark Zuckerberg"
-                android:textAlignment="center"
-                android:textColor="@android:color/background_light"
-                android:textSize="18dp" />
+    <TextView
+        android:id="@+id/tvCarLicense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="License#"
+        android:layout_marginTop="338dp"
+        android:layout_alignStart="@id/tvCarMake"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/driverrating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/tvDriverName"
-                android:layout_marginEnd="54dp"
-                android:text="TextView"
-                android:textColor="@android:color/background_light"
-                android:textSize="18dp" />
-
-            <TextView
-                android:id="@+id/tvCarMake"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/tvCarModel"
-                android:layout_toStartOf="@+id/tvCarModel"
-                android:text="Toyota"
-                android:textColor="@android:color/background_light"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvCarModel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="49dp"
-                android:layout_marginTop="249dp"
-                android:text=" Corolla"
-                android:textColor="@android:color/background_light"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvCarLicense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/tvDriverName"
-                android:layout_below="@+id/tvCarMake"
-                android:text="License#"
-                android:textColor="@android:color/background_light"
-                android:textSize="18sp" />
-
-
-            <ImageView
-                android:id="@+id/ivCar"
-                android:layout_width="133dp"
-                android:layout_height="154dp"
-                android:layout_alignStart="@+id/ivDriverPic"
-                android:layout_centerVertical="true"
-                app:srcCompat="@drawable/img" />
-
-            <TextView
-                android:id="@+id/driverinfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:text="Driver Info"
-                android:textColor="@android:color/background_light"
-                android:textSize="22dp" />
-
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_width="323dp"
+    <TextView
+        android:id="@+id/tvEta"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="81dp"
-        android:clickable="true"
-        card_view:cardBackgroundColor="#4DFFFFFF"
-        card_view:cardCornerRadius="12dp"
-        card_view:cardElevation="0dp"
-        card_view:contentPadding="4dp">
-
-        <RelativeLayout
-            android:layout_width="290dp"
-            android:layout_height="117dp"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tvEta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="19dp"
-                android:text="5 min"
-                android:textAlignment="center"
-                android:textColor="@android:color/background_light"
-                android:textSize="36dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/rideText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/tvEta"
-                android:layout_centerHorizontal="true"
-                android:text="Your ride will be arriving in"
-                android:textColor="@android:color/background_light"
-                android:textSize="16dp" />
-
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
+        android:layout_marginBottom="102dp"
+        android:text="5 min"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="36dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btCallDriver"
@@ -186,5 +106,46 @@
         android:layout_alignTop="@+id/btCallDriver"
         android:layout_centerHorizontal="true"
         android:background="@drawable/mapicon" />
+
+    <ImageView
+        android:id="@+id/ivCar"
+        android:layout_width="138dp"
+        android:layout_height="118dp"
+        android:layout_alignStart="@id/ivDriverPic"
+        android:layout_marginTop="280dp"
+        android:layout_marginBottom="260dp"
+        app:srcCompat="@drawable/img" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="364dp"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="228dp"
+        android:backgroundTint="@color/dividerWhite"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/rideText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="169dp"
+        android:text="Your ride will be arriving in"
+        android:textColor="@android:color/background_light"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/driverinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"
+        android:text="Driver Info"
+        android:textColor="@android:color/background_light"
+        android:textSize="22dp" />
 
 </RelativeLayout>

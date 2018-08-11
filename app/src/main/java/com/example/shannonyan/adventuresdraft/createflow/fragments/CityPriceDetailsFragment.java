@@ -81,7 +81,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         setUpNumPicker();
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
