@@ -102,7 +102,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
                 mDatabase.child(Database.HOME_LOC).child(Database.LAT).setValue(startLat);
                 mDatabase.child(Database.HOME_LOC).child(Database.LONG).setValue(startLong);
                 btNext.setEnabled(true);
-                btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.next2, null));
+                btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.bluearrow, null));
             }
 
             @Override

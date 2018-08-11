@@ -52,7 +52,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/next2"
+        android:background="@drawable/bluearrow"
         android:rotation="180" />
 
     <Button
