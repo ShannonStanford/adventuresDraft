@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bluegrad"
     tools:context=".ongoingflow.DriverInfoActivity">
 
     <ImageView
@@ -23,7 +22,7 @@
         android:layout_marginTop="140dp"
         android:text="Mark Zuckerberg"
         android:textAlignment="center"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/black"
         android:textSize="18dp" />
 
     <TextView
@@ -34,7 +33,7 @@
         android:layout_alignStart="@+id/tvDriverName"
         android:layout_marginTop="175dp"
         android:text="TextView"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/black"
         android:textSize="18dp" />
 
     <TextView
@@ -44,7 +43,7 @@
         android:layout_marginTop="306dp"
         android:layout_marginLeft="180dp"
         android:text="Toyota"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/black"
         android:textSize="18sp" />
 
     <TextView
@@ -54,7 +53,7 @@
         android:layout_toEndOf="@id/tvCarMake"
         android:layout_marginTop="306dp"
         android:text=" Corolla"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/black"
         android:textSize="18sp" />
 
     <TextView
@@ -64,7 +63,7 @@
         android:text="License#"
         android:layout_marginTop="338dp"
         android:layout_alignStart="@id/tvCarMake"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/black"
         android:textSize="18sp" />
 
     <TextView
@@ -76,7 +75,7 @@
         android:layout_marginBottom="102dp"
         android:text="5 min"
         android:textAlignment="center"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/Light_Blue"
         android:textSize="36dp"
         android:textStyle="bold" />
 
@@ -110,20 +109,19 @@
     <ImageView
         android:id="@+id/ivCar"
         android:layout_width="138dp"
-        android:layout_height="118dp"
-        android:layout_alignStart="@id/ivDriverPic"
-        android:layout_marginTop="280dp"
-        android:layout_marginBottom="260dp"
+        android:layout_height="130dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/ivDriverPic"
+        android:layout_marginBottom="259dp"
         app:srcCompat="@drawable/img" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="364dp"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="228dp"
-        android:backgroundTint="@color/dividerWhite"
         android:background="?android:attr/listDivider" />
 
     <TextView
@@ -134,7 +132,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="169dp"
         android:text="Your ride will be arriving in"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/black"
         android:textSize="16dp" />
 
     <TextView
@@ -145,7 +143,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp"
         android:text="Driver Info"
-        android:textColor="@android:color/background_light"
-        android:textSize="22dp" />
+        android:textColor="@color/black"
+        android:textSize="28dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
