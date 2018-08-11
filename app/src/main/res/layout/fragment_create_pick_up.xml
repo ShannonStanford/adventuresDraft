@@ -45,8 +45,6 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-
-
     <Button
         android:id="@+id/btPrev"
         android:layout_width="48dp"

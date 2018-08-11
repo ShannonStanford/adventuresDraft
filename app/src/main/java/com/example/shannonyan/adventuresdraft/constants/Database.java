@@ -43,7 +43,7 @@ public final class Database {
     public static final String EVENT_TYPE_FOOD = "eventFood";
     public static final String ITINERARY_ARRAY_NAME = "itinerary";
     public static final String HOME_LOC = "homeLoc";
-
+    public static final String EVENT_COUNT = "eventCount";
     public static final String CARD_TITLE_EVENT_NORM = "Activity";
     public static final String CARD_TITLE_EVENT_FOOD = "Meal";
     public static final String LOADING_TITLE = "Creating Your Adventure!";

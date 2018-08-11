@@ -63,10 +63,11 @@ public class TripOverviewFragment extends Fragment {
         priceAns = view.findViewById(R.id.price_ans);
         cityAns = view.findViewById(R.id.city_ans);
         create = view.findViewById(R.id.create);
+        btPrev = view.findViewById(R.id.btPrev);
         numPeepAns = view.findViewById(R.id.num_peeps_ans);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabaseItinerary = FirebaseDatabase.getInstance().getReference().child("itinerary");
-        btPrev = view.findViewById(R.id.btPrev);
+        create = view.findViewById(R.id.create);
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +78,13 @@ public class TripOverviewFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         //store itinerary array from database into local var
                         itinerary = (ArrayList<String>) dataSnapshot.getValue();
+                        mDatabase.child("eventCount").setValue(itinerary.size());
                         if(itinerary != null){
-                            yelpClient = YelpClient.getYelpClientInstance(getContext(), itinerary.get(0), true);
+                            boolean last = false;
+                            if (itinerary.size() == 1) {
+                                last = true;
+                            }
+                            yelpClient = YelpClient.getYelpClientInstance(getContext(), itinerary.get(0), true, last);
                             itinerary.remove(0);
                             mDatabaseItinerary.setValue(itinerary);
                         }else{

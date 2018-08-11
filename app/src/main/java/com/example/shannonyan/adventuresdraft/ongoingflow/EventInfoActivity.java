@@ -43,6 +43,7 @@ public class EventInfoActivity extends AppCompatActivity {
     public StorageReference storageRef;
     public FirebaseStorage storage;
     public Context context;
+    public int itinerarySize;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -76,7 +77,8 @@ public class EventInfoActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         itinerary = (ArrayList<String>) dataSnapshot.getValue();
-                        if (itinerary != null) {
+                        if(itinerary != null){
+                            itinerarySize = itinerary.size();
                             createNextEvent(itinerary.get(0));
                             itinerary.remove(0);
                             mDatabaseItinerary.setValue(itinerary);
@@ -122,13 +124,15 @@ public class EventInfoActivity extends AppCompatActivity {
 
     //decides on whether to create restaurant or non-restaurant event
     public void createNextEvent(String eventType){
+        boolean last = false;
+        if (itinerarySize == 1) last = true;
         if(eventType.equals(Database.EVENT_TYPE_NORM)){
-            yelpClient = YelpClient.getYelpClientInstance(EventInfoActivity.this, Database.EVENT_TYPE_NORM, false);
+            yelpClient = YelpClient.getYelpClientInstance(EventInfoActivity.this, Database.EVENT_TYPE_NORM, false, last);
             yelpClient.Create(Database.EVENT_TYPE_NORM, false);
             Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
             startActivity(intent);
         }else{
-            yelpClient = YelpClient.getYelpClientInstance(EventInfoActivity.this, Database.EVENT_TYPE_FOOD, false);
+            yelpClient = YelpClient.getYelpClientInstance(EventInfoActivity.this, Database.EVENT_TYPE_FOOD, false, last);
             yelpClient.Create(Database.EVENT_TYPE_FOOD, false);
             Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
             startActivity(intent);
