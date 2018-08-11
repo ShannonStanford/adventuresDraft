@@ -24,33 +24,6 @@
         android:layout_alignTop="@+id/recycler_view"
         android:layout_centerHorizontal="true" />
 
-    <!--<Button-->
-        <!--android:id="@+id/addEventButton"-->
-        <!--android:layout_width="323dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_above="@+id/doneButton"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:onClick="addEventNorm"-->
-        <!--android:text="ADD EVENT" />-->
-
-    <!--<Button-->
-        <!--android:id="@+id/addFoodEventButton"-->
-        <!--android:layout_width="319dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_above="@+id/addEventButton"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:onClick="addEventFood"-->
-        <!--android:text="ADD FOOD" />-->
-
-    <!--<Button-->
-        <!--android:id="@+id/doneButton"-->
-        <!--android:layout_width="319dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:onClick="doneAdding"-->
-        <!--android:text="DONE" />-->
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="371dp"
