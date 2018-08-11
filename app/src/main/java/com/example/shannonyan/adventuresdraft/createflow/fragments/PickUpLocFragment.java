@@ -110,6 +110,7 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
                 fragmentChangeInterface.onButtonClicked(v);
             }
         });
+
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
