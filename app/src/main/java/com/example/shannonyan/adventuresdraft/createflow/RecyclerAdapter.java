@@ -1,6 +1,5 @@
 package com.example.shannonyan.adventuresdraft.createflow;
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements ItemTouchHelperAdapter{
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
     public  ArrayList<String> allEvents;
     public DatabaseReference mDatabase;
@@ -25,7 +24,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         allEvents = events;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder{
 
         public ImageView itemImage;
         public TextView itemTitle;
@@ -34,18 +33,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             itemImage = (ImageView)itemView.findViewById(R.id.item_image);
             itemTitle = (TextView)itemView.findViewById(R.id.item_title);
+        }
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener(){
+        @Override
+        public void onItemSelected() {
+            itemView.setScaleX((float)1.1);
+            itemView.setScaleY((float)1.1);
+        }
 
-                @Override
-                public boolean onLongClick(View v) {
-                    Snackbar.make(v, "Item Deleted",
-                            Snackbar.LENGTH_LONG)
-                            .setAction("UNDO", null).show();
-                    return false;
-                }
-            });
-
+        @Override
+        public void onItemClear() {
+            itemView.setScaleX((float)1);
+            itemView.setScaleY((float)1);
         }
     }
 
@@ -56,17 +55,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.ITINERARY_ARRAY_NAME);
 
-//        mDatabaseItinerary = FirebaseDatabase.getInstance().getReference().child("itinerary");
-//        mDatabaseItinerary.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                itinerary = (ArrayList<String>) dataSnapshot.getValue();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
         return viewHolder;
     }
 

@@ -156,7 +156,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     public void changeButton() {
         if (checkValuesFilled()) {
             btNext.setEnabled(true);
-            btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.next2, null));
+            btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.bluearrow, null));
         }
     }
 
