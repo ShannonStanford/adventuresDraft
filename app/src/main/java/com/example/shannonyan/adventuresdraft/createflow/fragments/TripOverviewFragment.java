@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,7 @@ public class TripOverviewFragment extends Fragment {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Log.d("DATABASE", "Value event listener request cancelled.");
                     }
                 });
             }
@@ -113,10 +114,9 @@ public class TripOverviewFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 numPeepAns.setText(String.valueOf(dataSnapshot.child(Database.NUM_PEEPS).getValue(Integer.class)));
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.d("DATABASE", "Value event listener request cancelled.");
             }
         });
 
