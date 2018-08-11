@@ -28,6 +28,8 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'org.parceler:parceler-api:1.1.6'
     implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
+    implementation 'com.github.arthurghazaryan:floatingactionmenu:1.0.0'
+    implementation 'com.github.clans:fab:1.6.4'
     annotationProcessor 'org.parceler:parceler:1.1.6'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

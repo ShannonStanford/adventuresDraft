@@ -29,10 +29,10 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
 
     private ViewPager viewPager;
     private profileViewAdapter adapter;
-    private DatabaseReference mDatabase;
     private TabLayout tabLayout;
     private ImageView ivProfile;
     private Button btBack;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         ivProfile = findViewById(R.id.ivProfilePic);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.USER).child(Database.TEST_USER);
         GlideApp.with(getBaseContext()).load(R.drawable.profile).into(ivProfile);
 
         adapter = new profileViewAdapter(getSupportFragmentManager());
@@ -55,8 +55,6 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
 
         btBack = findViewById(R.id.btBack);
         onBackButtonClick();
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.USER).child(Database.TEST_USER);
     }
 
     public void onBackButtonClick(){

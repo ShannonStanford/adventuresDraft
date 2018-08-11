@@ -67,7 +67,6 @@ public class FindingDriverActivity extends AppCompatActivity {
             }
         }
         else {
-            //populate location variables
             setStartEnd();
             returnTrip = "false";
         }

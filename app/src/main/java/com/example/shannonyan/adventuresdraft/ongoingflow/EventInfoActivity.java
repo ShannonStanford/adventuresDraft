@@ -72,20 +72,22 @@ public class EventInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mDatabaseItinerary.addListenerForSingleValueEvent(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //store itinerary array from database into local var
                         itinerary = (ArrayList<String>) dataSnapshot.getValue();
-                        if(itinerary != null){
+                        if (itinerary != null) {
                             createNextEvent(itinerary.get(0));
                             itinerary.remove(0);
                             mDatabaseItinerary.setValue(itinerary);
-                        }else{
+                            //DatabaseHelper.setItinerary(itinerary);
+                        } else {
                             Intent intent = new Intent(EventInfoActivity.this, FindingDriverActivity.class);
                             intent.putExtra(Database.RETURN_TRIP, "true");
                             startActivity(intent);
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.d("DATABASE", "Value event listener request cancelled.");

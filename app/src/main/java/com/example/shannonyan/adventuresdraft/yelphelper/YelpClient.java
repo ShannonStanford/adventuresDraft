@@ -3,10 +3,13 @@ package com.example.shannonyan.adventuresdraft.yelphelper;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.view.ActionProvider;
+import android.view.ContextMenu;
 
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,9 +45,9 @@ public final class YelpClient {
     private ArrayList<String> food;
     private UberClient uberClient;
     private RidesService service;
-    private double startLat;
-    private double startLong;
-    private float numPeeps;
+    private float startLat;
+    private float startLong;
+    private Float numPeeps;
     private String totalCap;
     private int highEstimate;
     private Context contextActivity;
@@ -73,7 +76,7 @@ public final class YelpClient {
                 startLong = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.START_LOC).child(Database.LONG).getValue(long.class);
                 city = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.CITY_OF_INTEREST).getValue(String.class);
                 totalCap = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.PRICECAP).getValue(String.class);
-                if(!first){
+                if(!first) {
                     oldEndLat = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).getValue(long.class);
                     oldEndLon = dataSnapshot.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LONG).getValue(long.class);
                 }

@@ -44,8 +44,8 @@ public final class Database {
     public static final String ITINERARY_ARRAY_NAME = "itinerary";
     public static final String HOME_LOC = "homeLoc";
 
-    public static final String CARD_TITLE_EVENT_NORM = "SURPRISE EVENT";
-    public static final String CARD_TITLE_EVENT_FOOD = "SURPRISE FOOD";
+    public static final String CARD_TITLE_EVENT_NORM = "Activity";
+    public static final String CARD_TITLE_EVENT_FOOD = "Meal";
     public static final String LOADING_TITLE = "Creating Your Adventure!";
     public static final String LOADING_MESSAGE = "Loading...";
     public static final String CANCEL_TITLE = "Cancel";

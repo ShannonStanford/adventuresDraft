@@ -1,14 +1,13 @@
 package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
@@ -40,14 +39,6 @@ public class RideInProgressActivity extends AppCompatActivity {
         service = uberClient.service;
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        TextView prepare = (TextView) findViewById(R.id.tvPrepare);
-        TextView your = (TextView) findViewById(R.id.tvYour);
-        TextView forTakeoff = (TextView) findViewById(R.id.tvPrepare2);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/round.otf");
-        prepare.setTypeface(typeface);
-        your.setTypeface(typeface);
-        forTakeoff.setTypeface(typeface);
-
         ivBackgroundFind = findViewById(R.id.ivBackgroundFind);
         Glide.with(getBaseContext())
                 .load(R.drawable.rocket_telescope)
@@ -64,6 +55,7 @@ public class RideInProgressActivity extends AppCompatActivity {
                     if (status.equals("completed")) {
                         Intent i = new Intent(RideInProgressActivity.this, EventInfoActivity.class);
                         i.putExtra(Database.RIDE_ID, rideID);
+                        mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
                         startActivity(i);
                     }
                 }

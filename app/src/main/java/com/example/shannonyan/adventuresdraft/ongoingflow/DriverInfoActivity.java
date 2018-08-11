@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
-import com.example.shannonyan.adventuresdraft.modules.GlideApp;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +38,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DriverInfoActivity extends AppCompatActivity {
 
-    private static final String CANCELLED = "Driver Cancelled, calling another Uber.";
     public RidesService service;
     public UberClient uberClient;
     public String rideId;
@@ -52,13 +49,13 @@ public class DriverInfoActivity extends AppCompatActivity {
     public TextView carModel;
     public TextView carLicense;
     public TextView driverRating;
+    public TextView rideText;
     public ImageView driverPic;
     public ImageView car;
     public Button btDriverMap;
     public Button btCallDriver;
     public Button btCancel;
     public Context context;
-    public String rideId2;
     public String returnTrip;
     public ImageView ivCar;
     public DatabaseReference mDatabase;
@@ -86,8 +83,8 @@ public class DriverInfoActivity extends AppCompatActivity {
         btCallDriver = (Button) findViewById(R.id.btCallDriver);
         btCancel = (Button) findViewById(R.id.btCancel);
         ivCar = (ImageView) findViewById(R.id.ivCar);
+        rideText = (TextView) findViewById(R.id.rideText);
 
-        //ivCar.setBackground(Drawable.createFromPath("@drawable/circle"));
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;
@@ -107,15 +104,14 @@ public class DriverInfoActivity extends AppCompatActivity {
                 carMake.setText(ride.getVehicle().getMake());
                 carLicense.setText(ride.getVehicle().getLicensePlate());
                 driverPhoneNumber = ride.getDriver().getPhoneNumber();
-                driverRating.setText(String.valueOf(ride.getDriver().getRating()));
+                driverRating.setText(String.valueOf(ride.getDriver().getRating())+" stars");
                 onMapButtonClick();
                 onCallButtonClick();
                 onCancelButtonClick();
                 com.example.shannonyan.adventuresdraft.modules.GlideApp.with(context)
                         .load(ride.getDriver().getPictureUrl()).circleCrop()
                         .into(driverPic);
-                GlideApp.with(context).load(ride.getVehicle().getPictureUrl()).into(ivCar);
-                tvEta.setText(String.valueOf(ride.getEta()));
+                tvEta.setText(String.valueOf(ride.getEta()) + " min");
             }
 
             @Override
@@ -130,24 +126,25 @@ public class DriverInfoActivity extends AppCompatActivity {
                 String status = dataSnapshot.getValue(String.class);
                 if (status != null) {
                     if (status.equals(Database.ARRIVE)) {
-                        tvEta.setText("Arriving");
+                        tvEta.setText("Your ride is arriving");
+                        rideText.setText("");
                     }
                     else if (status.equals(Database.PROGRESS)) {
                         if (returnTrip.equals("true")) {
                             Intent i = new Intent(DriverInfoActivity.this, ReturnHomeActivity.class);
                             i.putExtra(Database.RIDE_ID, rideId);
-                            mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                            mDatabase.removeEventListener(this);
                             startActivity(i);
                         }
                         else {
                             Intent i = new Intent(DriverInfoActivity.this, com.example.shannonyan.adventuresdraft.ongoingflow.RideInProgressActivity.class);
-                            mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                            mDatabase.removeEventListener(this);
                             startActivity(i);
                         }
                     }
                     else if (status.equals(Database.DRIVER_CANCEL) || status.equals(Database.RIDER_CANCEL)) {
                         driverCancelDialog();
-                        mDatabase.child(Database.status).child(Database.status).removeEventListener(this);
+                        mDatabase.removeEventListener(this);
                     }
                 }
             }

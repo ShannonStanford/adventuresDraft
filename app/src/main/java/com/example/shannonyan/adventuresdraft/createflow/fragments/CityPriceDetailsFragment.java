@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 
 import com.example.shannonyan.adventuresdraft.R;
@@ -34,23 +34,22 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     public SupportPlaceAutocompleteFragment placeAutoComplete;
 
     private GoogleMap mMap;
-    private DatabaseReference mDatabase;
     private String cityInterest;
     private EditText etPrice;
     private NumberPicker numPicker;
-    private ImageView arrow_r;
-    private OnButtonClickListener mOnButtonClickListener;
+    private FragmentChangeInterface fragmentChangeInterface;
+    private DatabaseReference mDatabase;
     private Button btNext;
+    private boolean num = false;
+    private boolean pickCity = false;
+    private boolean maxPrice = false;
 
-    public interface OnButtonClickListener{
-        void onButtonClicked(View view);
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mOnButtonClickListener = (OnButtonClickListener) context;
+            fragmentChangeInterface = (FragmentChangeInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(((Activity) context).getLocalClassName()
                     + " must implement OnButtonClickListener");
@@ -79,11 +78,9 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_second, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
-        arrow_r = (ImageView) view.findViewById(R.id.arrow_r);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         etPrice = view.findViewById(R.id.etPrice);
         numPicker = view.findViewById(R.id.num_picker);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS);
         setUpNumPicker();
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -91,20 +88,13 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         setUpPlacesFrag();
 
         btNext = view.findViewById(R.id.btNext);
+        btNext.setEnabled(false);
 
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("here", "clicked");
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
-        btNext.setEnabled(false);
-
-        arrow_r.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
+                fragmentChangeInterface.onButtonClicked(v);
             }
         });
 
@@ -114,6 +104,8 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
                 addMarker(place);
                 cityInterest = place.getAddress().toString();
                 mDatabase.child(Database.CITY_OF_INTEREST).setValue(cityInterest);
+                pickCity = true;
+                changeButton();
             }
 
             @Override
@@ -128,6 +120,8 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
                 if(!hasFocus){
                     String priceCap = etPrice.getText().toString();
                     mDatabase.child(Database.PRICECAP).setValue(priceCap);
+                    maxPrice = true;
+                    changeButton();
                 }
             }
         });
@@ -136,12 +130,25 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 mDatabase.child(Database.NUM_PEEPS).setValue(numPicker.getValue());
-                btNext.setEnabled(true);
+                num = true;
+                changeButton();
             }
         });
-
-
         return view;
+    }
+
+    public boolean checkValuesFilled() {
+        if (maxPrice && pickCity && num) {
+            return true;
+        }
+        return false;
+    }
+
+    public void changeButton() {
+        if (checkValuesFilled()) {
+            btNext.setEnabled(true);
+            btNext.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.next2, null));
+        }
     }
 
     public void setUpNumPicker(){
@@ -153,8 +160,8 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
     }
 
     public void setUpPlacesFrag(){
-        final String HINT = "Pick your City of Interest";
-        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.background_material_light));
+        final String HINT = "City of Interest";
+        placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.trans_white));
         placeAutoComplete.setHint(HINT);
     }
 
@@ -169,7 +176,9 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         markerOptions.title((String)p.getName());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mMap.addMarker(markerOptions);
+        mMap.setPadding(0, 0, 0, 0);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
+        mMap.setPadding(0, 50, 0, 0);
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
     }
 }
