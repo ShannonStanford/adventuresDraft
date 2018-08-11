@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
@@ -77,8 +78,17 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         btPrev = view.findViewById(R.id.btPrev);
         btNext.setEnabled(false);
         mDatabase = FirebaseDatabase.getInstance().getReference().child(com.example.shannonyan.adventuresdraft.constants.Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
+
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete_one);
         setUpPlacesAutoComp();
+
+        AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(Place.TYPE_COUNTRY)
+                .setCountry("US")
+                .build();
+
+        placeAutoComplete.setFilter(autocompleteFilter);
+
         placeAutoComplete.getView().setBackgroundColor(getResources().getColor(R.color.trans_white));
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
