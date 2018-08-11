@@ -10,16 +10,16 @@
         android:id="@+id/ivDriverPic"
         android:layout_width="137dp"
         android:layout_height="130dp"
-        android:layout_marginTop="114dp"
-        android:layout_marginLeft="20dp"
-        app:srcCompat="@drawable/driver" />
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="30dp"
+        app:srcCompat="@drawable/img2" />
 
     <TextView
         android:id="@+id/tvDriverName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="180dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="100dp"
         android:text="Mark Zuckerberg"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -29,10 +29,10 @@
         android:id="@+id/driverrating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/tvDriverName"
-        android:layout_marginTop="175dp"
-        android:text="TextView"
+        android:layout_below="@id/tvDriverName"
+        android:layout_marginTop="15dp"
+        android:text="Rating"
         android:textColor="@color/black"
         android:textSize="18dp" />
 
@@ -40,7 +40,7 @@
         android:id="@+id/tvCarMake"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="306dp"
+        android:layout_marginTop="290dp"
         android:layout_marginLeft="180dp"
         android:text="Toyota"
         android:textColor="@color/black"
@@ -50,8 +50,8 @@
         android:id="@+id/tvCarModel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/tvCarMake"
-        android:layout_marginTop="306dp"
+        android:layout_toRightOf="@id/tvCarMake"
+        android:layout_alignBottom="@id/tvCarMake"
         android:text=" Corolla"
         android:textColor="@color/black"
         android:textSize="18sp" />
@@ -61,8 +61,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="License#"
-        android:layout_marginTop="338dp"
         android:layout_alignStart="@id/tvCarMake"
+        android:layout_below="@id/tvCarModel"
+        android:layout_marginTop="15dp"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
@@ -110,9 +111,8 @@
         android:id="@+id/ivCar"
         android:layout_width="138dp"
         android:layout_height="130dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/ivDriverPic"
-        android:layout_marginBottom="259dp"
+        android:layout_alignStart="@id/ivDriverPic"
+        android:layout_marginTop="250dp"
         app:srcCompat="@drawable/img" />
 
     <View
@@ -134,17 +134,5 @@
         android:text="Your ride will be arriving in"
         android:textColor="@android:color/black"
         android:textSize="16dp" />
-
-    <TextView
-        android:id="@+id/driverinfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp"
-        android:text="Driver Info"
-        android:textColor="@color/black"
-        android:textSize="28dp"
-        android:textStyle="bold" />
 
 </RelativeLayout>
