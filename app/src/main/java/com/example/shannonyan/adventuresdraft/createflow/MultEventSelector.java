@@ -45,7 +45,7 @@ public class MultEventSelector extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.logo);
+        toolbar.setNavigationIcon(R.drawable.logo2);
         getSupportActionBar().setTitle(null);
 
         recyclerView.setAdapter(adapter);

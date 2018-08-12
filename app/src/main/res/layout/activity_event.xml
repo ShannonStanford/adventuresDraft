@@ -13,6 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ivEvent"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/medium"
         android:text="Location Name"
         android:textAlignment="center"
         android:textColor="@android:color/black"
@@ -27,6 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="26dp"
         android:background="@drawable/rounded2"
+        android:fontFamily="@font/lemon"
         android:text="ADVENTURE FURTHER"
         android:textColor="@color/common_google_signin_btn_text_dark_pressed"
         android:textSize="36sp" />
