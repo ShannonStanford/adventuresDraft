@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="102dp"
+        android:layout_marginBottom="120dp"
         android:text="5 min"
         android:textAlignment="center"
         android:textColor="@color/Light_Blue"
@@ -121,7 +121,7 @@
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="228dp"
+        android:layout_marginBottom="267dp"
         android:background="?android:attr/listDivider" />
 
     <TextView
@@ -130,7 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="169dp"
+        android:layout_marginBottom="200dp"
         android:text="Your ride will be arriving in"
         android:textColor="@android:color/black"
         android:textSize="16dp" />
