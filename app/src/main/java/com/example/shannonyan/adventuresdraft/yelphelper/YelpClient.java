@@ -3,10 +3,7 @@ package com.example.shannonyan.adventuresdraft.yelphelper;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 
-import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
@@ -219,7 +216,7 @@ public final class YelpClient {
             int ranN = ran.nextInt(Api.YELP_LIMIT);
             URIBuilder builder = new URIBuilder(Api.SEARCH_API_URL);
             builder.addParameter(Api.LOCATION, String.valueOf(city));
-            builder.addParameter(Api.CATEGORIES, "Active Life,Arts & Entertainment,Arcades,Beer Garden,Local Flavor");
+            builder.addParameter(Api.CATEGORIES, "localflavor,galleries,antiques,hiking");
             builder.addParameter(Api.LIMIT, String.valueOf(Api.YELP_LIMIT));
             builder.addParameter(Api.OFFSET, "0");
             builder.addParameter(Api.PRICE, priceRange);

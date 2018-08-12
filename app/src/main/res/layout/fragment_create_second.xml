@@ -95,13 +95,14 @@
                 android:layout_toStartOf="@+id/etPrice"
                 android:fontFamily="sans-serif"
                 android:text="$"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black"
                 android:textSize="18dp" />
 
             <NumberPicker
                 android:id="@+id/num_picker"
                 android:layout_width="50dp"
                 android:layout_height="81dp"
+                android:theme="@style/AppTheme.Picker"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginBottom="36dp"

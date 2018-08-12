@@ -101,7 +101,7 @@ public class DriverInfoActivity extends AppCompatActivity {
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 Ride ride = response.body();
                 driverName.setText(ride.getDriver().getName());
-                carModel.setText(ride.getVehicle().getModel());
+                carModel.setText(" " + ride.getVehicle().getModel());
                 carMake.setText(ride.getVehicle().getMake());
                 carLicense.setText(ride.getVehicle().getLicensePlate());
                 driverPhoneNumber = ride.getDriver().getPhoneNumber();

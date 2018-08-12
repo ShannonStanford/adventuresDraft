@@ -31,4 +31,5 @@
     <color name="yellow"></color>
     <color name="transparentColor">#00FFFFFF</color>
     <color name="dividerWhite">#B3FFFFFF</color>
+    <color name="duskYellow">#FFD700</color>
 </resources>
