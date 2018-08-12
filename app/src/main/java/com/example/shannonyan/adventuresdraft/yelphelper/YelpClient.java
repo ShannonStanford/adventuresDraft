@@ -56,6 +56,7 @@ public final class YelpClient {
     private boolean lastEvent;
     private double oldEndLat;
     private double oldEndLon;
+    private float priceChunkEvent;
 
     public boolean found = false;
     public String city;
@@ -104,7 +105,8 @@ public final class YelpClient {
 
     // determine the priceCap for the events
     public float determineEventCap(int priceCap){
-        return priceCap/(numEvents * numPeeps);
+        priceChunkEvent = priceCap / numEvents;
+        return (priceChunkEvent / numPeeps);
     }
 
     public void CreateEvent(StringBuilder foodPar, String eventType) {
@@ -171,13 +173,13 @@ public final class YelpClient {
                                     highEstimate = priceEstimates.get(i).getHighEstimate();
                                 }
                             }
-                            int upperCap = -1;
+                            float upperCap = -1;
                             if (lastEvent) {
-                                upperCap = highEstimate + rangeAvg + homeEstimate;
+                                upperCap = highEstimate + (rangeAvg * numPeeps) + homeEstimate;
                             }
-                            else upperCap = highEstimate + rangeAvg;
+                            else upperCap = highEstimate + (rangeAvg * numPeeps);
 
-                            if (upperCap <= priceChunk) {
+                            if (upperCap <= priceChunkEvent) {
                                 found = true;
                                 if(firstEvent){
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).setValue(endLat);

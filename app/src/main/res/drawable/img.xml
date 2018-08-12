@@ -6,8 +6,8 @@
         android:height="150dp"
         android:drawable="@drawable/circle2" />
     <item
-        android:width="137dp"
-        android:height="80dp"
+        android:width="120dp"
+        android:height="70dp"
         android:drawable="@drawable/tprius2"
         android:gravity="center_vertical|center" />
 
