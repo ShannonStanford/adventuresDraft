@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import com.example.shannonyan.adventuresdraft.R;
@@ -41,6 +42,11 @@ public class MultEventSelector extends AppCompatActivity {
         done = (FloatingActionButton) findViewById(R.id.fabDone);
         food = (FloatingActionButton) findViewById(R.id.fabFood);
         event = (FloatingActionButton) findViewById(R.id.fabEvent);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.logo2);
+        getSupportActionBar().setTitle(null);
 
         recyclerView.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback((ItemTouchHelperAdapter) adapter);

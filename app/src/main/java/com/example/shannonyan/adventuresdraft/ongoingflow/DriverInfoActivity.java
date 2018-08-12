@@ -22,6 +22,8 @@ import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,11 +56,12 @@ public class DriverInfoActivity extends AppCompatActivity {
     public ImageView car;
     public Button btDriverMap;
     public Button btCallDriver;
-    public Button btCancel;
     public Context context;
     public String returnTrip;
     public ImageView ivCar;
     public DatabaseReference mDatabase;
+    FloatingActionMenu fabMenu;
+    FloatingActionButton cancel, call, map;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -79,12 +82,14 @@ public class DriverInfoActivity extends AppCompatActivity {
         tvEta = (TextView) findViewById(R.id.tvEta);
         driverPic = (ImageView) findViewById(R.id.ivDriverPic);
         driverRating = (TextView) findViewById(R.id.driverrating);
-        btDriverMap = (Button) findViewById(R.id.btDriverMap);
-        btCallDriver = (Button) findViewById(R.id.btCallDriver);
-        btCancel = (Button) findViewById(R.id.btCancel);
         ivCar = (ImageView) findViewById(R.id.ivCar);
         rideText = (TextView) findViewById(R.id.rideText);
         ivCar = (ImageView) findViewById(R.id.ivCar);
+        fabMenu = (FloatingActionMenu) findViewById(R.id.floatingActionMenu);
+        call = (FloatingActionButton) findViewById(R.id.fabCall);
+        cancel = (FloatingActionButton) findViewById(R.id.fabCancel);
+        map = (FloatingActionButton) findViewById(R.id.fabMap);
+
 
         //UBER instantiations
         uberClient = UberClient.getUberClientInstance(this);
@@ -106,7 +111,6 @@ public class DriverInfoActivity extends AppCompatActivity {
                 carLicense.setText(ride.getVehicle().getLicensePlate());
                 driverPhoneNumber = ride.getDriver().getPhoneNumber();
                 driverRating.setText(String.valueOf(ride.getDriver().getRating())+" stars");
-                onMapButtonClick();
                 onCallButtonClick();
                 onCancelButtonClick();
                 com.example.shannonyan.adventuresdraft.modules.GlideApp.with(context)
@@ -155,21 +159,32 @@ public class DriverInfoActivity extends AppCompatActivity {
                 Log.d("DATABASE", "Value event listener request cancelled.");
             }
         });
-    }
 
-    @Override
-    public void onBackPressed() {
-        Log.v("onBackPressed", "pressed");
-    }
+        cancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                cancelConfirmationDialog();
+            }
+        });
 
-    public void onMapButtonClick() {
-        btDriverMap.setOnClickListener(new View.OnClickListener() {
+        map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), UberMapActivity.class);
                 startActivity(intent);
             }
         });
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v("onBackPressed", "pressed");
     }
 
     //Use this method to get the Map Link in a real life ride, (non simulation).
@@ -216,12 +231,6 @@ public class DriverInfoActivity extends AppCompatActivity {
     }
 
     public void onCancelButtonClick(){
-        btCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancelConfirmationDialog();
-            }
-        });
     }
 
     public void cancelConfirmationDialog(){

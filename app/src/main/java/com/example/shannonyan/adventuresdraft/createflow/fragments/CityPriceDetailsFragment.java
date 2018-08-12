@@ -67,6 +67,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         mMap.setMinZoomPreference(ZOOM_PREF);
         LatLng ny = new LatLng(HARD_LAT, HARD_LNG);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+        //mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.greyscale));
     }
 
     public CityPriceDetailsFragment() { }
@@ -84,7 +85,6 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         mDatabase = FirebaseDatabase.getInstance().getReference().child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER);
         setUpNumPicker();
         placeAutoComplete = (SupportPlaceAutocompleteFragment) getChildFragmentManager().findFragmentById(R.id.place_autocomplete);
-
         AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder()
                 .setTypeFilter(Place.TYPE_COUNTRY)
                 .setCountry("US")
@@ -187,7 +187,7 @@ public class CityPriceDetailsFragment extends Fragment implements OnMapReadyCall
         mMap.addMarker(markerOptions);
         mMap.setPadding(0, 0, 0, 0);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
-        mMap.setPadding(0, 50, 0, 0);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+        mMap.setPadding(0, 300, 0, 0);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
     }
 }

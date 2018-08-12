@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -28,10 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import nl.dionsegijn.konfetti.KonfettiView;
-import nl.dionsegijn.konfetti.models.Shape;
-import nl.dionsegijn.konfetti.models.Size;
-
 public class TripOverviewFragment extends Fragment {
 
     private TextView pickupAns;
@@ -45,7 +40,7 @@ public class TripOverviewFragment extends Fragment {
     private FragmentChangeInterface fragmentChangeInterface;
     public ArrayList<String> itinerary;
     public YelpClient yelpClient;
-    public KonfettiView viewKonfetti;
+//    public KonfettiView viewKonfetti;
 
     @Override
     public void onAttach(Context context) {
@@ -72,22 +67,22 @@ public class TripOverviewFragment extends Fragment {
         cityAns = view.findViewById(R.id.city_ans);
         create = view.findViewById(R.id.create);
         btPrev = view.findViewById(R.id.btPrev);
-        viewKonfetti = view.findViewById(R.id.viewKonfetti);
+//        viewKonfetti = view.findViewById(R.id.viewKonfetti);
         numPeepAns = view.findViewById(R.id.num_peeps_ans);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabaseItinerary = FirebaseDatabase.getInstance().getReference().child("itinerary");
         create = view.findViewById(R.id.create);
 
-        viewKonfetti.build()
-                .addColors(Color.YELLOW, Color.BLUE, Color.MAGENTA)
-                .setDirection(0.0, 359.0)
-                .setSpeed(1f, 5f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000L)
-                .addSizes(new Size(8, 5f))
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                .setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
-                .streamFor(300, 5000L);
+//        viewKonfetti.build()
+//                .addColors(Color.YELLOW, Color.BLUE, Color.MAGENTA)
+//                .setDirection(0.0, 359.0)
+//                .setSpeed(1f, 5f)
+//                .setFadeOutEnabled(true)
+//                .setTimeToLive(2000L)
+//                .addSizes(new Size(8, 5f))
+//                .addShapes(Shape.RECT, Shape.CIRCLE)
+//                .setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
+//                .streamFor(300, 5000L);
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
