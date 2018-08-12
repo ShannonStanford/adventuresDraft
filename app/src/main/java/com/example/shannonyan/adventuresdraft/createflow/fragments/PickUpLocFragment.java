@@ -58,11 +58,12 @@ public class PickUpLocFragment extends Fragment implements OnMapReadyCallback {
         final double HARD_LNG = -122.152279;
 
         mMap = googleMap;
-//        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.greyscale));
+        //mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.greyscale));
         mMap.setMinZoomPreference(ZOOM_PREF);
         LatLng ny = new LatLng(HARD_LAT, HARD_LNG);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ny));
         mMap.getUiSettings().setZoomControlsEnabled(false);
+
     }
 
     public PickUpLocFragment() { }

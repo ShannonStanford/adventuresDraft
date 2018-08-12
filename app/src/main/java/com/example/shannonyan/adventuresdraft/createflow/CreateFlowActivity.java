@@ -39,7 +39,7 @@ public class CreateFlowActivity extends AppCompatActivity implements FragmentCha
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.logo);
+        toolbar.setNavigationIcon(R.drawable.logo2);
         vpAdapter = new CreateFragmentAdapter(getSupportFragmentManager());
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(vpAdapter);

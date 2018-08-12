@@ -1,19 +1,15 @@
 package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
-import com.example.shannonyan.adventuresdraft.createflow.MultEventSelector;
-import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.createflow.MultEventSelector;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.google.firebase.database.DataSnapshot;
@@ -41,10 +37,6 @@ public class ReturnHomeActivity extends AppCompatActivity {
         Glide.with(getBaseContext())
                 .load(R.drawable.rocket_ending)
                 .into(ivEnd);
-
-        TextView prepare = (TextView) findViewById(R.id.tvLater);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/round.otf");
-        prepare.setTypeface(typeface);
 
         uberClient = UberClient.getUberClientInstance(this);
         service = uberClient.service;

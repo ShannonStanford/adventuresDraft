@@ -27,8 +27,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 public class EventInfoActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
@@ -45,11 +43,6 @@ public class EventInfoActivity extends AppCompatActivity {
     public Context context;
     public Button btHome;
     public int itinerarySize;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

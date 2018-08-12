@@ -86,7 +86,7 @@ public class TripOverviewFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProgressIndicator();
+                //showProgressIndicator();
 
                 mDatabaseItinerary.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

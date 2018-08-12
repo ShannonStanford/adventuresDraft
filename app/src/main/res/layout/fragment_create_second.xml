@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:fontFamily="@font/medium"/>
 
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +42,8 @@
                 android:layout_width="276dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="0dp" />
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/medium"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -51,7 +53,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="74dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/medium"
                 android:text="Total Price Cap"
                 android:textColor="@color/black"
                 android:textSize="18dp"
@@ -59,15 +61,16 @@
 
             <EditText
                 android:id="@+id/etPrice"
-                android:layout_width="103dp"
+                android:layout_width="104dp"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/textView2"
                 android:layout_alignStart="@+id/num_picker"
+                android:layout_marginStart="-1dp"
                 android:backgroundTint="@color/uber_white"
                 android:clickable="true"
                 android:ems="10"
                 android:focusableInTouchMode="true"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/medium"
                 android:hint="100.00"
                 android:inputType="number"
                 android:textColor="@color/black"
@@ -81,7 +84,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/textView2"
                 android:layout_marginBottom="55dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/medium"
                 android:text="Total Number of People"
                 android:textColor="@color/black"
                 android:textSize="18dp"
@@ -93,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/etPrice"
                 android:layout_toStartOf="@+id/etPrice"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/medium"
                 android:text="$"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
