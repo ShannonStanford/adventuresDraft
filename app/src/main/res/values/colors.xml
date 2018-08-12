@@ -28,6 +28,7 @@
     <color name="white">#FFFFFF</color>
     <color name="trans_blue">#B3ecf8fe</color>
     <color name="dark_blue">#19284f</color>
+    <color name="yellow"></color>
     <color name="transparentColor">#00FFFFFF</color>
     <color name="dividerWhite">#B3FFFFFF</color>
 </resources>
