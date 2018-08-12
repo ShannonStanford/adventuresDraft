@@ -3,12 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pinkgradient"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
+    android:background="@drawable/bluegrad4"
     tools:context=".createflow.MultEventSelector">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -36,7 +46,9 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/lemon"
         android:text="Plan your adventure"
         android:textSize="25sp" />
@@ -47,10 +59,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginBottom="17dp"
+        android:layout_marginEnd="16dp"
         app:fab_colorNormal="#FFFFFF"
+        app:menu_backgroundColor="@android:color/transparent"
         app:menu_colorNormal="#E8974D"
         app:menu_colorPressed="#EFAF4C"
-        app:menu_backgroundColor="@android:color/transparent"
         app:menu_labels_colorNormal="#FFFFFF"
         app:menu_labels_textColor="#C64B69"
         app:menu_openDirection="up"

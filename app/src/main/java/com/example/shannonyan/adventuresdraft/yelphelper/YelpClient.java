@@ -218,8 +218,8 @@ public final class YelpClient {
             Random ran = new Random();
             int ranN = ran.nextInt(Api.YELP_LIMIT);
             URIBuilder builder = new URIBuilder(Api.SEARCH_API_URL);
-            builder.addParameter(Api.TERM, "Active Life,Arts & Entertainment,Arcades,Beer Garden,Local Flavor");
             builder.addParameter(Api.LOCATION, String.valueOf(city));
+            builder.addParameter(Api.CATEGORIES, "Active Life,Arts & Entertainment,Arcades,Beer Garden,Local Flavor");
             builder.addParameter(Api.LIMIT, String.valueOf(Api.YELP_LIMIT));
             builder.addParameter(Api.OFFSET, "0");
             builder.addParameter(Api.PRICE, priceRange);

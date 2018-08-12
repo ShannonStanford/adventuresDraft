@@ -21,7 +21,7 @@
         android:layout_height="69dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="59dp"
         android:clickable="true"
         card_view:cardBackgroundColor="#D9FFFFFF"
         card_view:cardCornerRadius="12dp"

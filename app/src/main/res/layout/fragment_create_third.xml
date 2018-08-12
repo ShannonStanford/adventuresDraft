@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".createflow.fragments.CityPriceDetailsFragment"
-    android:background="@drawable/map_back2">
+    android:background="@drawable/map_back3">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -35,7 +35,7 @@
                 android:id="@+id/overview"
                 android:layout_width="293dp"
                 android:layout_height="40dp"
-                android:fontFamily="@font/cavdramsbold"
+                android:fontFamily="@font/medium"
                 android:text="Overview"
                 android:textAlignment="center"
                 android:textColor="@color/Light_Blue"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/pickup_ans"
                 android:layout_below="@+id/pickup_ans"
-                android:fontFamily="@font/cavdramsbold"
+                android:fontFamily="@font/medium"
                 android:text="Pick up location"
                 android:textColor="#a9a9a9"
                 android:textSize="14sp" />
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/pickup_lo"
                 android:layout_toRightOf="@id/pickup_lo"
-                android:fontFamily="@font/cavdramsbold"
+                android:fontFamily="@font/medium"
                 android:text="Pickup Ans"
                 android:textColor="@color/Light_Blue"
                 android:textSize="18sp"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@id/city_ans"
                 android:layout_below="@id/city_ans"
-                android:fontFamily="@font/cavdramsbold"
+                android:fontFamily="@font/medium"
                 android:text="City of Interest"
                 android:textColor="#a9a9a9"
                 android:textSize="14sp" />
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="160dp"
                 android:layout_toRightOf="@id/end_loc"
-                android:fontFamily="@font/cavdramsbold"
+                android:fontFamily="@font/medium"
                 android:text="City Ans"
                 android:textColor="@android:color/background_dark"
                 android:textSize="18sp"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@id/num_peeps_ans"
                 android:layout_below="@id/num_peeps_ans"
-                android:fontFamily="@font/cavdramsbold"
+                android:fontFamily="@font/medium"
                 android:text="Total Number of People"
                 android:textColor="#a9a9a9"
                 android:textSize="14sp" />
@@ -102,20 +102,21 @@
                 android:id="@+id/num_peeps_ans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/group"
                 android:layout_alignTop="@+id/group"
-                android:fontFamily="@font/cavdramsbold"
+                android:layout_toRightOf="@id/group"
+                android:fontFamily="@font/medium"
                 android:text="numPeepsAns"
                 android:textColor="@color/Light_Blue"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/price_ans"
                 android:layout_alignStart="@id/price_ans"
-                android:fontFamily="@font/cavdramsbold"
+                android:layout_below="@id/price_ans"
+                android:fontFamily="@font/medium"
                 android:text="Total Price Cap"
                 android:textColor="#a9a9a9"
                 android:textSize="14sp" />
@@ -126,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/dollar"
                 android:layout_toRightOf="@id/dollar"
-                android:fontFamily="@font/cavdramsbold"
+                android:fontFamily="@font/medium"
                 android:text="Price Ans"
                 android:textColor="@color/Light_Blue"
                 android:textSize="18sp"
