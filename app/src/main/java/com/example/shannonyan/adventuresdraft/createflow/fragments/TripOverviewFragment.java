@@ -72,17 +72,6 @@ public class TripOverviewFragment extends Fragment {
         mDatabaseItinerary = FirebaseDatabase.getInstance().getReference().child("itinerary");
         create = view.findViewById(R.id.create);
 
-//        viewKonfetti.build()
-//                .addColors(Color.YELLOW, Color.BLUE, Color.MAGENTA)
-//                .setDirection(0.0, 359.0)
-//                .setSpeed(1f, 5f)
-//                .setFadeOutEnabled(true)
-//                .setTimeToLive(2000L)
-//                .addSizes(new Size(8, 5f))
-//                .addShapes(Shape.RECT, Shape.CIRCLE)
-//                .setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
-//                .streamFor(300, 5000L);
-
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

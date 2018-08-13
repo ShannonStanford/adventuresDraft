@@ -51,9 +51,11 @@
         android:id="@+id/tvTakeoff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:fontFamily="@font/lemon"
+        android:layout_below="@+id/tvPrepare3"
         android:text="TAKEOFF"
         android:textColor="#D7EFFF "
         android:textSize="50sp" />

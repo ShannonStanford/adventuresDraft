@@ -94,17 +94,31 @@
             app:fab_label="Activity"
             app:fab_size="normal" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_done"
-            app:fab_colorNormal="#E8974D"
-            app:fab_colorPressed="#EFAF4C"
-            app:fab_label="Done"
-            app:fab_size="normal" />
+        <!--<com.github.clans.fab.FloatingActionButton-->
+            <!--android:id="@+id/fabDone"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ic_done"-->
+            <!--app:fab_colorNormal="#E8974D"-->
+            <!--app:fab_colorPressed="#EFAF4C"-->
+            <!--app:fab_label="Done"-->
+            <!--app:fab_size="normal" />-->
 
     </com.github.clans.fab.FloatingActionMenu>
+
+    <Button
+        android:id="@+id/btDone"
+        android:layout_width="151dp"
+        android:layout_height="55dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_alignBottom="@id/floatingActionMenu"
+        android:background="@drawable/round_done"
+        android:elevation="15dp"
+        android:fontFamily="@font/medium"
+        android:text="done"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 
 

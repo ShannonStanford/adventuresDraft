@@ -2,6 +2,7 @@ package com.example.shannonyan.adventuresdraft.ongoingflow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+
 public class EventInfoActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
@@ -43,6 +48,7 @@ public class EventInfoActivity extends AppCompatActivity {
     public Context context;
     public Button btHome;
     public int itinerarySize;
+    public KonfettiView viewKonfetti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,19 @@ public class EventInfoActivity extends AppCompatActivity {
         context = this;
 
         populateComponents();
+
+        viewKonfetti = findViewById(R.id.viewKonfetti);
+        viewKonfetti.build()
+                .addColors(Color.YELLOW, Color.BLUE, Color.MAGENTA)
+                .setDirection(0.0, 90)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(1300L)
+                .addSizes(new Size(6, 5f))
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                //.setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
+                .setPosition(0, (float)viewKonfetti.getWidth(), -50f, -50f)
+                .streamFor(300, 1300L);
 
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
