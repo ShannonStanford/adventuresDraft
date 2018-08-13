@@ -3,10 +3,7 @@ package com.example.shannonyan.adventuresdraft.yelphelper;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
 
-import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.example.shannonyan.adventuresdraft.constants.Api;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
@@ -59,6 +56,7 @@ public final class YelpClient {
     private boolean lastEvent;
     private double oldEndLat;
     private double oldEndLon;
+    private float priceChunkEvent;
 
     public boolean found = false;
     public String city;
@@ -107,7 +105,8 @@ public final class YelpClient {
 
     // determine the priceCap for the events
     public float determineEventCap(int priceCap){
-        return priceCap/(numEvents * numPeeps);
+        priceChunkEvent = priceCap / numEvents;
+        return (priceChunkEvent / numPeeps);
     }
 
     public void CreateEvent(StringBuilder foodPar, String eventType) {
@@ -174,13 +173,13 @@ public final class YelpClient {
                                     highEstimate = priceEstimates.get(i).getHighEstimate();
                                 }
                             }
-                            int upperCap = -1;
+                            float upperCap = -1;
                             if (lastEvent) {
-                                upperCap = highEstimate + rangeAvg + homeEstimate;
+                                upperCap = highEstimate + (rangeAvg * numPeeps) + homeEstimate;
                             }
-                            else upperCap = highEstimate + rangeAvg;
+                            else upperCap = highEstimate + (rangeAvg * numPeeps);
 
-                            if (upperCap <= priceChunk) {
+                            if (upperCap <= priceChunkEvent) {
                                 found = true;
                                 if(firstEvent){
                                     mDatabase.child(Database.TRIPS).child(Database.TEST_TRIPS).child(Database.UBER).child(Database.END_LOC).child(Database.LAT).setValue(endLat);
@@ -219,7 +218,7 @@ public final class YelpClient {
             int ranN = ran.nextInt(Api.YELP_LIMIT);
             URIBuilder builder = new URIBuilder(Api.SEARCH_API_URL);
             builder.addParameter(Api.LOCATION, String.valueOf(city));
-            builder.addParameter(Api.CATEGORIES, "Active Life,Arts & Entertainment,Arcades,Beer Garden,Local Flavor");
+            builder.addParameter(Api.CATEGORIES, "localflavor,galleries,antiques,hiking");
             builder.addParameter(Api.LIMIT, String.valueOf(Api.YELP_LIMIT));
             builder.addParameter(Api.OFFSET, "0");
             builder.addParameter(Api.PRICE, priceRange);

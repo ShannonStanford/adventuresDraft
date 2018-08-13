@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.constants.TextViewStrings;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -62,10 +63,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         if(allEvents.get(i).equals(Database.EVENT_TYPE_NORM)){
             viewHolder.itemImage.setImageResource(R.drawable.sunset);
-            viewHolder.itemTitle.setText(Database.CARD_TITLE_EVENT_NORM);
+            viewHolder.itemTitle.setText(TextViewStrings.CARD_TITLE_EVENT_NORM);
         }else{
             viewHolder.itemImage.setImageResource(R.drawable.menu);
-            viewHolder.itemTitle.setText(Database.CARD_TITLE_EVENT_FOOD);
+            viewHolder.itemTitle.setText(TextViewStrings.CARD_TITLE_EVENT_FOOD);
         }
     }
 

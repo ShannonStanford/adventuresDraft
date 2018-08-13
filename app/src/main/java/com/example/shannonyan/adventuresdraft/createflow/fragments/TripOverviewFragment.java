@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.constants.TextViewStrings;
 import com.example.shannonyan.adventuresdraft.ongoingflow.FindingDriverActivity;
 import com.example.shannonyan.adventuresdraft.yelphelper.YelpClient;
 import com.google.firebase.database.DataSnapshot;
@@ -75,7 +77,7 @@ public class TripOverviewFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showProgressIndicator();
+                showProgressIndicator();
 
                 mDatabaseItinerary.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -157,13 +159,13 @@ public class TripOverviewFragment extends Fragment {
     }
 
     public void showProgressIndicator(){
-        ProgressDialog progress;
-        progress = new ProgressDialog(getContext());
-        progress.setTitle(Database.LOADING_TITLE);
-        progress.setMessage(Database.LOADING_MESSAGE);
-        progress.setCancelable(true);
-        progress.setIcon(R.drawable.spaceship_dark);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.show();
+        new MaterialDialog.Builder(getContext())
+                .content(TextViewStrings.LOADING_MESSAGE)
+                .widgetColor(getResources().getColor(R.color.dark_blue))
+                .contentColor(getResources().getColor(R.color.dark_blue))
+                .backgroundColor(getResources().getColor(R.color.uber_white))
+                .progress(true, 0)
+                .cancelable(false)
+                .show();
     }
 }

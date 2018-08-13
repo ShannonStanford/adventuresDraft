@@ -98,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
             selectedChoice = Database.CAR_PREF;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.ProfileDialogTheme);
         builder.setTitle(Title);
         final String finalSelectedChoice = selectedChoice;
         builder.setMultiChoiceItems(options, null,
@@ -127,7 +127,6 @@ public class ProfileActivity extends AppCompatActivity implements com.example.sh
                         Toast.makeText(getBaseContext(),"Preferences not updated", Toast.LENGTH_LONG).show();
                     }
                 });
-
         dialog = builder.create();
         dialog.show();
     }

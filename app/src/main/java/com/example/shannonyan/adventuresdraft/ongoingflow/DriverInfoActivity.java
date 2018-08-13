@@ -3,11 +3,8 @@ package com.example.shannonyan.adventuresdraft.ongoingflow;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,10 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.constants.TextViewStrings;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.github.clans.fab.FloatingActionButton;
@@ -55,7 +52,6 @@ public class DriverInfoActivity extends AppCompatActivity {
     public ImageView driverPic;
     public ImageView car;
     public Button btDriverMap;
-    public Button btCallDriver;
     public Context context;
     public String returnTrip;
     public ImageView ivCar;
@@ -106,12 +102,11 @@ public class DriverInfoActivity extends AppCompatActivity {
             public void onResponse(Call<Ride> call, Response<Ride> response) {
                 Ride ride = response.body();
                 driverName.setText(ride.getDriver().getName());
-                carModel.setText(ride.getVehicle().getModel());
+                carModel.setText(" " + ride.getVehicle().getModel());
                 carMake.setText(ride.getVehicle().getMake());
                 carLicense.setText(ride.getVehicle().getLicensePlate());
                 driverPhoneNumber = ride.getDriver().getPhoneNumber();
                 driverRating.setText(String.valueOf(ride.getDriver().getRating())+" stars");
-                onCallButtonClick();
                 onCancelButtonClick();
                 com.example.shannonyan.adventuresdraft.modules.GlideApp.with(context)
                         .load(ride.getDriver().getPictureUrl()).circleCrop()
@@ -214,37 +209,21 @@ public class DriverInfoActivity extends AppCompatActivity {
         });
     }
 
-    public void onCallButtonClick() {
-        final String callingPermission = "Make sure you granted calling permissions";
-        btCallDriver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:"+driverPhoneNumber));
-                if (ActivityCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getBaseContext(), callingPermission, Toast.LENGTH_SHORT);
-                    return;
-                }
-                startActivity(callIntent);
-            }
-        });
-    }
-
     public void onCancelButtonClick(){
     }
 
     public void cancelConfirmationDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(Database.CANCEL_TITLE);
-        alert.setMessage(Database.CANCEL_MESSAGE);
-        alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
+        alert.setTitle(TextViewStrings.CANCEL_TITLE);
+        alert.setMessage(TextViewStrings.CANCEL_MESSAGE);
+        alert.setPositiveButton(TextViewStrings.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 service.cancelRide(rideId);
                 Intent intent = new Intent(DriverInfoActivity.this, CreateFlowActivity.class);
                 startActivity(intent);
             }
         });
-        alert.setNegativeButton(Database.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(TextViewStrings.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
@@ -254,15 +233,15 @@ public class DriverInfoActivity extends AppCompatActivity {
 
     public void driverCancelDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(Database.DRIVER_CANCEL_TITLE);
-        alert.setMessage(Database.DRIVER_CANCEL_MESSAGE);
-        alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
+        alert.setTitle(TextViewStrings.DRIVER_CANCEL_TITLE);
+        alert.setMessage(TextViewStrings.DRIVER_CANCEL_MESSAGE);
+        alert.setPositiveButton(TextViewStrings.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
                 startActivity(intent);
             }
         });
-        alert.setNegativeButton(Database.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(TextViewStrings.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
