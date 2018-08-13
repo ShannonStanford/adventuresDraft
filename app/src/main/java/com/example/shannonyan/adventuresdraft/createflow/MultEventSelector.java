@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
 import com.github.clans.fab.FloatingActionButton;
@@ -26,6 +29,7 @@ public class MultEventSelector extends AppCompatActivity {
     public DatabaseReference mDatabase;
     FloatingActionMenu fabMenu;
     FloatingActionButton done, food, event;
+    Button btDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +43,10 @@ public class MultEventSelector extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerAdapter(allEvents);
         fabMenu = (FloatingActionMenu) findViewById(R.id.floatingActionMenu);
-        done = (FloatingActionButton) findViewById(R.id.fabDone);
+        //done = (FloatingActionButton) findViewById(R.id.fabDone);
         food = (FloatingActionButton) findViewById(R.id.fabFood);
         event = (FloatingActionButton) findViewById(R.id.fabEvent);
+        btDone = (Button) findViewById(R.id.btDone);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,18 +60,30 @@ public class MultEventSelector extends AppCompatActivity {
 
         updateItinerary(allEvents);
 
-        done.setOnClickListener(new View.OnClickListener(){
+        btDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(allEvents.size() == 0) {
-
+                    Toast.makeText(getBaseContext(),"Must add at least one event", Toast.LENGTH_SHORT);
                 } else {
                     Intent i = new Intent(MultEventSelector.this, CreateFlowActivity.class);
                     startActivity(i);
                 }
-
             }
         });
+
+//        done.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                if(allEvents.size() == 0) {
+//
+//                } else {
+//                    Intent i = new Intent(MultEventSelector.this, CreateFlowActivity.class);
+//                    startActivity(i);
+//                }
+//
+//            }
+//        });
 
         event.setOnClickListener(new View.OnClickListener() {
             @Override
