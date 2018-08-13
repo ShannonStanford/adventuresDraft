@@ -3,11 +3,8 @@ package com.example.shannonyan.adventuresdraft.ongoingflow;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
@@ -56,7 +52,6 @@ public class DriverInfoActivity extends AppCompatActivity {
     public ImageView driverPic;
     public ImageView car;
     public Button btDriverMap;
-    public Button btCallDriver;
     public Context context;
     public String returnTrip;
     public ImageView ivCar;
@@ -112,7 +107,6 @@ public class DriverInfoActivity extends AppCompatActivity {
                 carLicense.setText(ride.getVehicle().getLicensePlate());
                 driverPhoneNumber = ride.getDriver().getPhoneNumber();
                 driverRating.setText(String.valueOf(ride.getDriver().getRating())+" stars");
-                onCallButtonClick();
                 onCancelButtonClick();
                 com.example.shannonyan.adventuresdraft.modules.GlideApp.with(context)
                         .load(ride.getDriver().getPictureUrl()).circleCrop()
@@ -211,22 +205,6 @@ public class DriverInfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), UberMapActivity.class);
                 intent.putExtra(Database.MAP_URL, mapURL);
                 startActivity(intent);
-            }
-        });
-    }
-
-    public void onCallButtonClick() {
-        final String callingPermission = "Make sure you granted calling permissions";
-        btCallDriver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:"+driverPhoneNumber));
-                if (ActivityCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getBaseContext(), callingPermission, Toast.LENGTH_SHORT);
-                    return;
-                }
-                startActivity(callIntent);
             }
         });
     }

@@ -9,10 +9,10 @@
     <ImageView
         android:id="@+id/ivDriverPic"
         android:layout_width="137dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="60dp"
+        android:layout_height="137dp"
         android:layout_marginLeft="30dp"
-        app:srcCompat="@drawable/img2" />
+        android:layout_marginTop="60dp"
+        android:background="@drawable/img2" />
 
     <TextView
         android:id="@+id/tvDriverName"
@@ -20,10 +20,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="180dp"
         android:layout_marginTop="100dp"
-        android:text="Mark Zuckerberg"
+        android:text="Driver Name"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="18dp" />
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/driverrating"
@@ -33,39 +34,43 @@
         android:layout_below="@id/tvDriverName"
         android:layout_marginTop="15dp"
         android:text="Rating"
+        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="18dp" />
+        android:textSize="19dp" />
 
     <TextView
         android:id="@+id/tvCarMake"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="290dp"
         android:layout_marginLeft="180dp"
-        android:text="Toyota"
+        android:layout_marginTop="290dp"
+        android:text="Make"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvCarModel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/tvCarMake"
         android:layout_alignBottom="@id/tvCarMake"
-        android:text=" Corolla"
+        android:layout_toRightOf="@id/tvCarMake"
+        android:text=" Model"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvCarLicense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="License#"
         android:layout_alignStart="@id/tvCarMake"
         android:layout_below="@id/tvCarModel"
         android:layout_marginTop="15dp"
+        android:text="License#"
+        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="19dp" />
 
     <TextView
         android:id="@+id/tvEta"
@@ -77,13 +82,13 @@
         android:text="5 min"
         android:textAlignment="center"
         android:textColor="@color/Light_Blue"
-        android:textSize="36dp"
+        android:textSize="38dp"
         android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/ivCar"
         android:layout_width="138dp"
-        android:layout_height="130dp"
+        android:layout_height="137dp"
         android:layout_alignStart="@id/ivDriverPic"
         android:layout_marginTop="250dp"
         app:srcCompat="@drawable/img" />
@@ -106,7 +111,7 @@
         android:layout_marginBottom="200dp"
         android:text="Your ride will be arriving in"
         android:textColor="@android:color/black"
-        android:textSize="16dp" />
+        android:textSize="18dp" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/floatingActionMenu"
