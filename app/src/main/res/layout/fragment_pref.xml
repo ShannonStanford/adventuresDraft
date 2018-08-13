@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PrefFragment">
+    tools:context="profileflow.fragments.PrefFragment">
 
     <Button
         android:id="@+id/btFood"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="170dp"
         android:textSize="20dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -18,7 +18,7 @@
     <Button
         android:id="@+id/btCar"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="190dp"
         android:textSize="20dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/btFood"
