@@ -2,13 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:width="200dp"
-        android:height="200dp"
+        android:width="137dp"
+        android:height="137dp"
         android:drawable="@drawable/circle2" />
-    <item
-        android:width="168dp"
-        android:height="110dp"
-        android:drawable="@drawable/stock"
-        android:gravity="center_vertical|center" />
 
 </layer-list>

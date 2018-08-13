@@ -36,7 +36,7 @@
     <ImageView
         android:id="@+id/ivEvent"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="220dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/btHome"
         android:layout_marginTop="5dp"
@@ -70,7 +70,7 @@
         android:layout_width="338dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/locationRating"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="Poppping Japanese Restaurant with San Francisco's best sea food."
