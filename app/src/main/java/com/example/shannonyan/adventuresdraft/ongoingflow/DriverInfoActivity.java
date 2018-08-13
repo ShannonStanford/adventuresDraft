@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.shannonyan.adventuresdraft.R;
 import com.example.shannonyan.adventuresdraft.constants.Database;
+import com.example.shannonyan.adventuresdraft.constants.TextViewStrings;
 import com.example.shannonyan.adventuresdraft.createflow.CreateFlowActivity;
 import com.example.shannonyan.adventuresdraft.uberhelper.UberClient;
 import com.github.clans.fab.FloatingActionButton;
@@ -235,16 +236,16 @@ public class DriverInfoActivity extends AppCompatActivity {
 
     public void cancelConfirmationDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(Database.CANCEL_TITLE);
-        alert.setMessage(Database.CANCEL_MESSAGE);
-        alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
+        alert.setTitle(TextViewStrings.CANCEL_TITLE);
+        alert.setMessage(TextViewStrings.CANCEL_MESSAGE);
+        alert.setPositiveButton(TextViewStrings.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 service.cancelRide(rideId);
                 Intent intent = new Intent(DriverInfoActivity.this, CreateFlowActivity.class);
                 startActivity(intent);
             }
         });
-        alert.setNegativeButton(Database.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(TextViewStrings.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
@@ -254,15 +255,15 @@ public class DriverInfoActivity extends AppCompatActivity {
 
     public void driverCancelDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(Database.DRIVER_CANCEL_TITLE);
-        alert.setMessage(Database.DRIVER_CANCEL_MESSAGE);
-        alert.setPositiveButton(Database.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
+        alert.setTitle(TextViewStrings.DRIVER_CANCEL_TITLE);
+        alert.setMessage(TextViewStrings.DRIVER_CANCEL_MESSAGE);
+        alert.setPositiveButton(TextViewStrings.DIALOG_POSITIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getBaseContext(), FindingDriverActivity.class);
                 startActivity(intent);
             }
         });
-        alert.setNegativeButton(Database.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(TextViewStrings.DIALOG_NEGATIVE, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
